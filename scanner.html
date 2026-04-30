@@ -36,8 +36,8 @@
     .app {
       max-width: 560px;
       margin: 0 auto;
-      padding: 10px;
-      padding-bottom: 92px;
+      padding: 8px;
+      padding-bottom: 90px;
     }
 
     .top {
@@ -45,7 +45,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .back {
@@ -65,11 +65,11 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     h1 {
-      font-size: 18px;
+      font-size: 17px;
       margin: 0;
       line-height: 1.2;
     }
@@ -78,112 +78,196 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 6px 9px;
+      padding: 5px 8px;
       border-radius: 999px;
       background: var(--card2);
       border: 1px solid var(--border);
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       white-space: nowrap;
     }
 
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 10px;
-      margin-bottom: 10px;
-      box-shadow: 0 12px 26px rgba(0,0,0,.24);
+      border-radius: 16px;
+      padding: 8px;
+      margin-bottom: 8px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
     }
 
-    .compact-info {
+    .stats {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-top: 8px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 5px;
     }
 
-    .info-item {
+    .stat {
       background: var(--card2);
       border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 8px;
-      min-height: 48px;
+      border-radius: 12px;
+      padding: 7px 6px;
+      text-align: center;
     }
 
-    .info-label {
-      font-size: 10px;
+    .stat-num {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .stat-label {
+      margin-top: 3px;
       color: var(--muted);
-      margin-bottom: 3px;
+      font-size: 10px;
     }
 
-    .info-value {
-      font-size: 13px;
-      font-weight: 700;
-      word-break: break-word;
+    .last-wrap {
+      margin-top: 7px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
     }
 
-    .scanner-card {
-      padding: 8px;
-    }
-
-    #reader {
-      overflow: hidden;
-      border-radius: 18px;
-      background: #000;
+    .last-code {
+      padding: 9px;
+      border-radius: 13px;
+      background: var(--card2);
       border: 1px solid var(--border);
-      min-height: 330px;
-    }
-
-    #reader video {
-      width: 100% !important;
-      min-height: 330px;
-      object-fit: cover;
-      border-radius: 18px;
-    }
-
-    #reader__scan_region {
-      min-height: 300px;
-    }
-
-    #reader__dashboard_section {
-      padding: 8px !important;
-    }
-
-    #reader button,
-    #reader select {
-      border-radius: 10px !important;
-      border: 1px solid var(--border) !important;
-      padding: 8px !important;
-      font-size: 13px !important;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--greenText);
+      word-break: break-all;
+      min-height: 42px;
     }
 
     .status {
-      margin-top: 8px;
-      padding: 10px;
+      padding: 8px 9px;
       border-radius: 13px;
       background: var(--card2);
       border: 1px solid var(--border);
       color: #cbd5e1;
       font-size: 13px;
-      line-height: 1.35;
+      line-height: 1.3;
       word-break: break-word;
-      min-height: 40px;
+      min-height: 36px;
     }
 
     .ok { color: var(--greenText); }
     .warn { color: var(--yellow); }
     .bad { color: #fca5a5; }
 
+    .compact-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .info-item {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 7px;
+      min-height: 42px;
+    }
+
+    .info-label {
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 12px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .scanner-card {
+      padding: 7px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      color: #cbd5e1;
+      margin: 7px 0 4px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 11px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card2);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 58px;
+      resize: vertical;
+    }
+
+    #cameraSelect {
+      padding: 9px;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    /*
+      Компактное окно камеры.
+      Оно специально немного больше рамки сканирования, чтобы было видно статус и историю.
+    */
+    #reader {
+      overflow: hidden;
+      border-radius: 16px;
+      background: #000;
+      border: 1px solid var(--border);
+      height: 245px;
+      min-height: 245px;
+      max-height: 245px;
+    }
+
+    #reader video {
+      width: 100% !important;
+      height: 245px !important;
+      min-height: 245px !important;
+      max-height: 245px !important;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    #reader__scan_region {
+      height: 245px !important;
+      min-height: 245px !important;
+      max-height: 245px !important;
+    }
+
+    #reader__dashboard_section {
+      padding: 4px !important;
+      font-size: 11px !important;
+    }
+
+    #reader button,
+    #reader select {
+      border-radius: 10px !important;
+      border: 1px solid var(--border) !important;
+      padding: 6px !important;
+      font-size: 12px !important;
+    }
+
     button {
       width: 100%;
-      padding: 13px 14px;
+      padding: 12px 13px;
       border: 0;
-      border-radius: 14px;
+      border-radius: 13px;
       font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 7px;
     }
 
     .primary { background: var(--green); color: #052e16; }
@@ -198,77 +282,15 @@
     .button-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    label {
-      display: block;
-      font-size: 12px;
-      color: #cbd5e1;
-      margin: 10px 0 5px;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 13px;
-      border: 1px solid var(--border);
-      background: var(--card2);
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 62px;
-      resize: vertical;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-    }
-
-    .stat {
-      background: var(--card2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 9px;
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 24px;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .stat-label {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .last-code {
-      margin-top: 8px;
-      padding: 10px;
-      border-radius: 14px;
-      background: var(--card2);
-      border: 1px solid var(--border);
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--greenText);
-      word-break: break-all;
-      min-height: 43px;
+      gap: 7px;
     }
 
     details {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 10px;
-      margin-bottom: 10px;
+      border-radius: 16px;
+      padding: 9px;
+      margin-bottom: 8px;
     }
 
     summary {
@@ -282,14 +304,14 @@
     summary::-webkit-details-marker { display: none; }
 
     .history {
-      max-height: 230px;
+      max-height: 215px;
       overflow-y: auto;
       padding-right: 2px;
-      margin-top: 8px;
+      margin-top: 7px;
     }
 
     .history-row {
-      padding: 8px 0;
+      padding: 7px 0;
       border-bottom: 1px solid #1f2937;
     }
 
@@ -302,8 +324,15 @@
     .history-meta {
       color: var(--muted);
       font-size: 11px;
-      margin-top: 3px;
-      line-height: 1.35;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .mini {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-top: 6px;
     }
 
     .bottom-bar {
@@ -330,23 +359,31 @@
       margin-top: 0;
     }
 
-    .mini {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
     @media (max-width: 440px) {
-      .app { padding: 8px; padding-bottom: 92px; }
-      #reader { min-height: 305px; }
-      #reader video { min-height: 305px; }
-      .compact-info { grid-template-columns: 1fr 1fr; }
-      h1 { font-size: 17px; }
-      .pill { font-size: 11px; padding: 5px 8px; }
+      .app { padding: 7px; padding-bottom: 90px; }
+
+      #reader,
+      #reader video,
+      #reader__scan_region {
+        height: 215px !important;
+        min-height: 215px !important;
+        max-height: 215px !important;
+      }
+
+      .stat-num { font-size: 20px; }
+      .last-code { font-size: 16px; min-height: 39px; }
+      h1 { font-size: 16px; }
+      .pill { font-size: 10px; padding: 5px 7px; }
+    }
+
+    @media (min-height: 780px) and (min-width: 460px) {
+      #reader,
+      #reader video,
+      #reader__scan_region {
+        height: 265px !important;
+        min-height: 265px !important;
+        max-height: 265px !important;
+      }
     }
   </style>
 </head>
@@ -379,7 +416,10 @@
         </div>
       </div>
 
-      <div class="last-code" id="lastCode">Последний код появится здесь</div>
+      <div class="last-wrap">
+        <div class="last-code" id="lastCode">Последний код появится здесь</div>
+        <div class="status" id="status">Нажми “Старт”. При первом запуске разреши камеру и звук.</div>
+      </div>
 
       <div class="compact-info">
         <div class="info-item">
@@ -404,10 +444,7 @@
     <div class="card scanner-card">
       <label>Камера</label>
       <select id="cameraSelect"></select>
-
       <div id="reader"></div>
-
-      <div class="status" id="status">Нажми “Старт”. При первом запуске разреши камеру и звук.</div>
     </div>
 
     <details>
@@ -423,18 +460,20 @@
 
     <details>
       <summary>Дополнительно</summary>
-      <button class="secondary" onclick="loadCameras()">Обновить список камер</button>
+      <div class="button-row">
+        <button class="secondary" onclick="loadCameras()">Камеры</button>
+        <button class="secondary" onclick="testSound()">Тест звука</button>
+      </div>
       <button class="secondary" onclick="syncOfflineQueue()">Отправить отложенные сканы</button>
       <button class="ghost" onclick="clearLocalScannedCodes()">Очистить локальную защиту от дублей</button>
       <div class="status" id="queueStatus">Очередь: 0</div>
       <div class="mini">
-        Защита от дублей работает локально для текущей связки: действие + заказ + контейнер + коробка.
-        Уже считанный код повторно в таблицу не отправляется.
+        Уже считанный код повторно в таблицу не отправляется. Защита действует для текущей связки: действие + заказ + контейнер + коробка.
       </div>
     </details>
 
     <details open>
-      <summary>История</summary>
+      <summary>История последних сканов</summary>
       <div class="history" id="history"></div>
     </details>
   </div>
@@ -540,15 +579,9 @@
       const all = loadAllScannedData();
       const key = getTaskKey();
 
-      if (!all[key]) {
-        all[key] = [];
-      }
+      if (!all[key]) all[key] = [];
+      if (!all[key].includes(serial)) all[key].push(serial);
 
-      if (!all[key].includes(serial)) {
-        all[key].push(serial);
-      }
-
-      // Чтобы localStorage не разрастался бесконечно.
       if (all[key].length > 5000) {
         all[key] = all[key].slice(-5000);
       }
@@ -566,7 +599,7 @@
       sessionScans = new Set();
       dupCount = 0;
       updateCounters();
-      addHistory('—', 'Локальная защита от дублей очищена для текущего заказа/контейнера', false);
+      addHistory('—', 'Локальная защита от дублей очищена', false);
       playSound('ok');
       setStatus('Локальная защита от дублей очищена.', 'ok');
     }
@@ -581,7 +614,6 @@
           await audioCtx.resume();
         }
 
-        // Тихий короткий звук, чтобы браузер разблокировал аудио после нажатия.
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain);
@@ -602,7 +634,13 @@
       }
     }
 
-    function playTone(freq, duration, volume, startOffset) {
+    /*
+      Более громкий звук:
+      - увеличена громкость gain до 0.55–0.75;
+      - добавлены две частоты одновременно/последовательно;
+      - используется square/triangle, они слышнее на телефоне.
+    */
+    function playTone(freq, duration, volume, startOffset, type) {
       if (!audioCtx || !audioReady) return;
 
       const start = audioCtx.currentTime + (startOffset || 0);
@@ -612,29 +650,39 @@
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      osc.type = 'sine';
+      osc.type = type || 'square';
       osc.frequency.setValueAtTime(freq, start);
 
+      const safeVolume = Math.min(volume || 0.45, 0.85);
+
       gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(volume || 0.12, start + 0.01);
+      gain.gain.linearRampToValueAtTime(safeVolume, start + 0.015);
       gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
 
       osc.start(start);
-      osc.stop(start + duration + 0.02);
+      osc.stop(start + duration + 0.03);
     }
 
     function playSound(type) {
       try {
         if (type === 'ok') {
-          playTone(880, 0.09, 0.12, 0);
-          playTone(1175, 0.08, 0.10, 0.09);
+          playTone(1046, 0.12, 0.58, 0.00, 'square');
+          playTone(1568, 0.12, 0.52, 0.12, 'square');
+          playTone(2093, 0.10, 0.45, 0.24, 'triangle');
         } else if (type === 'dup') {
-          playTone(230, 0.16, 0.13, 0);
-          playTone(190, 0.14, 0.13, 0.16);
+          playTone(220, 0.22, 0.70, 0.00, 'square');
+          playTone(175, 0.22, 0.70, 0.23, 'square');
         } else if (type === 'error') {
-          playTone(160, 0.22, 0.14, 0);
+          playTone(130, 0.34, 0.75, 0.00, 'sawtooth');
         }
       } catch (err) {}
+    }
+
+    async function testSound() {
+      await unlockAudio();
+      playSound('ok');
+      vibrate([80]);
+      setStatus('Тест звука выполнен. Если тихо — увеличь громкость мультимедиа на телефоне.', 'ok');
     }
 
     function vibrate(pattern) {
@@ -656,7 +704,7 @@
         const tempStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
         tempStream.getTracks().forEach(track => track.stop());
       } catch (e) {
-        setStatus('Разреши доступ к камере. Без разрешения список камер может быть пустым.', 'warn');
+        setStatus('Разреши камеру. Без разрешения список камер может быть пустым.', 'warn');
       }
 
       try {
@@ -705,7 +753,7 @@
       const cameraId = $('cameraSelect').value;
 
       if (!cameraId) {
-        setStatus('Сначала выбери камеру или нажми “Обновить список камер”.', 'warn');
+        setStatus('Сначала выбери камеру или нажми “Камеры”.', 'warn');
         playSound('error');
         await loadCameras();
         return;
@@ -728,20 +776,22 @@
         });
 
         const config = {
-          fps: 15,
+          fps: 18,
+
+          // Рамка сканирования меньше, а само окно камеры немного больше рамки.
           qrbox: function(viewfinderWidth, viewfinderHeight) {
-            const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
             return {
-              width: Math.floor(Math.min(viewfinderWidth * 0.94, 540)),
-              height: Math.floor(Math.max(115, minEdge * 0.32))
+              width: Math.floor(Math.min(viewfinderWidth * 0.88, 460)),
+              height: Math.floor(Math.max(82, Math.min(viewfinderHeight * 0.46, 115)))
             };
           },
+
           aspectRatio: 1.7777778,
           disableFlip: false,
           videoConstraints: {
             facingMode: { ideal: 'environment' },
-            width: { ideal: 1920 },
-            height: { ideal: 1080 }
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
           }
         };
 
@@ -784,15 +834,13 @@
     }
 
     function onScanFailure(errorMessage) {
-      // Не показываем постоянные ошибки распознавания кадра.
+      // Постоянные ошибки распознавания кадра не показываем.
     }
 
     async function onScanSuccess(decodedText, decodedResult) {
       const now = Date.now();
 
-      if (now - lastScanTime < 1200) {
-        return;
-      }
+      if (now - lastScanTime < 1200) return;
 
       lastScanTime = now;
 
@@ -808,7 +856,6 @@
       serial = normalizeCode(serial);
       if (!serial) return;
 
-      // Главное правило: уже считанное не отправляем повторно.
       if (sessionScans.has(serial) || taskScans.has(serial)) {
         dupCount++;
         updateCounters();
@@ -973,11 +1020,8 @@
 
       for (const payload of queue) {
         const sent = await sendToGoogle(payload);
-        if (sent) {
-          sentCount++;
-        } else {
-          remaining.push(payload);
-        }
+        if (sent) sentCount++;
+        else remaining.push(payload);
         await sleep(250);
       }
 
