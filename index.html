@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЯЖИЗНЬ — Клиника интегративной медицины</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #f5f3f0; overflow-x: hidden; }
+
+        :root {
+            --primary: #2d6a4f; --primary-light: #40916c; --primary-dark: #1b4332;
+            --accent: #d4a373; --accent-light: #e9c46a;
+            --bg: #f5f3f0; --bg-soft: #ece8e2; --white: #ffffff;
+            --text: #1a1a2e; --text-light: #6c757d; --text-muted: #9ca3af;
+            --radius: 20px; --shadow: 0 4px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 48px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); box-shadow: 0 1px 8px rgba(0,0,0,0.04); padding: 12px 0; }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
+        .logo .zizn { color: var(--primary); }
+        .logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--white); }
+        .nav-links { display: flex; gap: 8px; align-items: center; }
+        .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--text-light); transition: var(--transition); padding: 8px 16px; border-radius: 8px; }
+        .nav-links a:hover { color: var(--primary); background: rgba(45,106,79,0.06); }
+        .nav-cta { padding: 10px 24px !important; background: var(--primary) !important; color: var(--white) !important; border-radius: 50px !important; font-weight: 600 !important; }
+        .nav-cta:hover { background: var(--primary-dark) !important; color: var(--white) !important; }
+        .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: var(--transition); }
+
+        /* URGENCY */
+        .urgency { background: linear-gradient(90deg, #c0392b, #e74c3c); padding: 12px 24px; text-align: center; font-size: 0.85rem; color: var(--white); font-weight: 600; margin-top: 64px; cursor: pointer; }
+        .urgency:hover { background: linear-gradient(90deg, #a93226, #cb4335); }
+
+        /* HERO */
+        .hero { min-height: calc(100vh - 100px); display: flex; align-items: center; position: relative; overflow: hidden; background: linear-gradient(160deg, #f5f3f0, #ece8e2, #f0ebe4); padding: 60px 0; }
+        /*
+         * 🖼️ ФОНОВОЕ ИЗОБРАЖЕНИЕ HERO
+         * Рекомендуемый размер: 1920x1080px (16:9)
+         * Формат: JPG/WebP, до 300KB
+         * Расположение: правая часть экрана (можно врачивать в .hero::before)
+         */
+        .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(45,106,79,0.06) 0%, transparent 70%); }
+        .hero::after { content: ''; position: absolute; bottom: -10%; left: -5%; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(212,163,115,0.08) 0%, transparent 70%); }
+        .hero .container { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 24px; text-align: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--white); padding: 8px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--primary); box-shadow: var(--shadow); margin-bottom: 24px; }
+        .hero-badge .dot { width: 8px; height: 8px; background: var(--primary-light); border-radius: 50%; }
+        .logo-hero { font-family: 'Inter', sans-serif; font-size: clamp(3rem, 7vw, 5rem); font-weight: 800; color: var(--text); letter-spacing: -2px; line-height: 1; margin-bottom: 8px; }
+        .logo-hero .zizn { color: var(--primary); }
+        .logo-sub { font-size: 0.9rem; color: var(--text-light); letter-spacing: 3px; text-transform: uppercase; font-weight: 500; margin-bottom: 40px; }
+        .hero-headline { font-family: 'Inter', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: var(--text); font-weight: 600; line-height: 1.3; margin-bottom: 16px; }
+        .hero-headline .highlight { color: var(--primary); }
+        .hero-desc { font-size: 1.05rem; color: var(--text-light); line-height: 1.8; max-width: 640px; margin: 0 auto 48px; }
+
+        .choice-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; margin-bottom: 24px; }
+        .choice-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 860px; margin: 0 auto; }
+        .choice-card { border-radius: 24px; padding: 44px 36px; text-align: left; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; display: block; border: 1px solid #e5e0da; }
+        .choice-card-child { background: linear-gradient(145deg, #faf6f0, #f5efe6); }
+        .choice-card-adult { background: linear-gradient(145deg, #f0f2f5, #e8eaef); }
+        .choice-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--shadow-lg); }
+        .choice-emoji { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+        .choice-card h3 { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; }
+        .choice-card-child h3 { color: #5a4230; }
+        .choice-card-adult h3 { color: var(--text); }
+        .choice-card .subtitle { font-size: 0.88rem; margin-bottom: 16px; line-height: 1.6; }
+        .choice-card-child .subtitle { color: #8b7355; }
+        .choice-card-adult .subtitle { color: var(--text-light); }
+        .choice-card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+        .tag { padding: 4px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 600; }
+        .choice-card-child .tag { background: rgba(139,111,71,0.1); color: #6b5535; }
+        .choice-card-adult .tag { background: rgba(45,106,79,0.08); color: var(--primary); }
+        .choice-arrow { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
+        .choice-card-child .choice-arrow { color: #8b6f47; }
+        .choice-card-adult .choice-arrow { color: var(--primary); }
+        .choice-card:hover .choice-arrow { gap: 12px; }
+
+        /* TRUST */
+        .trust { padding: 80px 24px; background: var(--white); }
+        .trust .container { max-width: 1000px; margin: 0 auto; }
+        .trust-title { text-align: center; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; margin-bottom: 40px; }
+        .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
+        .trust-item .num { font-family: 'Inter', sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--primary); line-height: 1; }
+        .trust-item .label { font-size: 0.85rem; color: var(--text-light); margin-top: 8px; line-height: 1.4; }
+
+        /* DOCTOR */
+        .doctor { padding: 80px 24px; background: var(--bg); }
+        .doctor .container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+        /*
+         * 🖼️ ФОТО ВРАЧА
+         * Рекомендуемый размер: 560x720px (3:4)
+         * Формат: JPG/WebP, до 200KB
+         * Замените содержимое doctor-photo на <img src="doctor-photo.jpg" alt="Ровенская Елена Викторовна" style="width:100%;height:100%;object-fit:cover;border-radius:24px;">
+         */
+        .doctor-photo { width: 280px; height: 360px; background: linear-gradient(135deg, var(--bg-soft), var(--white)); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 6rem; box-shadow: var(--shadow); position: sticky; top: 100px; }
+        .doctor-info .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 16px; }
+        .doctor-info .section-label::before { content: ''; display: block; width: 32px; height: 2px; background: var(--primary); }
+        .doctor-name { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.3px; color: var(--text); margin-bottom: 8px; }
+        .doctor-title { font-size: 0.95rem; color: var(--primary); font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
+        .doctor-detail { margin-bottom: 16px; }
+        .doctor-detail h4 { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .doctor-detail p { font-size: 0.88rem; color: var(--text-light); line-height: 1.6; }
+        .timeline-item { display: flex; gap: 12px; margin-bottom: 6px; font-size: 0.85rem; }
+        .timeline-item .years { color: var(--primary); font-weight: 600; min-width: 100px; }
+        .timeline-item .desc { color: var(--text-light); }
+
+        /* FOOTER */
+        .footer { background: #2a2520; color: rgba(255,255,255,0.5); padding: 48px 24px 24px; }
+        .footer .container { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; gap: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px; flex-wrap: wrap; }
+        .footer-col h4 { color: var(--white); font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; }
+        .footer-col p, .footer-col a { display: block; font-size: 0.83rem; margin-bottom: 6px; color: rgba(255,255,255,0.5); transition: var(--transition); }
+        .footer-col a:hover { color: var(--white); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: underline; transition: var(--transition); }
+        .footer-bottom a:hover { color: rgba(255,255,255,0.7); }
+
+        /* MODAL */
+        
+        
+        .modal { background: var(--white); border-radius: 24px; max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(30px) scale(0.96); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15); }
+        .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+        .modal-header { position: sticky; top: 0; z-index: 2; background: var(--white); padding: 24px 28px 16px; border-bottom: 1px solid #f0ece6; border-radius: 24px 24px 0 0; }
+        .modal-header .tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: #e8f5e9; color: var(--primary); margin-bottom: 10px; }
+        .modal-header h2 { font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text); }
+        .modal-close { position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; background: #f5f3f0; border: none; border-radius: 50%; cursor: pointer; font-size: 1.1rem; color: var(--text-light); transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .modal-close:hover { background: #e8e4de; transform: rotate(90deg); }
+        .modal-body { padding: 24px 28px 28px; }
+        .modal-body p { color: var(--text-light); line-height: 1.8; margin-bottom: 14px; font-size: 0.93rem; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 2px solid #e5e0da; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 0.93rem; transition: var(--transition); background: var(--white); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45,106,79,0.1); }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-submit { width: 100%; padding: 14px; background: var(--primary); color: var(--white); border: none; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: var(--transition); margin-top: 6px; }
+        .form-submit:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .form-success { text-align: center; padding: 36px 20px; display: none; }
+        .form-success.show { display: block; }
+        .form-success .check-circle { width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--white); }
+        .form-success h3 { font-family: 'Inter', sans-serif; font-size: 1.3rem; margin-bottom: 10px; }
+        .form-success p { color: var(--text-light); line-height: 1.7; }
+        .form-content.hidden { display: none; }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .choice-cards { grid-template-columns: 1fr; max-width: 440px; }
+            .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .choice-card { padding: 32px 28px; }
+            .doctor .container { grid-template-columns: 1fr; }
+            .doctor-photo { position: static; margin: 0 auto; width: 200px; height: 260px; font-size: 4rem; }
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .footer-top { flex-direction: column; gap: 24px; }
+            .form-row { grid-template-columns: 1fr; }
+            .modal { border-radius: 16px; }
+        }
+    
+        .modal-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.show { display: flex; }
+        .modal-overlay .modal { animation: modalIn 0.3s ease forwards; }
+        @keyframes modalIn { from { opacity:0; transform:translateY(30px) scale(0.96); } to { opacity:1; transform:translateY(0) scale(1); } }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo"><img src="logo.png" alt="ЯЖИЗНЬ" style="height:40px;width:auto;"></a>
+            <div class="nav-links">
+                <a href="#doctor">О враче</a>
+                <a href="deti.html">Дети</a>
+                <a href="vzroslye.html">Взрослые</a>
+                <a href="#contacts">Контакты</a>
+                <a href="#" class="nav-cta" onclick="openModal('booking'); return false;">Записаться</a>
+            </div>
+            <button class="hamburger" onclick="let n=document.querySelector('.nav-links');n.style.display=n.style.display==='flex'?'none':'flex'"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- URGENCY (ПОД навбаром) -->
+    <div class="urgency" onclick="openModal('booking')">
+        🔥 В мае — скидка 30% на биофизический check-up. Осталось 7 мест. Записаться →
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge"><span class="dot"></span>Клиника интегративной медицины</div>
+            <div class="logo-hero">Я<span class="zizn">ЖИЗНЬ</span></div>
+            <div class="logo-sub">Медицина, которая ищет причину</div>
+            <h1 class="hero-headline">Видим <span class="highlight">метаболические нарушения</span> до диагноза<br>и то, что другие не находят</h1>
+            <p class="hero-desc">Аппаратная диагностика нового поколения. 6 систем за 15–30 минут. Генетика, биохимия, нейровоспаление — глубокий анализ, экспертное заключение, персональный план.</p>
+
+            <div class="choice-label">Кто пациент?</div>
+            <div class="choice-cards">
+                <a href="deti.html" class="choice-card choice-card-child">
+                    <span class="choice-emoji">👶</span>
+                    <h3>Ребёнок 2–10 лет</h3>
+                    <p class="subtitle">РАС, эпилепсия, задержки развития. Ищем причину, а не лечим симптомы.</p>
+                    <div class="tags"><span class="tag">РАС</span><span class="tag">Эпилепсия</span><span class="tag">ЗРР</span><span class="tag">Генетика</span></div>
+                    <span class="choice-arrow">Перейти →</span>
+                </a>
+                <a href="vzroslye.html" class="choice-card choice-card-adult">
+                    <span class="choice-emoji">👤</span>
+                    <h3>Взрослый 35–75 лет</h3>
+                    <p class="subtitle">Check-up биологического возраста. Узнай, что реально происходит с организмом.</p>
+                    <div class="tags"><span class="tag">Биовозраст</span><span class="tag">Check-up</span><span class="tag">Превентивность</span><span class="tag">Контроль</span></div>
+                    <span class="choice-arrow">Перейти →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust-title">Цифры, которые говорят за нас</div>
+            <div class="trust-grid">
+                <div class="trust-item fade-up"><div class="num">6</div><div class="label">систем аппаратной<br>диагностики</div></div>
+                <div class="trust-item fade-up"><div class="num">15–30</div><div class="label">минут до полной<br>картины организма</div></div>
+                <div class="trust-item fade-up"><div class="num">90%+</div><div class="label">пациентов находят<br>скрытые причины</div></div>
+                <div class="trust-item fade-up"><div class="num">32</div><div class="label">года стажа<br>главного врача</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOCTOR -->
+    <section class="doctor" id="doctor">
+        <div class="container">
+            <div class="doctor-photo"><img src="doc.png" alt="Ровенская Елена Викторовна" style="width:100%;height:100%;object-fit:cover;border-radius:24px;"></div>
+            <div class="doctor-info fade-up">
+                <span class="section-label">О враче</span>
+                <h2 class="doctor-name">Ровенская Елена Викторовна</h2>
+                <p class="doctor-title">Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог, врач превентивной, интегративной, антивозрастной медицины, функциональной диагностики</p>
+                <div class="doctor-detail"><h4>Стаж</h4><p>32 года в должности врача невролога, врача паллиативной помощи, скорой медицинской помощи, врача функциональной диагностики</p></div>
+                <div class="doctor-detail"><h4>Образование и карьера</h4>
+                    <div class="timeline-item"><span class="years">1983–1989</span><span class="desc">ИГМА им. Бубнова — Педиатрия</span></div>
+                    <div class="timeline-item"><span class="years">1989–1990</span><span class="desc">Интернатура — Педиатрия</span></div>
+                    <div class="timeline-item"><span class="years">1991–1993</span><span class="desc">Ординатура — Неврология</span></div>
+                    <div class="timeline-item"><span class="years">1992–1993</span><span class="desc">Научный сотрудник лаборатории гематологии и реологии крови</span></div>
+                    <div class="timeline-item"><span class="years">1993–1995</span><span class="desc">Аспирантура — Неврология</span></div>
+                    <div class="timeline-item"><span class="years">1995–2002</span><span class="desc">Ассистент кафедры Неврологии ИГМА</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contacts">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col"><h4>ЯЖИЗНЬ</h4><p>Клиника интегративной медицины</p><p>ООО «ВОССТАНОВЛЕНИЕ»</p><p>ИНН: 9722108070</p></div>
+                <div class="footer-col"><h4>Контакты</h4><p>📍 Москва, Мичуринский проспект, 25к2</p><p>📞 +7 903 792 80 03</p><p>📞 +7 495 792 80 03</p><p>✉️ Yajizn@yandex.ru</p></div>
+                <div class="footer-col"><h4>Часы работы</h4><p>Пн–Пт: 10:00–19:00</p></div>
+                <div class="footer-col"><h4>Направления</h4><a href="deti.html">Дети (РАС, эпилепсия, ЗРР)</a><a href="vzroslye.html">Взрослые (check-up, мониторинг)</a></div>
+            </div>
+            <div class="footer-bottom">
+                <span>Лицензия на осуществление медицинской деятельности № Л041-01137-77/04132361 от 13.01.2026 г.</span>
+                <a href="politika.html">Политика в отношении обработки персональных данных</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOOKING MODAL -->
+    <div class="modal-overlay" id="modal-booking">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('booking')">&times;</button>
+            <div class="modal-header"><span class="tag">Запись</span><h2>Записаться на приём</h2></div>
+            <div class="modal-body">
+                <div class="form-content" id="booking-form-content">
+                    <p>Заполните форму — мы свяжемся с вами в течение рабочего дня.</p>
+                    <form id="bookingForm" onsubmit="submitBooking(event)">
+                        <div class="form-row"><div class="form-group"><label>Имя *</label><input type="text" name="name" required placeholder="Ваше имя"></div><div class="form-group"><label>Телефон *</label><input type="tel" name="phone" required placeholder="+7 (___) ___-__-__"></div></div>
+                        <div class="form-group"><label>Email *</label><input type="email" name="email" required placeholder="your@email.com"></div>
+                        <div class="form-group"><label>Услуга *</label><select name="service" required><option value="" disabled selected>Выберите</option><option>Консультация невролога (30 000 ₽)</option><option>Консультация эндокринолога (8 000 ₽)</option><option>Консультация терапевта (8 000 ₽)</option><option>Консультация косметолога (10 000 ₽)</option><option>Консилиум специалистов (35 000 ₽)</option><option>Анти-эйдж программа (16 000 ₽)</option><option>Другое</option></select></div>
+                        <div class="form-row"><div class="form-group"><label>Возраст</label><input type="text" name="age" placeholder="Напр., 5 лет / 45 лет"></div><div class="form-group"><label>Дата</label><input type="date" name="date"></div></div>
+                        <div class="form-group"><label>Запрос</label><textarea name="message" placeholder="Что беспокоит..."></textarea></div>
+                        <button type="submit" class="form-submit">Отправить заявку</button>
+                    </form>
+                </div>
+                <div class="form-success" id="booking-success"><div class="check-circle">✓</div><h3>Заявка отправлена!</h3><p>Мы свяжемся с вами в течение рабочего дня.</p><br><button class="btn btn-primary" style="padding:12px 28px;background:#2d6a4f;color:#fff;border:none;border-radius:50px;font-weight:600;cursor:pointer;" onclick="closeModal('booking')">Закрыть</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var _modalOpen = false;
+
+        function openModal(id) {
+            document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
+            var el = document.getElementById('modal-' + id);
+            if (!el) return;
+            requestAnimationFrame(function() {
+                el.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                _modalOpen = true;
+            });
+        }
+
+        function closeModal(id) {
+            var el = document.getElementById('modal-' + id);
+            if (!el) return;
+            el.classList.remove('show');
+            setTimeout(function() {
+                if (!document.querySelector('.modal-overlay.show')) {
+                    document.body.style.overflow = '';
+                    _modalOpen = false;
+                }
+            }, 50);
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay') && e.target.classList.contains('show')) {
+                closeModal(e.target.id.replace('modal-', ''));
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && _modalOpen) {
+                document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
+                document.body.style.overflow = '';
+                _modalOpen = false;
+            }
+        });
+
+        var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
+
+        function submitBooking(e) {
+            e.preventDefault();
+            var d = new FormData(e.target);
+            var b = 'Заявка с сайта ЯЖИЗНЬ
+
+Имя: ' + (d.get('name')||'') + '
+Телефон: ' + (d.get('phone')||'') + '
+Email: ' + (d.get('email')||'') + '
+Услуга: ' + (d.get('service')||'') + '
+Возраст: ' + (d.get('age')||'') + '
+Дата: ' + (d.get('date')||'') + '
+Запрос: ' + (d.get('message')||'');
+            window.location.href = 'mailto:Yajizn@yandex.ru?subject=' + encodeURIComponent('Заявка: ' + (d.get('name')||'')) + '&body=' + encodeURIComponent(b);
+            document.getElementById('booking-form-content').classList.add('hidden');
+            document.getElementById('booking-success').classList.add('show');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
+
+

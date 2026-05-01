@@ -1,0 +1,651 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЯЖИЗНЬ — Взрослые | Check-up биологического возраста</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #2c2c2c; background: #f5f3f0; line-height: 1.7; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        :root {
+            --bg: #f5f3f0; --bg-soft: #ece8e2; --bg-card: #ffffff;
+            --primary: #2d6a4f; --primary-light: #40916c; --primary-dark: #1b4332;
+            --accent: #d4a373; --accent-light: #e9c46a;
+            --text: #2c2c2c; --text-light: #6c757d; --text-muted: #9ca3af;
+            --white: #ffffff;
+            --radius: 20px; --shadow: 0 4px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 48px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 80px 0; }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); box-shadow: 0 1px 8px rgba(0,0,0,0.04); padding: 12px 0; }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text); }
+        .logo .zizn { color: var(--primary); }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--text-light); transition: var(--transition); padding: 8px 16px; border-radius: 8px; }
+        .nav-links a:hover { color: var(--primary); background: rgba(45,106,79,0.06); }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.83rem; color: var(--text-muted); font-weight: 500; }
+        .nav-back:hover { color: var(--primary); }
+        .nav-cta { padding: 10px 24px !important; background: var(--primary) !important; color: var(--white) !important; border-radius: 50px !important; font-weight: 600 !important; }
+        .nav-cta:hover { background: var(--primary-dark) !important; }
+        .hamburger { display: none; background: none; border: none; cursor: pointer; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; }
+
+        /* URGENCY */
+        .urgency { background: linear-gradient(90deg, #c0392b, #e74c3c); padding: 12px 24px; text-align: center; font-size: 0.85rem; color: var(--white); font-weight: 600; margin-top: 60px; }
+        .urgency a { color: var(--white); text-decoration: underline; }
+
+        /* HERO */
+        .hero { min-height: 80vh; display: flex; align-items: center; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(245,243,240,0.88), rgba(236,232,226,0.85), rgba(240,235,228,0.82)), url("adults.png"); background-size: cover; background-position: center; padding: 60px 0; }
+        .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(45,106,79,0.06) 0%, transparent 70%); }
+        .hero .container { position: relative; z-index: 2; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--white); padding: 8px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--primary); box-shadow: var(--shadow); margin-bottom: 24px; }
+        .hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 20px; }
+        .hero h1 .accent { color: var(--primary); }
+        .hero-text { font-size: 1.05rem; color: var(--text-light); line-height: 1.8; margin-bottom: 32px; max-width: 520px; }
+        .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; font-size: 0.95rem; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; transition: var(--transition); }
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,106,79,0.3); }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: var(--white); }
+        .btn-ghost { background: var(--white); color: var(--primary); box-shadow: var(--shadow); }
+        .btn-ghost:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+        .hero-visual { position: relative; }
+        .hero-card { background: var(--white); border-radius: 28px; padding: 36px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); position: relative; }
+        .age-display { text-align: center; margin-bottom: 20px; }
+        .age-label { font-size: 0.73rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 6px; }
+        .age-num { font-family: 'Inter', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1; }
+        .age-sub { font-size: 0.83rem; color: var(--text-light); margin-top: 4px; }
+        .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .metric { background: #f8f7f5; border-radius: 12px; padding: 12px; text-align: center; }
+        .metric .val { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text); }
+        .metric .lbl { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+        .float-badge { position: absolute; background: var(--white); border-radius: 14px; padding: 12px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); font-size: 0.82rem; font-weight: 600; color: var(--primary-dark); animation: floatBadge 4s ease-in-out infinite; }
+        .float-badge-1 { top: -15px; right: -20px; }
+        .float-badge-2 { bottom: -10px; left: -20px; animation-delay: -2s; }
+        @keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        /* SECTIONS */
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 16px; }
+        .section-label::before { content: ''; display: block; width: 32px; height: 2px; background: var(--primary); }
+        .section-title { font-family: 'Inter', sans-serif; font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 700; letter-spacing: -0.3px; color: var(--text); line-height: 1.2; margin-bottom: 16px; }
+        .section-subtitle { font-size: 1rem; color: var(--text-light); max-width: 640px; line-height: 1.8; margin-bottom: 40px; }
+
+        /* PAIN */
+        .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .pain-card { padding: 28px; border-radius: var(--radius); border: 1px solid #e5e0da; transition: var(--transition); background: var(--bg-card); }
+        .pain-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .pain-icon { font-size: 1.8rem; margin-bottom: 12px; }
+        .pain-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .pain-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; }
+
+        /* QUOTE */
+        .quote-section { background: var(--bg-soft); padding: 60px 24px; text-align: center; }
+        .quote-box { max-width: 660px; margin: 0 auto; background: var(--white); border-radius: 24px; padding: 40px; box-shadow: var(--shadow-lg); position: relative; }
+        .quote-box::before { content: '"'; position: absolute; top: 8px; left: 20px; font-family: 'Inter', sans-serif; font-size: 4rem; color: #d4d0ca; line-height: 1; }
+        .quote-text { font-family: 'Inter', sans-serif; font-size: 1.2rem; color: var(--text); line-height: 1.7; font-style: italic; position: relative; z-index: 1; }
+        .quote-author { margin-top: 16px; font-size: 0.83rem; color: var(--text-muted); }
+
+        /* CHECKUP */
+        .checkup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+        .checkup-item { background: var(--bg-card); border: 1px solid #e5e0da; border-radius: var(--radius); padding: 24px 16px; text-align: center; transition: var(--transition); cursor: pointer; }
+        .checkup-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary-light); }
+        .checkup-item .icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+        .checkup-item h4 { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+        .checkup-item small { display: block; color: var(--text-muted); font-size: 0.72rem; margin-top: 2px; }
+
+        /* SERVICES */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .svc-card { background: var(--bg-card); border-radius: var(--radius); padding: 32px; transition: var(--transition); cursor: pointer; border: 1px solid #e5e0da; position: relative; overflow: hidden; }
+        .svc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+        .svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-light)); transform: scaleX(0); transition: var(--transition); }
+        .svc-card:hover::after { transform: scaleX(1); }
+        .svc-tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: #e8f5e9; color: var(--primary); margin-bottom: 14px; }
+        .svc-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .svc-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; margin-bottom: 16px; }
+        .svc-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .svc-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; }
+        .svc-feature .check { flex-shrink: 0; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 0.65rem; margin-top: 1px; }
+        .svc-card .more { display: inline-flex; align-items: center; gap: 4px; font-size: 0.83rem; font-weight: 600; color: var(--primary); transition: var(--transition); }
+        .svc-card:hover .more { gap: 8px; }
+
+        /* PRICING */
+        .pricing-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-top: 24px; }
+        .pricing-table th { background: var(--primary); color: var(--white); padding: 14px 20px; text-align: left; font-size: 0.85rem; font-weight: 600; }
+        .pricing-table td { padding: 14px 20px; border-bottom: 1px solid #f0ece6; font-size: 0.88rem; color: var(--text); }
+        .pricing-table tr:last-child td { border-bottom: none; }
+        .pricing-table tr:hover td { background: #faf8f5; }
+        .pricing-table .price { font-weight: 700; color: var(--primary); white-space: nowrap; }
+        .pricing-table .cat-header td { background: var(--bg-soft); font-weight: 700; color: var(--text); font-size: 0.9rem; padding: 16px 20px; }
+
+        /* TESTIMONIALS */
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .testi-card { background: var(--bg-card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); transition: var(--transition); }
+        .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .testi-quote { font-family: 'Inter', sans-serif; font-size: 2.2rem; color: #d4d0ca; line-height: 1; margin-bottom: 10px; }
+        .testi-text { font-size: 0.9rem; color: var(--text); line-height: 1.8; font-style: italic; margin-bottom: 14px; }
+        .testi-author { display: flex; align-items: center; gap: 10px; }
+        .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: #e8f5e9; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .testi-name { font-weight: 600; font-size: 0.85rem; }
+        .testi-role { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* DOCTOR */
+        .doctor { background: var(--bg-soft); }
+        .doctor .container { display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
+        .doctor-photo { width: 240px; height: 310px; background: var(--white); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 5rem; box-shadow: var(--shadow); position: sticky; top: 100px; }
+        .doctor-name { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 700; letter-spacing: -0.3px; color: var(--text); margin-bottom: 6px; }
+        .doctor-title { font-size: 0.9rem; color: var(--primary); font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+        .doctor-detail { margin-bottom: 14px; }
+        .doctor-detail h4 { font-size: 0.83rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .doctor-detail p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+        .timeline-item { display: flex; gap: 12px; margin-bottom: 4px; font-size: 0.83rem; }
+        .timeline-item .years { color: var(--primary); font-weight: 600; min-width: 90px; }
+        .timeline-item .desc { color: var(--text-light); }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light)); padding: 80px 24px; text-align: center; color: var(--white); }
+        .cta-section h2 { font-family: 'Inter', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 14px; }
+        .cta-section p { font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 600px; margin: 0 auto 28px; }
+        .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+        .btn-white { background: var(--white); color: var(--primary-dark); }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .btn-transp { background: rgba(255,255,255,0.15); color: var(--white); backdrop-filter: blur(8px); }
+        .btn-transp:hover { background: rgba(255,255,255,0.25); }
+        .cta-contact { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.15); }
+        .cta-contact-item { display: flex; align-items: center; gap: 6px; font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+
+        /* FOOTER */
+        .footer { background: #2a2520; color: rgba(255,255,255,0.4); padding: 40px 24px 20px; }
+        .footer .container { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; gap: 40px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-col h4 { color: rgba(255,255,255,0.7); font-size: 0.83rem; font-weight: 600; margin-bottom: 10px; }
+        .footer-col p, .footer-col a { display: block; font-size: 0.8rem; margin-bottom: 5px; color: rgba(255,255,255,0.4); }
+        .footer-col a:hover { color: rgba(255,255,255,0.7); }
+        .footer-bottom { display: flex; justify-content: space-between; font-size: 0.73rem; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: underline; }
+
+        /* MODAL */
+        
+        
+        .modal { background: var(--white); border-radius: 24px; max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(30px) scale(0.96); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15); }
+        .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+        .modal-header { position: sticky; top: 0; z-index: 2; background: var(--white); padding: 24px 28px 16px; border-bottom: 1px solid #f0ece6; border-radius: 24px 24px 0 0; }
+        .modal-header .tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: #e8f5e9; color: var(--primary); margin-bottom: 10px; }
+        .modal-header h2 { font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text); }
+        .modal-close { position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; background: #f5f3f0; border: none; border-radius: 50%; cursor: pointer; font-size: 1.1rem; color: var(--text-light); transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .modal-close:hover { background: #e8e4de; transform: rotate(90deg); }
+        .modal-body { padding: 24px 28px 28px; }
+        .modal-body p { color: var(--text-light); line-height: 1.8; margin-bottom: 14px; font-size: 0.93rem; }
+        .modal-body h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 20px 0 10px; }
+        .modal-highlight { background: linear-gradient(135deg, #f0faf4, #e8f5e9); border-left: 4px solid var(--primary); padding: 18px 20px; border-radius: 0 12px 12px 0; margin: 16px 0; }
+        .modal-highlight p { margin: 0; color: var(--primary-dark); font-weight: 500; font-style: italic; }
+        .modal-features { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+        .modal-feature { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: #f8f7f5; border-radius: 12px; }
+        .modal-feature .ico { flex-shrink: 0; font-size: 1.1rem; }
+        .modal-feature strong { display: block; margin-bottom: 2px; color: var(--text); font-size: 0.88rem; }
+        .modal-feature span { color: var(--text-light); font-size: 0.8rem; }
+        .modal-cta { margin-top: 24px; padding-top: 20px; border-top: 1px solid #f0ece6; display: flex; gap: 10px; flex-wrap: wrap; }
+        .modal-cta .btn { flex: 1; justify-content: center; min-width: 140px; }
+
+        /* FORM */
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 2px solid #e5e0da; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 0.93rem; transition: var(--transition); background: var(--white); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45,106,79,0.1); }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-submit { width: 100%; padding: 14px; background: var(--primary); color: var(--white); border: none; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: var(--transition); margin-top: 6px; }
+        .form-submit:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .form-success { text-align: center; padding: 36px 20px; display: none; }
+        .form-success.show { display: block; }
+        .form-success .check-circle { width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--white); }
+        .form-success h3 { font-family: 'Inter', sans-serif; font-size: 1.3rem; margin-bottom: 10px; }
+        .form-success p { color: var(--text-light); line-height: 1.7; }
+        .form-content.hidden { display: none; }
+
+        /* FADE */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } .hero-visual { display: none; } }
+        @media (max-width: 768px) {
+            .section { padding: 56px 0; }
+            .nav-links { display: none; } .hamburger { display: block; }
+            .pain-grid, .services-grid, .testi-grid, .checkup-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .doctor .container { grid-template-columns: 1fr; }
+            .doctor-photo { position: static; margin: 0 auto; width: 180px; height: 230px; font-size: 3.5rem; }
+            .footer-top { flex-direction: column; gap: 20px; }
+            .cta-contact { flex-direction: column; align-items: center; gap: 10px; }
+            .modal { border-radius: 16px; }
+            .pricing-table { font-size: 0.82rem; }
+            .pricing-table td, .pricing-table th { padding: 10px 12px; }
+        }
+    
+        .modal-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.show { display: flex; }
+        .modal-overlay .modal { animation: modalIn 0.3s ease forwards; }
+        @keyframes modalIn { from { opacity:0; transform:translateY(30px) scale(0.96); } to { opacity:1; transform:translateY(0) scale(1); } }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-back">← На главную</a>
+            <a href="index.html" class="logo"><img src="logo.png" alt="ЯЖИЗНЬ" style="height:40px;width:auto;"></a>
+            <div class="nav-links">
+                <a href="#checkup">Check-up</a>
+                <a href="#services">Услуги</a>
+                <a href="#pricing">Прайс</a>
+                <a href="#doctor">О враче</a>
+                <a href="#" class="nav-cta" onclick="openModal('booking'); return false;">Записаться</a>
+            </div>
+            <button class="hamburger" onclick="let n=document.querySelector('.nav-links');n.style.display=n.style.display==='flex'?'none':'flex'"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- URGENCY -->
+    <div class="urgency">
+        🔥 В мае — скидка 30% на биофизический check-up. Осталось 7 мест. <a href="#booking">Записаться →</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-badge">👤 Взрослые 35–75 лет</div>
+                    <h1>Узнайте свой <span class="accent">реальный биологический возраст</span></h1>
+                    <p class="hero-text">Ваш паспорт говорит одно, а организм — другое. За 15–30 минут мы покажем, насколько ваше тело старше или моложе. И дадим план, чтобы это исправить.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary" onclick="openModal('booking'); return false;">Записаться на check-up</a>
+                        <a href="#checkup" class="btn btn-ghost">Что входит?</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="age-display">
+                            <div class="age-label">Ваш биологический возраст</div>
+                            <div class="age-num">42</div>
+                            <div class="age-sub">Паспортный: 52 года ✓ моложе на 10 лет</div>
+                        </div>
+                        <div class="metrics">
+                            <div class="metric"><div class="val">87</div><div class="lbl">Wellness-индекс</div></div>
+                            <div class="metric"><div class="val">Низкий</div><div class="lbl">Уровень стресса</div></div>
+                            <div class="metric"><div class="val">+12%</div><div class="lbl">Антиоксиданты</div></div>
+                            <div class="metric"><div class="val">Норма</div><div class="lbl">Сосуды</div></div>
+                        </div>
+                        <div class="float-badge float-badge-1">📊 Результат за 30 мин</div>
+                        <div class="float-badge float-badge-2">🔬 6 систем диагностики</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section" id="problem">
+        <div class="container">
+            <div class="fade-up"><span class="section-label">Знакомо?</span><h2 class="section-title">«Хочу понять, что реально происходит с организмом»</h2><p class="section-subtitle">Вы чувствуете, что что-то не так. Устали, туман в голове, давление скачет. А анализы — «в норме».</p></div>
+            <div class="pain-grid">
+                <div class="pain-card fade-up"><div class="pain-icon">😤</div><h3>Хроническая усталость</h3><p>Спите 8 часов, а чувствуете себя разбитым. Анализы в норме — значит, проблемы нет? Есть. Мы её найдём.</p></div>
+                <div class="pain-card fade-up"><div class="pain-icon">🩺</div><h3>Давление «на границе»</h3><p>130/85 — ещё не гипертония. Но ваши сосуды уже стареют. АнгиоКод покажет на сколько.</p></div>
+                <div class="pain-card fade-up"><div class="pain-icon">📉</div><h3>Метаболизм замедлился</h3><p>Набираете вес, не меняя питания. Биоимпеданс покажет точный состав тела — и что с этим делать.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="quote-section">
+        <div class="quote-box fade-up">
+            <p class="quote-text">За 15–30 минут вы узнаете о своём теле больше, чем за год у разных врачей.</p>
+            <p class="quote-author">— Клиника ЯЖИЗНЬ</p>
+        </div>
+    </section>
+
+    <!-- CHECKUP -->
+    <section class="section" id="checkup">
+        <div class="container">
+            <div class="fade-up"><span class="section-label">Check-up</span><h2 class="section-title">6 систем диагностики за 30 минут</h2><p class="section-subtitle">Каждая система исследует свой уровень физиологии. Вместе — полная картина.</p></div>
+            <div class="checkup-grid">
+                <div class="checkup-item fade-up"><span class="icon">⚡</span><h4 onclick="openModal('tech-kme')">КМЕ</h4><small>Электрополи органов</small></div>
+                <div class="checkup-item fade-up"><span class="icon">🫀</span><h4 onclick="openModal('tech-angio')">АнгиоКод</h4><small>Состояние сосудов</small></div>
+                <div class="checkup-item fade-up"><span class="icon">🔬</span><h4 onclick="openModal('tech-capil')">Капилляроскопия</h4><small>Микроциркуляция</small></div>
+                <div class="checkup-item fade-up"><span class="icon">📊</span><h4 onclick="openModal('tech-bio')">Биоимпеданс</h4><small>Состав тела</small></div>
+                <div class="checkup-item fade-up"><span class="icon">🧪</span><h4 onclick="openModal('tech-oligo')">ОлигоСкан</h4><small>Антиоксидантный статус</small></div>
+                <div class="checkup-item fade-up"><span class="icon">🌐</span><h4 onclick="openModal('tech-web')">ВебВелнесс</h4><small>Wellness-индекс</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services" style="background: var(--white);">
+        <div class="container">
+            <div class="fade-up"><span class="section-label">Услуги</span><h2 class="section-title">Check-up и мониторинг</h2></div>
+            <div class="services-grid">
+                <div class="svc-card fade-up" onclick="openModal('checkup')">
+                    <span class="svc-tag">Диагностика</span>
+                    <h3>Биофизический check-up</h3>
+                    <p>Ваш реальный биологический возраст, уровень стресса, прогноз рисков. Конкретная цифра, понятный результат.</p>
+                    <div class="svc-features">
+                        <div class="svc-feature"><span class="check">✓</span><span>6 систем диагностики за 1 визит</span></div>
+                        <div class="svc-feature"><span class="check">✓</span><span>Биологический возраст vs паспортный</span></div>
+                        <div class="svc-feature"><span class="check">✓</span><span>Протокол диагностики на руки</span></div>
+                    </div>
+                    <span class="more">Подробнее →</span>
+                </div>
+                <div class="svc-card fade-up" onclick="openModal('monitoring')">
+                    <span class="svc-tag">Контроль</span>
+                    <h3>Мониторинг состояния</h3>
+                    <p>Регулярная оценка динамики: изменились ли показатели, работает ли план коррекции.</p>
+                    <div class="svc-features">
+                        <div class="svc-feature"><span class="check">✓</span><span>Повторная диагностика каждые 1–3 месяца</span></div>
+                        <div class="svc-feature"><span class="check">✓</span><span>Сравнение с предыдущими результатами</span></div>
+                        <div class="svc-feature"><span class="check">✓</span><span>Коррекция терапии по данным</span></div>
+                    </div>
+                    <span class="more">Подробнее →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <div class="fade-up"><span class="section-label">Прайс</span><h2 class="section-title">Стоимость услуг</h2></div>
+            <div class="fade-up">
+                <table class="pricing-table">
+                    <thead><tr><th>Услуга</th><th>Формат</th><th>Цена</th></tr></thead>
+                    <tbody>
+                        <tr class="cat-header"><td colspan="3">Консультации</td></tr>
+                        <tr><td>Приём врача-эндокринолога</td><td>Консультация • 60 мин.</td><td class="price">8 000 ₽</td></tr>
+                        <tr><td>Приём врача-терапевта</td><td>Консультация • 60 мин.</td><td class="price">8 000 ₽</td></tr>
+                        <tr><td>Приём врача-невролога, к.м.н.</td><td>Консультация, осмотр • 60 мин.</td><td class="price">30 000 ₽</td></tr>
+                        <tr><td>Приём врача-косметолога</td><td>Осмотр, консультация без манипуляций • 60 мин.</td><td class="price">10 000 ₽</td></tr>
+                        <tr><td>Врачебная трактовка исследований</td><td>30 мин.</td><td class="price">3 500 ₽</td></tr>
+                        <tr><td>Консилиум специалистов с заключением</td><td>—</td><td class="price">35 000 ₽</td></tr>
+
+                        <tr class="cat-header"><td colspan="3">Аппаратные процедуры</td></tr>
+                        <tr><td>Карбокситерапия на веках (MEDEXIM INCO2)</td><td>—</td><td class="price">3 500 ₽</td></tr>
+                        <tr><td>Карбокситерапия волосистой части головы</td><td>—</td><td class="price">7 000 ₽</td></tr>
+                        <tr><td>Карбокситерапия одной зоны</td><td>—</td><td class="price">5 000 ₽</td></tr>
+                        <tr><td>Карбокситерапия двух зон</td><td>—</td><td class="price">8 000 ₽</td></tr>
+                        <tr><td>Карбокситерапия трёх зон</td><td>—</td><td class="price">10 000 ₽</td></tr>
+                        <tr><td>Карбокситерапия всего лица</td><td>—</td><td class="price">8 500 ₽</td></tr>
+                        <tr><td>Антиоксидантная spa «Ion Detox Foot Spa»</td><td>1 процедура</td><td class="price">5 000 ₽</td></tr>
+                        <tr><td>Комплекс 5 процедур «Ion Detox Foot Spa»</td><td>5 процедур</td><td class="price">21 000 ₽</td></tr>
+
+                        <tr class="cat-header"><td colspan="3">Исследования и диагностика</td></tr>
+                        <tr><td>Программа «Анти-эйдж»</td><td>—</td><td class="price">16 000 ₽</td></tr>
+                        <tr><td>Биоимпедансный анализ состава тела</td><td>—</td><td class="price">3 000 ₽</td></tr>
+                        <tr><td>Исследование эндотелиальной функции сосудов (Ангиоскан)</td><td>Экспресс</td><td class="price">3 000 ₽</td></tr>
+                        <tr><td>Миниинвазивный мониторинг глюкозы крови</td><td>7 дней</td><td class="price">15 000 ₽</td></tr>
+                        <tr><td>Гипоксовоздействие (OXYTERRA)</td><td>1 процедура</td><td class="price">5 000 ₽</td></tr>
+                        <tr><td>Интервальная гипокси-гиперокситерапия</td><td>5 сеансов</td><td class="price">20 000 ₽</td></tr>
+                        <tr><td>Интервальная гипокси-гиперокситерапия</td><td>10 сеансов</td><td class="price">35 000 ₽</td></tr>
+                        <tr><td>Датчик мониторирования глюкозы Lumiflex</td><td>—</td><td class="price">6 500 ₽</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" style="background: var(--white);">
+        <div class="container">
+            <div class="fade-up" style="text-align: center;"><span class="section-label" style="justify-content: center;">Результаты</span><h2 class="section-title">Истории наших пациентов</h2></div>
+            <div class="testi-grid">
+                <div class="testi-card fade-up"><div class="testi-quote">«</div><p class="testi-text">Пришла на check-up — оказалось, мой организм на 12 лет старше паспорта. Получила план. Через 6 месяцев — уже на 5 лет разница.</p><div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Елена, 52 года</div><div class="testi-role">Биофизический check-up</div></div></div></div>
+                <div class="testi-card fade-up"><div class="testi-quote">«</div><p class="testi-text">Давление 140/90. АнгиоКод показал: сосуды как у 60-летнего. Скорректировали питание — через 3 месяца давление в норме без таблеток.</p><div class="testi-author"><div class="testi-avatar">👨</div><div><div class="testi-name">Андрей, 48 лет</div><div class="testi-role">Check-up + мониторинг</div></div></div></div>
+                <div class="testi-card fade-up"><div class="testi-quote">«</div><p class="testi-text">Хотела узнать биовозраст. А узнала, что у меня серьёзный дефицит антиоксидантов и начальная инсулинорезистентность.</p><div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Марина, 44 года</div><div class="testi-role">Check-up</div></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOCTOR -->
+    <section class="section doctor" id="doctor">
+        <div class="container">
+            <div class="doctor-photo"><img src="doc.png" alt="Ровенская Елена Викторовна" style="width:100%;height:100%;object-fit:cover;border-radius:24px;"></div>
+            <div class="doctor-info fade-up">
+                <span class="section-label">О враче</span>
+                <h2 class="doctor-name">Ровенская Елена Викторовна</h2>
+                <p class="doctor-title">Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог, врач превентивной, интегративной, антивозрастной медицины, функциональной диагностики</p>
+                <div class="doctor-detail"><h4>Стаж</h4><p>32 года в должности врача невролога, врача паллиативной помощи, скорой медицинской помощи, врача функциональной диагностики</p></div>
+                <div class="doctor-detail"><h4>Образование и карьера</h4>
+                    <div class="timeline-item"><span class="years">1983–1989</span><span class="desc">ИГМА им. Бубнова — Педиатрия</span></div>
+                    <div class="timeline-item"><span class="years">1989–1990</span><span class="desc">Интернатура — Педиатрия</span></div>
+                    <div class="timeline-item"><span class="years">1991–1993</span><span class="desc">Ординатура — Неврология</span></div>
+                    <div class="timeline-item"><span class="years">1992–1993</span><span class="desc">Научный сотрудник лаборатории гематологии и реологии крови</span></div>
+                    <div class="timeline-item"><span class="years">1993–1995</span><span class="desc">Аспирантура — Неврология</span></div>
+                    <div class="timeline-item"><span class="years">1995–2002</span><span class="desc">Ассистент кафедры Неврологии ИГМА</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="booking">
+        <div class="container">
+            <h2>Узнайте правду о своём организме</h2>
+            <p>Запишитесь на биофизический check-up. За 30 минут — полная картина и план действий.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-white" onclick="openModal('booking'); return false;">Записаться на check-up</a>
+                <a href="tel:+79037928003" class="btn btn-transp">Позвонить</a>
+            </div>
+            <div class="cta-contact">
+                <div class="cta-contact-item">📍 Москва, Мичуринский проспект, 25к2</div>
+                <div class="cta-contact-item">🕐 Пн–Пт: 10:00–19:00</div>
+                <div class="cta-contact-item">📞 +7 903 792 80 03</div>
+                <div class="cta-contact-item">✉️ Yajizn@yandex.ru</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col"><h4>ЯЖИЗНЬ</h4><p>Клиника интегративной медицины</p><p>ООО «ВОССТАНОВЛЕНИЕ» ИНН: 9722108070</p></div>
+                <div class="footer-col"><h4>Контакты</h4><p>📍 Москва, Мичуринский пр., 25к2</p><p>📞 +7 903 792 80 03</p><p>📞 +7 495 792 80 03</p><p>✉️ Yajizn@yandex.ru</p></div>
+                <div class="footer-col"><h4>Часы работы</h4><p>Пн–Пт: 10:00–19:00</p></div>
+                <div class="footer-col"><h4>Направления</h4><a href="deti.html">Дети</a><a href="index.html">Главная</a></div>
+            </div>
+            <div class="footer-bottom">
+                <span>Лицензия № Л041-01137-77/04132361 от 13.01.2026 г.</span>
+                <a href="политика персональных данных.txt">Политика обработки персональных данных</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOOKING MODAL -->
+    <div class="modal-overlay" id="modal-booking">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('booking')">&times;</button>
+            <div class="modal-header"><span class="tag">Запись</span><h2>Записаться на приём</h2></div>
+            <div class="modal-body">
+                <div class="form-content" id="booking-form-content">
+                    <p>Заполните форму — мы свяжемся с вами в течение рабочего дня.</p>
+                    <form id="bookingForm" onsubmit="submitBooking(event)">
+                        <div class="form-row"><div class="form-group"><label>Имя *</label><input type="text" name="name" required placeholder="Ваше имя"></div><div class="form-group"><label>Телефон *</label><input type="tel" name="phone" required placeholder="+7 (___) ___-__-__"></div></div>
+                        <div class="form-group"><label>Email *</label><input type="email" name="email" required placeholder="your@email.com"></div>
+                        <div class="form-group"><label>Услуга *</label><select name="service" required><option value="" disabled selected>Выберите</option><option>Консультация невролога (30 000 ₽)</option><option>Консультация эндокринолога (8 000 ₽)</option><option>Консультация терапевта (8 000 ₽)</option><option>Консультация косметолога (10 000 ₽)</option><option>Консилиум специалистов (35 000 ₽)</option><option>Анти-эйдж программа (16 000 ₽)</option><option>Биоимпеданс (3 000 ₽)</option><option>Ангиоскан (3 000 ₽)</option><option>Карбокситерапия</option><option>Гипокситерапия</option><option>Другое</option></select></div>
+                        <div class="form-row"><div class="form-group"><label>Возраст</label><input type="text" name="age" placeholder="Напр., 45 лет"></div><div class="form-group"><label>Дата</label><input type="date" name="date"></div></div>
+                        <div class="form-group"><label>Запрос</label><textarea name="message" placeholder="Что беспокоит..."></textarea></div>
+                        <button type="submit" class="form-submit">Отправить заявку</button>
+                    </form>
+                </div>
+                <div class="form-success" id="booking-success"><div class="check-circle">✓</div><h3>Заявка отправлена!</h3><p>Мы свяжемся с вами в течение рабочего дня.</p><br><button class="btn btn-primary" onclick="closeModal('booking')">Закрыть</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SERVICE MODALS -->
+    <div class="modal-overlay" id="modal-checkup"><div class="modal"><button class="modal-close" onclick="closeModal('checkup')">&times;</button><div class="modal-header"><span class="tag">Check-up</span><h2>Биофизический check-up</h2></div><div class="modal-body"><p>За 15–30 минут — 6 систем диагностики. Безболезненно, неинвазивно, без облучения.</p><div class="modal-highlight"><p>Вы получите конкретную цифру — ваш реальный биологический возраст.</p></div><h4>Что вы получите</h4><div class="modal-features"><div class="modal-feature"><div class="ico">🔢</div><div><strong>Биологический возраст</strong><span>Цифра и разница с паспортным</span></div></div><div class="modal-feature"><div class="ico">📊</div><div><strong>Wellness-индекс</strong><span>Интегральная оценка 0–100</span></div></div><div class="modal-feature"><div class="ico">📋</div><div><strong>Протокол на руки</strong><span>Полный отчёт с рекомендациями</span></div></div></div><div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('checkup'); openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('checkup')">Закрыть</button></div></div></div></div>
+
+    <div class="modal-overlay" id="modal-monitoring"><div class="modal"><button class="modal-close" onclick="closeModal('monitoring')">&times;</button><div class="modal-header"><span class="tag">Контроль</span><h2>Мониторинг состояния</h2></div><div class="modal-body"><p>Регулярная оценка динамики. Видим, работает ли план коррекции, не ухудшается ли состояние.</p><div class="modal-features"><div class="modal-feature"><div class="ico">📈</div><div><strong>Динамика показателей</strong><span>Сравнение с предыдущими визитами</span></div></div><div class="modal-feature"><div class="ico">💊</div><div><strong>Коррекция терапии</strong><span>На основе объективных данных</span></div></div><div class="modal-feature"><div class="ico">⚠️</div><div><strong>Раннее выявление</strong><span>Ухудшения до симптомов</span></div></div></div><div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('monitoring'); openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('monitoring')">Закрыть</button></div></div></div></div>
+
+    <script>
+        var _modalOpen = false;
+
+        function openModal(id) {
+            document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
+            var el = document.getElementById('modal-' + id);
+            if (!el) return;
+            requestAnimationFrame(function() {
+                el.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                _modalOpen = true;
+            });
+        }
+
+        function closeModal(id) {
+            var el = document.getElementById('modal-' + id);
+            if (!el) return;
+            el.classList.remove('show');
+            setTimeout(function() {
+                if (!document.querySelector('.modal-overlay.show')) {
+                    document.body.style.overflow = '';
+                    _modalOpen = false;
+                }
+            }, 50);
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay') && e.target.classList.contains('show')) {
+                closeModal(e.target.id.replace('modal-', ''));
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && _modalOpen) {
+                document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
+                document.body.style.overflow = '';
+                _modalOpen = false;
+            }
+        });
+
+        var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
+
+        function submitBooking(e) {
+            e.preventDefault();
+            var d = new FormData(e.target);
+            var b = 'Заявка с сайта ЯЖИЗНЬ
+
+Имя: ' + (d.get('name')||'') + '
+Телефон: ' + (d.get('phone')||'') + '
+Email: ' + (d.get('email')||'') + '
+Услуга: ' + (d.get('service')||'') + '
+Возраст: ' + (d.get('age')||'') + '
+Дата: ' + (d.get('date')||'') + '
+Запрос: ' + (d.get('message')||'');
+            window.location.href = 'mailto:Yajizn@yandex.ru?subject=' + encodeURIComponent('Заявка: ' + (d.get('name')||'')) + '&body=' + encodeURIComponent(b);
+            document.getElementById('booking-form-content').classList.add('hidden');
+            document.getElementById('booking-success').classList.add('show');
+            e.target.reset();
+        }
+    </script>
+
+    <!-- TECH MODALS -->
+    <div class="modal-overlay" id="modal-tech-kme"><div class="modal"><button class="modal-close" onclick="closeModal('tech-kme')">&times;</button><div class="modal-header"><span class="tag">Диагностика</span><h2>КМЕ — Картирование электрополей</h2></div><div class="modal-body">
+        <p><strong>Проблема:</strong> Ребёнок плохо себя чувствует, но анализы в норме. Вы чувствуете, что что-то не так, но стандартное обследование ничего не находит.</p>
+        <p><strong>Решение:</strong> КМЕ видит то, что не видят анализы крови и УЗИ — функциональное состояние каждого органа через его собственные электромагнитные поля. Мы видим, какой орган работает с напряжением, ещё до того, как это станет заболеванием.</p>
+        <p><strong>Что вы узнаете:</strong></p>
+        <ul style="margin:12px 0 12px 20px;color:#8b7d6b;line-height:1.8">
+            <li>Какой орган требует внимания прямо сейчас</li>
+            <li>Есть ли скрытое воспаление, которое не видно на анализах</li>
+            <li>Насколько хорошо организм справляется с нагрузкой</li>
+        </ul>
+        <p style="color:#8b6f47;font-weight:600">⏱ 5–7 минут. Безболезненно. Подходит для детей с 2 лет.</p>
+        <div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('tech-kme');openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('tech-kme')">Закрыть</button></div>
+    </div></div></div>
+
+    <div class="modal-overlay" id="modal-tech-capil"><div class="modal"><button class="modal-close" onclick="closeModal('tech-capil')">&times;</button><div class="modal-header"><span class="tag">Диагностика</span><h2>Капилляроскопия</h2></div><div class="modal-body">
+        <p><strong>Проблема:</strong> Ребёнок бледный, быстро устаёт, плохо ест. Вы думаете — анемия, но гемоглобин в норме.</p>
+        <p><strong>Решение:</strong> Капилляроскопия показывает, как кровь доходит до самых мелких сосудов. Даже при нормальном гемоглобине микроциркуляция может быть нарушена — и это объясняет усталость, бледность, плохой аппетит.</p>
+        <p><strong>Что вы увидите:</strong></p>
+        <ul style="margin:12px 0 12px 20px;color:#8b7d6b;line-height:1.8">
+            <li>Фото ваших капилляров в реальном времени</li>
+            <li>Скорость кровотока — норма или замедление</li>
+            <li>Есть ли отёчность тканей, которую не видно внешне</li>
+        </ul>
+        <p style="color:#8b6f47;font-weight:600">⏱ 5 минут. Камера на палец. Безболезненно.</p>
+        <div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('tech-capil');openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('tech-capil')">Закрыть</button></div>
+    </div></div></div>
+
+    <div class="modal-overlay" id="modal-tech-bio"><div class="modal"><button class="modal-close" onclick="closeModal('tech-bio')">&times;</button><div class="modal-header"><span class="tag">Диагностика</span><h2>Биоимпеданс</h2></div><div class="modal-body">
+        <p><strong>Проблема:</strong> Ребёнок либо недобирает вес, либо набирает больше нормы. Педиатр говорит «норма» или «побольше гуляйте» — но вы видите, что что-то не так.</p>
+        <p><strong>Решение:</strong> Медицинский биоимпеданс показывает точный состав тела: сколько мышц, жира, воды, костной массы. Не весы — а прибор, который видит, куда «уходят» килограммы и почему.</p>
+        <p><strong>Что вы узнаете:</strong></p>
+        <ul style="margin:12px 0 12px 20px;color:#8b7d6b;line-height:1.8">
+            <li>Точный процент жира и мышц (по сегментам тела)</li>
+            <li>Водный баланс — нет ли скрытых отёков</li>
+            <li>Базовый метаболизм — хватает ли энергии растущему организму</li>
+        </ul>
+        <p style="color:#8b6f47;font-weight:600">⏱ 3 минуты. Нужно постоять на платформе босиком.</p>
+        <div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('tech-bio');openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('tech-bio')">Закрыть</button></div>
+    </div></div></div>
+
+    <div class="modal-overlay" id="modal-tech-oligo"><div class="modal"><button class="modal-close" onclick="closeModal('tech-oligo')">&times;</button><div class="modal-header"><span class="tag">Диагностика</span><h2>ОлигоСкан</h2></div><div class="modal-body">
+        <p><strong>Проблема:</strong> Ребёнок часто болеет, слабый иммунитет. Витамины пьёте — а толку нет.</p>
+        <p><strong>Решение:</strong> ОлигоСкан за 30 секунд показывает уровень антиоксидантов в организме. Если защитных ресурсов мало — организм не может справляться с инфекциями и воспалениями. Теперь вы точно знаете, какие витамины нужны, а какие — деньги на ветер.</p>
+        <p><strong>Что вы узнаете:</strong></p>
+        <ul style="margin:12px 0 12px 20px;color:#8b7d6b;line-height:1.8">
+            <li>Уровень каротиноидов — главный маркер защиты от свободных радикалов</li>
+            <li>Степень окислительного стресса</li>
+            <li>Какие именно антиоксиданты нужно добавить, а какие в норме</li>
+        </ul>
+        <p style="color:#8b6f47;font-weight:600">⏱ 30 секунд. Сканер на палец. Подходит для детей.</p>
+        <div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('tech-oligo');openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('tech-oligo')">Закрыть</button></div>
+    </div></div></div>
+
+    <div class="modal-overlay" id="modal-tech-angio"><div class="modal"><button class="modal-close" onclick="closeModal('tech-angio')">&times;</button><div class="modal-header"><span class="tag">Диагностика</span><h2>АнгиоКод</h2></div><div class="modal-body">
+        <p><strong>Проблема:</strong> У ребёнка головные боли, метеозависимость, быстрая утомляемость. Невролог назначает таблетки, но не знает, в каком состоянии сосуды.</p>
+        <p><strong>Решение:</strong> АнгиоКод за 3–5 минут показывает состояние сосудистой системы: эластичность, жёсткость, биологический возраст сосудов. Это объясняет, почему болит голова и что с этим делать — без таблеток.</p>
+        <p><strong>Что вы узнаете:</strong></p>
+        <ul style="margin:12px 0 12px 20px;color:#8b7d6b;line-height:1.8">
+            <li>Эластичность сосудов — не стареют ли они быстрее, чем организм</li>
+            <li>Уровень стресса через вегетативный баланс</li>
+            <li>Есть ли риск проблем с давлением в будущем</li>
+        </ul>
+        <p style="color:#8b6f47;font-weight:600">⏱ 3–5 минут. Датчик на запястье. Безболезненно.</p>
+        <div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('tech-angio');openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('tech-angio')">Закрыть</button></div>
+    </div></div></div>
+
+    <div class="modal-overlay" id="modal-tech-web"><div class="modal"><button class="modal-close" onclick="closeModal('tech-web')">&times;</button><div class="modal-header"><span class="tag">Диагностика</span><h2>ВебВелнесс</h2></div><div class="modal-body">
+        <p><strong>Проблема:</strong> Вы прошли 5 обследований, получили 5 разных заключений. Кто-то говорит — норма, кто-то — лечите. Непонятно, что делать.</p>
+        <p><strong>Решение:</strong> ВебВелнесс объединяет данные всех систем в одну цифру — wellness-индекс от 0 до 100. Вы сразу видите: зелёный — всё хорошо, жёлтый — обратите внимание, красный — нужна помощь. Без воды, без терминов.</p>
+        <p><strong>Что вы получите:</strong></p>
+        <ul style="margin:12px 0 12px 20px;color:#8b7d6b;line-height:1.8">
+            <li>Общий wellness-индекс с визуальной шкалой</li>
+            <li>Оценку по каждой системе отдельно</li>
+            <li>Приоритетные зоны — на что обратить внимание первым делом</li>
+        </ul>
+        <p style="color:#8b6f47;font-weight:600">Работает как итоговый отчёт — собирает данные всех 5 предыдущих диагностик.</p>
+        <div class="modal-cta"><button class="btn btn-primary" onclick="closeModal('tech-web');openModal('booking');">Записаться</button><button class="btn btn-outline" onclick="closeModal('tech-web')">Закрыть</button></div>
+    </div></div></div>
+
+</body>
+</html>
+
