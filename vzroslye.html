@@ -375,6 +375,94 @@ footer{background:#2c2c2c;color:rgba(255,255,255,0.7);padding:60px 0 32px}
             opacity: 1;
         }
 
+    
+        /* === MODERN DESIGN SYSTEM === */
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Modern typography */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Card shadows - layered */
+        .choice-card, .pain-card, .step-card, .svc-card, .tech-item, .testi-card, .checkup-item {
+            box-shadow: 
+                0 1px 3px rgba(0,0,0,0.04),
+                0 4px 12px rgba(0,0,0,0.06),
+                0 8px 24px rgba(0,0,0,0.04);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .choice-card:hover, .pain-card:hover, .step-card:hover, .svc-card:hover, 
+        .tech-item:hover, .testi-card:hover, .checkup-item:hover {
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.04),
+                0 8px 24px rgba(0,0,0,0.08),
+                0 16px 48px rgba(0,0,0,0.06);
+            transform: translateY(-3px);
+        }
+        
+        /* Choice cards - background overlay for text readability */
+        .choice-bg {
+            opacity: 0.88;
+            transition: opacity 0.3s ease;
+        }
+        .choice-card:hover .choice-bg {
+            opacity: 0.95;
+        }
+        
+        /* Text contrast enhancement */
+        .choice-content h3, .choice-content p, .choice-content .tag {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+        
+        /* Button modern style */
+        .btn {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.25s ease;
+        }
+        .btn:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        /* Section dividers */
+        .section-divider {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            margin: 0 auto;
+        }
+        
+        /* Modal modern */
+        .modal {
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        /* Navbar modern */
+        .navbar {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* Quote section */
+        .quote-section {
+            position: relative;
+        }
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: rgba(0,0,0,0.05);
+            line-height: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -532,7 +620,7 @@ footer{background:#2c2c2c;color:rgba(255,255,255,0.7);padding:60px 0 32px}
       </div>
       <div class="checkup-card fade-up" onclick="openModal('tech-web')">
         <div class="checkup-icon">🌐</div>
-        <h3>Вебер-тест</h3>
+        <h3>ВебВелнесс</h3>
         <p>Определение вегетативного статуса и уровня стресса нервной системы</p>
       </div>
     </div>
@@ -929,19 +1017,19 @@ footer{background:#2c2c2c;color:rgba(255,255,255,0.7);padding:60px 0 32px}
   </div>
 </div>
 
-<!-- Tech: Вебер-тест -->
+<!-- Tech: ВебВелнесс -->
 <div class="modal-overlay" id="modal-tech-web">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('tech-web')">✕</button>
     <div class="modal-header">
-      <h2>Вебер-тест</h2>
+      <h2>ВебВелнесс</h2>
       <p>Оценка вегетативного статуса и уровня стресса</p>
     </div>
     <div class="modal-body">
       <h4>Проблема</h4>
       <p>Хронический стресс разрушает организм изнутри — но человек его не чувствует, потому что адаптировался. Вегетативная нервная система работает на износ.</p>
       <h4>Решение</h4>
-      <p>Вебер-тест оценивает баланс симпатической и парасимпатической нервной системы. Вы узнаете реальный уровень стресса и резервы адаптации вашего организма.</p>
+      <p>ВебВелнесс оценивает баланс симпатической и парасимпатической нервной системы. Вы узнаете реальный уровень стресса и резервы адаптации вашего организма.</p>
       <form class="modal-form" onsubmit="submitBooking(event)">
         <input type="text" placeholder="Ваше имя" required>
         <input type="tel" placeholder="Телефон" required>

@@ -5,11 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дети — ЯЖИЗНЬ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+    <style>
+        @font-face { font-family: 'Nunito'; src: url('Nunito-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'Nunito'; src: url('Nunito-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'Nunito'; src: url('Nunito-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'Nunito'; src: url('Nunito-ExtraBold.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+    
+        /* Modern design improvements */
+        .choice-card, .pain-card, .step-card, .svc-card, .tech-item, .testi-card {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .choice-card:hover, .pain-card:hover, .step-card:hover, .svc-card:hover, .tech-item:hover, .testi-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+        /* Subtle background overlay for better text readability */
+        .choice-bg {
+            opacity: 0.85;
+        }
+        .choice-card:hover .choice-bg {
+            opacity: 0.95;
+        }
+        /* Better text contrast */
+        .choice-content h3, .choice-content p {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+    
+        /* === MODERN DESIGN SYSTEM === */
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Modern typography */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Card shadows - layered */
+        .choice-card, .pain-card, .step-card, .svc-card, .tech-item, .testi-card, .checkup-item {
+            box-shadow: 
+                0 1px 3px rgba(0,0,0,0.04),
+                0 4px 12px rgba(0,0,0,0.06),
+                0 8px 24px rgba(0,0,0,0.04);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .choice-card:hover, .pain-card:hover, .step-card:hover, .svc-card:hover, 
+        .tech-item:hover, .testi-card:hover, .checkup-item:hover {
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.04),
+                0 8px 24px rgba(0,0,0,0.08),
+                0 16px 48px rgba(0,0,0,0.06);
+            transform: translateY(-3px);
+        }
+        
+        /* Choice cards - background overlay for text readability */
+        .choice-bg {
+            opacity: 0.88;
+            transition: opacity 0.3s ease;
+        }
+        .choice-card:hover .choice-bg {
+            opacity: 0.95;
+        }
+        
+        /* Text contrast enhancement */
+        .choice-content h3, .choice-content p, .choice-content .tag {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+        
+        /* Button modern style */
+        .btn {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.25s ease;
+        }
+        .btn:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        /* Section dividers */
+        .section-divider {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            margin: 0 auto;
+        }
+        
+        /* Modal modern */
+        .modal {
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        /* Navbar modern */
+        .navbar {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* Quote section */
+        .quote-section {
+            position: relative;
+        }
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: rgba(0,0,0,0.05);
+            line-height: 1;
+        }
+
+    </style>
+    
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#faf6f0;color:#2d2d2d;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Nunito',sans-serif;background:#faf6f0;color:#2d2d2d;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
 img{max-width:100%;display:block}
@@ -124,7 +241,7 @@ section{padding:80px 24px}
 .timeline-item .desc{font-size:13px;color:#888}
 
 /* CTA */
-.cta-section{text-align:center;background:#2d2d2d;color:#fff;border-radius:24px;max-width:1100px;margin:0 auto 0}
+.cta-section { background: linear-gradient(135deg, rgba(90,66,48,0.85), rgba(139,111,71,0.8), rgba(201,169,110,0.75)), url("futer-deti.png"); background-size: cover; background-position: center;color:#fff;border-radius:24px;max-width:1100px;margin:0 auto 0}
 .cta-section .container{padding:64px 24px}
 .cta-section h2{font-size:32px;font-weight:800;margin-bottom:12px}
 .cta-section p{font-size:16px;color:#aaa;margin-bottom:24px}
@@ -259,9 +376,7 @@ footer{background:#2d2d2d;color:#ccc;padding:60px 24px 32px}
         }
         
         /* CTA section - warm gradient */
-        .cta-section {
-            background: linear-gradient(135deg, #5a4230, #8b6f47, #c9a96e);
-        }
+        
         
         /* Navbar - softer shadow */
         .navbar {
@@ -351,6 +466,116 @@ footer{background:#2d2d2d;color:#ccc;padding:60px 24px 32px}
         }
         .step-card:hover::after {
             opacity: 1;
+        }
+
+    
+        /* Modern design improvements */
+        .choice-card, .pain-card, .step-card, .svc-card, .tech-item, .testi-card {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .choice-card:hover, .pain-card:hover, .step-card:hover, .svc-card:hover, .tech-item:hover, .testi-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+        /* Subtle background overlay for better text readability */
+        .choice-bg {
+            opacity: 0.85;
+        }
+        .choice-card:hover .choice-bg {
+            opacity: 0.95;
+        }
+        /* Better text contrast */
+        .choice-content h3, .choice-content p {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+    
+        /* === MODERN DESIGN SYSTEM === */
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Modern typography */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Card shadows - layered */
+        .choice-card, .pain-card, .step-card, .svc-card, .tech-item, .testi-card, .checkup-item {
+            box-shadow: 
+                0 1px 3px rgba(0,0,0,0.04),
+                0 4px 12px rgba(0,0,0,0.06),
+                0 8px 24px rgba(0,0,0,0.04);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .choice-card:hover, .pain-card:hover, .step-card:hover, .svc-card:hover, 
+        .tech-item:hover, .testi-card:hover, .checkup-item:hover {
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.04),
+                0 8px 24px rgba(0,0,0,0.08),
+                0 16px 48px rgba(0,0,0,0.06);
+            transform: translateY(-3px);
+        }
+        
+        /* Choice cards - background overlay for text readability */
+        .choice-bg {
+            opacity: 0.88;
+            transition: opacity 0.3s ease;
+        }
+        .choice-card:hover .choice-bg {
+            opacity: 0.95;
+        }
+        
+        /* Text contrast enhancement */
+        .choice-content h3, .choice-content p, .choice-content .tag {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+        
+        /* Button modern style */
+        .btn {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.25s ease;
+        }
+        .btn:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        /* Section dividers */
+        .section-divider {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            margin: 0 auto;
+        }
+        
+        /* Modal modern */
+        .modal {
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        /* Navbar modern */
+        .navbar {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* Quote section */
+        .quote-section {
+            position: relative;
+        }
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: rgba(0,0,0,0.05);
+            line-height: 1;
         }
 
     </style>

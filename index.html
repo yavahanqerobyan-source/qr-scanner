@@ -1,393 +1,351 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ЯЖИЗНЬ — Клиника интегративной медицины</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#f5f3f0;color:#2d2d2d;line-height:1.6;-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
-ul{list-style:none}
-img{max-width:100%;display:block}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЯЖИЗНЬ — Клиника интегративной медицины</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #faf8f5; color: #2d2d2d; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-/* Navbar */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(245,243,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.navbar .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:#2d2d2d}
-.navbar nav{display:flex;align-items:center;gap:6px}
-.navbar nav a{padding:8px 16px;border-radius:12px;font-size:14px;font-weight:500;color:#555;transition:background .2s,color .2s}
-.navbar nav a:hover{background:rgba(0,0,0,0.06);color:#2d2d2d}
-.navbar nav a.btn-book{background:#2d2d2d;color:#fff;border-radius:12px}
-.navbar nav a.btn-book:hover{background:#444}
-.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
-.burger span{width:22px;height:2px;background:#2d2d2d;border-radius:2px;transition:transform .3s}
-.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(245,243,240,0.98);backdrop-filter:blur(12px);padding:16px 24px;border-bottom:1px solid rgba(0,0,0,0.06);z-index:999}
-.mobile-menu.show{display:block}
-.mobile-menu a{display:block;padding:12px 16px;border-radius:12px;font-size:15px;font-weight:500;color:#555}
-.mobile-menu a:hover{background:rgba(0,0,0,0.06);color:#2d2d2d}
+        /* Navbar */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(250,248,245,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06); padding: 14px 0; }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+        .logo img { height: 40px; width: auto; }
+        nav { display: flex; align-items: center; gap: 28px; }
+        nav a { color: #6c757d; text-decoration: none; font-weight: 500; font-size: 15px; transition: color 0.2s; padding: 8px 0; position: relative; }
+        nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #2d2d2d; transition: width 0.3s; }
+        nav a:hover { color: #2d2d2d; }
+        nav a:hover::after { width: 100%; }
+        .btn-book { background: #2d2d2d !important; color: white !important; padding: 10px 24px !important; border-radius: 14px; font-weight: 600 !important; }
+        .btn-book:hover { background: #1a1a1a !important; transform: translateY(-2px); }
+        .btn-book::after { display: none !important; }
+        .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .burger span { display: block; width: 24px; height: 2px; background: #2d2d2d; transition: 0.3s; }
+        .mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(250,248,245,0.98); backdrop-filter: blur(12px); padding: 20px; z-index: 999; flex-direction: column; gap: 16px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        .mobile-menu.show { display: flex; }
+        .mobile-menu a { color: #2d2d2d; text-decoration: none; font-weight: 500; font-size: 16px; padding: 8px 0; }
 
-/* Urgency Banner */
-.urgency-banner{margin-top:64px;background:linear-gradient(135deg,#2d2d2d,#4a4a4a);color:#fff;text-align:center;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s}
-.urgency-banner:hover{background:linear-gradient(135deg,#3a3a3a,#555)}
-.urgency-banner span{color:#f0c040}
+        /* Urgency */
+        .urgency-banner { background: #2d2d2d; color: white; padding: 14px 24px; text-align: center; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.3s; }
+        .urgency-banner:hover { background: #1a1a1a; }
 
-/* Section */
-section{padding:80px 24px}
-.container{max-width:1100px;margin:0 auto}
+        /* Hero */
+        .hero { background: linear-gradient(160deg, rgba(250,248,245,0.92), rgba(245,240,232,0.88), rgba(240,235,228,0.85)), url("main.png"); background-size: cover; background-position: center; padding: 140px 24px 100px; text-align: center; }
+        .hero-title { font-size: 56px; font-weight: 800; color: #2d2d2d; margin-bottom: 16px; letter-spacing: -1px; }
+        .hero-sub { font-size: 22px; font-weight: 500; color: #6c757d; margin-bottom: 20px; }
+        .hero-desc { font-size: 17px; color: #888; max-width: 650px; margin: 0 auto 48px; line-height: 1.7; }
 
-/* Hero */
-.hero{text-align:center;padding:100px 24px 80px}
-.hero-title{font-size:72px;font-weight:800;letter-spacing:-2px;color:#2d2d2d;margin-bottom:8px}
-.hero-sub{font-size:20px;font-weight:500;color:#666;margin-bottom:16px}
-.hero-desc{font-size:16px;color:#888;max-width:600px;margin:0 auto 48px;line-height:1.7}
-.cards-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap}
-.choice-card{background:#fff;border-radius:20px;padding:32px 28px;width:280px;cursor:pointer;border:2px solid transparent;transition:border-color .2s,box-shadow .2s;text-align:left}
-.choice-card:hover{border-color:#2d2d2d;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
-.choice-card .icon{font-size:40px;margin-bottom:16px}
-.choice-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
-.choice-card p{font-size:14px;color:#888;margin-bottom:16px}
-.choice-card .tag{display:inline-block;background:#f0ede8;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;color:#666}
+        /* Choice Cards */
+        .cards-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+        .choice-card { position: relative; overflow: hidden; background: #fff; border-radius: 20px; padding: 48px 36px; width: 320px; cursor: pointer; border: 2px solid transparent; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); text-decoration: none; }
+        .choice-card:hover { border-color: #2d2d2d; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-4px); }
+        .choice-bg { position: absolute; inset: 0; opacity: 0.5; transition: opacity 0.3s; filter: saturate(0.7); }
+        .choice-card:hover .choice-bg { opacity: 0.65; }
+        .choice-content { position: relative; z-index: 2; text-align: center; }
+        .choice-content h3 { font-size: 22px; font-weight: 700; color: #2d2d2d; margin-bottom: 12px; text-shadow: 0 1px 3px rgba(255,255,255,0.8); }
+        .choice-content p { font-size: 15px; color: #555; line-height: 1.5; margin-bottom: 18px; text-shadow: 0 1px 3px rgba(255,255,255,0.8); }
+        .choice-content .tag { display: inline-block; background: rgba(255,255,255,0.85); padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #444; border: 1px solid rgba(0,0,0,0.06); }
 
-/* Trust */
-.trust-section{background:#fff}
-.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
-.trust-item .num{font-size:40px;font-weight:800;color:#2d2d2d;margin-bottom:4px}
-.trust-item .label{font-size:14px;color:#888}
+        /* Sections */
+        .section { padding: 80px 0; }
+        .section-title { font-size: 36px; font-weight: 700; color: #2d2d2d; margin-bottom: 16px; text-align: center; }
+        .section-sub { font-size: 17px; color: #888; text-align: center; max-width: 600px; margin: 0 auto 48px; }
 
-/* Doctor */
-.doctor-section{background:#f5f3f0}
-.doctor-grid{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start}
-.doctor-photo{width:300px;height:380px;border-radius:24px;overflow:hidden;background:#e8e4de}
-.doctor-info h2{font-size:28px;font-weight:700;margin-bottom:4px}
-.doctor-info .role{font-size:14px;color:#888;margin-bottom:20px}
-.doctor-info .bio{font-size:14px;color:#666;line-height:1.7;margin-bottom:24px}
-.timeline{border-left:2px solid #ddd;padding-left:20px}
-.timeline-item{margin-bottom:16px;position:relative}
-.timeline-item::before{content:'';position:absolute;left:-25px;top:6px;width:8px;height:8px;border-radius:50%;background:#2d2d2d}
-.timeline-item .year{font-size:13px;font-weight:700;color:#2d2d2d}
-.timeline-item .desc{font-size:13px;color:#888}
+        /* Trust */
+        .trust-section { background: #f5f0e8; padding: 60px 0; }
+        .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+        .trust-item .num { font-size: 42px; font-weight: 800; color: #2d2d2d; }
+        .trust-item .label { font-size: 14px; color: #888; margin-top: 4px; }
 
-/* Footer */
-footer{background:#2d2d2d;color:#ccc;padding:60px 24px 32px}
-.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;max-width:1100px;margin:0 auto 40px}
-.footer-grid h4{color:#fff;font-size:14px;font-weight:600;margin-bottom:16px}
-.footer-grid p,.footer-grid a{font-size:13px;color:#aaa;line-height:1.8;display:block}
-.footer-grid a:hover{color:#fff}
-.footer-bottom{max-width:1100px;margin:0 auto;text-align:center;font-size:12px;color:#666;border-top:1px solid rgba(255,255,255,0.08);padding-top:24px}
+        /* Doctor */
+        .doctor-section { padding: 80px 0; }
+        .doctor-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center; }
+        .doctor-img { border-radius: 24px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .doctor-img img { width: 100%; height: 100%; object-fit: cover; }
+        .doctor-info h3 { font-size: 28px; font-weight: 700; color: #2d2d2d; margin-bottom: 8px; }
+        .doctor-info .role { font-size: 16px; color: #888; margin-bottom: 20px; }
+        .doctor-info p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 16px; }
 
-/* Modal */
-.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal-overlay .modal{background:#fff;border-radius:24px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.15);animation:modalIn .3s ease forwards}
-@keyframes modalIn{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:#f0ede8;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:1}
-.modal-close:hover{background:#e0ddd6}
-.modal-body{padding:40px 32px}
-.modal-body h2{font-size:24px;font-weight:700;margin-bottom:8px}
-.modal-body p{font-size:14px;color:#888;margin-bottom:24px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#555}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1.5px solid #e0ddd6;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;background:#faf9f7;transition:border-color .2s}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#2d2d2d}
-.form-group textarea{resize:vertical;min-height:80px}
-.btn-submit{width:100%;padding:14px;background:#2d2d2d;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px}
-.btn-submit:hover{background:#444}
-.success-screen{display:none;text-align:center;padding:40px 32px}
-.success-screen.show{display:block}
-.success-screen .check{font-size:48px;margin-bottom:16px}
-.success-screen h2{font-size:22px;font-weight:700;margin-bottom:8px}
-.success-screen p{font-size:14px;color:#888}
+        /* Quote */
+        .quote-section { background: #f5f0e8; padding: 60px 0; text-align: center; }
+        .quote-text { font-size: 20px; font-style: italic; color: #444; max-width: 700px; margin: 0 auto 16px; line-height: 1.7; }
+        .quote-author { font-size: 15px; color: #888; }
 
-/* Fade-up */
-.fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
+        /* CTA */
+        .cta-section { background: #2d2d2d; color: white; padding: 80px 0; text-align: center; border-radius: 24px; max-width: 1100px; margin: 0 auto 60px; }
+        .cta-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
+        .cta-section p { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-contacts { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+        .cta-contacts a { color: white; text-decoration: none; font-size: 18px; font-weight: 600; }
+        .btn { display: inline-block; padding: 14px 32px; border-radius: 14px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-white { background: white; color: #2d2d2d; }
+        .btn-white:hover { background: #f0f0f0; transform: translateY(-2px); }
+        .btn-dark { background: #2d2d2d; color: white; }
+        .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); }
 
-/* Responsive */
-@media(max-width:768px){
-.navbar nav{display:none}
-.burger{display:flex}
-.hero-title{font-size:42px}
-.hero-sub{font-size:17px}
-.trust-grid{grid-template-columns:repeat(2,1fr);gap:24px}
-.doctor-grid{grid-template-columns:1fr}
-.doctor-photo{width:100%;height:300px}
-.footer-grid{grid-template-columns:1fr 1fr}
-.cards-row{flex-direction:column;align-items:center}
-}
-@media(max-width:480px){
-.hero-title{font-size:32px}
-.trust-grid{grid-template-columns:1fr 1fr}
-.footer-grid{grid-template-columns:1fr}
-.modal-body{padding:24px 20px}
-}
-</style>
+        /* Footer */
+        .footer { background: #2d2d2d; color: rgba(255,255,255,0.7); padding: 48px 24px 24px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: white; font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+        .footer-col p, .footer-col a { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 8px; display: block; text-decoration: none; transition: color 0.2s; }
+        .footer-col a:hover { color: white; }
+        .footer-bottom { text-align: center; padding-top: 24px; margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: rgba(255,255,255,0.4); }
+
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 24px; max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.15); animation: modalIn 0.3s ease forwards; }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .modal-header { background: linear-gradient(135deg, #f5f0e8, #e8e0d4); padding: 32px; border-radius: 24px 24px 0 0; text-align: center; }
+        .modal-header h2 { font-size: 24px; font-weight: 700; color: #2d2d2d; margin-bottom: 8px; }
+        .modal-header p { font-size: 14px; color: #888; }
+        .modal-body { padding: 32px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: #444; margin-bottom: 8px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 15px; font-family: inherit; transition: border-color 0.2s; background: #faf8f5; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #2d2d2d; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-submit { width: 100%; padding: 16px; background: #2d2d2d; color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .form-submit:hover { background: #1a1a1a; }
+        .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.05); border: none; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .modal-close:hover { background: rgba(0,0,0,0.1); }
+
+        /* Fade animation */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-title { font-size: 42px; }
+            .trust-grid { grid-template-columns: repeat(2, 1fr); }
+            .doctor-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 32px; }
+            .hero-sub { font-size: 18px; }
+            .choice-card { width: 100%; max-width: 320px; padding: 36px 28px; }
+            nav { display: none; }
+            .burger { display: flex; }
+            .section-title { font-size: 28px; }
+        }
+    </style>
 </head>
 <body>
 
 <!-- Navbar -->
 <header class="navbar">
-  <a href="index.html" class="logo">
-    <img src="logo.png" alt="ЯЖИЗНЬ" style="height:40px;width:auto;">
-  </a>
-  <nav>
-    <a href="#doctor">О враче</a>
-    <a href="deti.html">Дети</a>
-    <a href="vzroslye.html">Взрослые</a>
-    <a href="#contacts">Контакты</a>
-    <a href="#" class="btn-book" onclick="openModal('booking');return false;">Записаться</a>
-  </nav>
-  <div class="burger" onclick="document.querySelector('.mobile-menu').classList.toggle('show')">
-    <span></span><span></span><span></span>
-  </div>
+    <div class="container">
+        <a href="index.html" class="logo"><img src="logo.png" alt="ЯЖИЗНЬ"></a>
+        <nav>
+            <a href="#doctor">О враче</a>
+            <a href="deti.html">Дети</a>
+            <a href="vzroslye.html">Взрослые</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#" class="btn-book" onclick="openModal('booking');return false;">Записаться</a>
+        </nav>
+        <div class="burger" onclick="document.querySelector('.mobile-menu').classList.toggle('show')">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
 </header>
 <div class="mobile-menu">
-  <a href="#doctor" onclick="this.parentElement.classList.remove('show')">О враче</a>
-  <a href="deti.html">Дети</a>
-  <a href="vzroslye.html">Взрослые</a>
-  <a href="#contacts" onclick="this.parentElement.classList.remove('show')">Контакты</a>
-  <a href="#" onclick="openModal('booking');this.parentElement.classList.remove('show');return false;">Записаться</a>
+    <a href="#doctor" onclick="this.parentElement.classList.remove('show')">О враче</a>
+    <a href="deti.html">Дети</a>
+    <a href="vzroslye.html">Взрослые</a>
+    <a href="#contacts" onclick="this.parentElement.classList.remove('show')">Контакты</a>
+    <a href="#" onclick="openModal('booking');this.parentElement.classList.remove('show');return false;">Записаться</a>
 </div>
 
-<!-- Urgency Banner -->
+<!-- Urgency -->
 <div class="urgency-banner" onclick="openModal('booking')">
-  🔥 В мае — <span>скидка 30%</span> на биофизический check-up. Успейте записаться!
+    В мае — скидка 30% на биофизический check-up. Осталось 7 мест.
 </div>
 
 <!-- Hero -->
 <section class="hero">
-  <div class="container">
-    <h1 class="hero-title fade-up">ЯЖИЗНЬ</h1>
-    <p class="hero-sub fade-up">Медицина, которая ищет причину</p>
-    <p class="hero-desc fade-up">Клиника интегративной медицины. Мы не лечим симптомы — мы находим корень проблемы через комплексную диагностику 6 систем организма за 15–30 минут.</p>
-    <div class="cards-row fade-up">
-      <a href="deti.html" class="choice-card">
-        <div class="icon">👶</div>
-        <h3>Ребёнок 2–10 лет</h3>
-        <p>Часто болеет, устаёт, капризничает? Найдём причину.</p>
-        <span class="tag">Интегративная педиатрия</span>
-      </a>
-      <a href="vzroslye.html" class="choice-card">
-        <div class="icon">👤</div>
-        <h3>Взрослый 35–75 лет</h3>
-        <p>Узнайте свой реальный биологический возраст.</p>
-        <span class="tag">Anti-age диагностика</span>
-      </a>
+    <div class="container">
+        <h1 class="hero-title fade-up">ЯЖИЗНЬ</h1>
+        <p class="hero-sub fade-up">Медицина, которая ищет причину</p>
+        <p class="hero-desc fade-up">Клиника интегративной медицины. Мы не лечим симптомы — мы находим корень проблемы через комплексную диагностику 6 систем организма за 15–30 минут.</p>
+        <div class="cards-row fade-up">
+            <a href="deti.html" class="choice-card">
+                <div class="choice-bg" style="background-image:url(deti-2.png);background-size:cover;background-position:center;"></div>
+                <div class="choice-content">
+                    <h3>Ребёнок 2–10 лет</h3>
+                    <p>Часто болеет, устаёт, капризничает? Найдём причину.</p>
+                    <span class="tag">Интегративная педиатрия</span>
+                </div>
+            </a>
+            <a href="vzroslye.html" class="choice-card">
+                <div class="choice-bg" style="background-image:url(adults-2.png);background-size:cover;background-position:center;"></div>
+                <div class="choice-content">
+                    <h3>Взрослый 35–75 лет</h3>
+                    <p>Узнайте свой реальный биологический возраст.</p>
+                    <span class="tag">Anti-age диагностика</span>
+                </div>
+            </a>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- Trust -->
 <section class="trust-section">
-  <div class="container">
-    <div class="trust-grid fade-up">
-      <div class="trust-item"><div class="num">6</div><div class="label">Систем диагностики</div></div>
-      <div class="trust-item"><div class="num">15–30</div><div class="label">Минут на обследование</div></div>
-      <div class="trust-item"><div class="num">90%+</div><div class="label">Пациентов находят причину</div></div>
-      <div class="trust-item"><div class="num">32</div><div class="label">Года стажа врача</div></div>
+    <div class="container">
+        <div class="trust-grid fade-up">
+            <div class="trust-item"><div class="num">6</div><div class="label">Систем диагностики</div></div>
+            <div class="trust-item"><div class="num">15–30</div><div class="label">Минут на обследование</div></div>
+            <div class="trust-item"><div class="num">32</div><div class="label">Года опыта врача</div></div>
+            <div class="trust-item"><div class="num">90%+</div><div class="label">Пациентов получают чёткий план действий</div></div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- Doctor -->
 <section class="doctor-section" id="doctor">
-  <div class="container">
-    <div class="doctor-grid fade-up">
-      <div class="doctor-photo">
-        <img src="doc.png" alt="Ровенская Елена Викторовна" style="width:100%;height:100%;object-fit:cover;border-radius:24px;">
-      </div>
-      <div class="doctor-info">
-        <h2>Ровенская Елена Викторовна</h2>
-        <div class="role">Главный врач, кандидат медицинских наук</div>
-        <div class="role" style="margin-top:-16px;margin-bottom:20px">Невролог · Психоневролог · Эпилептолог · Превентивная и интегративная медицина</div>
-        <div class="bio">
-          Стаж: 32 года в неврологии, паллиативной помощи, скорой помощи и функциональной диагностике.
+    <div class="container">
+        <h2 class="section-title fade-up">О враче</h2>
+        <div class="doctor-grid fade-up">
+            <div class="doctor-img"><img src="doc.png" alt="Ровенская Елена Викторовна"></div>
+            <div class="doctor-info">
+                <h3>Ровенская Елена Викторовна</h3>
+                <div class="role">Главный врач, к.м.н., невролог, психоневролог, эпилептолог</div>
+                <p>Врач превентивной, интегративной и антивозрастной медицины, функциональной диагностики. Стаж 32 года.</p>
+                <p>Образование: ИГМА Педиатрия (1983–1989), Интернатура (1989–1990), Ординатура Неврология (1991–1993), Аспирантура Неврология (1993–1995), Ассистент кафедры Неврологии ИГМА (1995–2002).</p>
+                <a href="#" class="btn btn-dark" onclick="openModal('booking');return false;">Записаться на приём</a>
+            </div>
         </div>
-        <div class="timeline">
-          <div class="timeline-item"><div class="year">1983–1989</div><div class="desc">ИГМА им. Бубнова — Педиатрия</div></div>
-          <div class="timeline-item"><div class="year">1989–1990</div><div class="desc">Интернатура — Педиатрия</div></div>
-          <div class="timeline-item"><div class="year">1991–1993</div><div class="desc">Ординатура — Неврология</div></div>
-          <div class="timeline-item"><div class="year">1992–1993</div><div class="desc">Научный сотрудник лаборатории гематологии и реологии крови</div></div>
-          <div class="timeline-item"><div class="year">1993–1995</div><div class="desc">Аспирантура — Неврология</div></div>
-          <div class="timeline-item"><div class="year">1995–2002</div><div class="desc">Ассистент кафедры Неврологии ИГМА</div></div>
-        </div>
-      </div>
     </div>
-  </div>
+</section>
+
+<!-- Quote -->
+<section class="quote-section">
+    <div class="container">
+        <div class="quote-text fade-up">«Паспортный возраст — это статистика. Биологический — это правда. И между ними может быть разница в 10–15 лет в вашу пользу.»</div>
+        <div class="quote-author fade-up">— Ровенская Елена Викторовна, главный врач ЯЖИЗНЬ</div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contacts">
+    <div class="container">
+        <h2 class="fade-up">Запишитесь на приём</h2>
+        <p class="fade-up">Комплексная диагностика и персональный план действий</p>
+        <div class="cta-contacts fade-up">
+            <a href="tel:+79037928003">+7 903 792 80 03</a>
+            <a href="tel:+74957928003">+7 495 792 80 03</a>
+            <a href="mailto:Yajizn@yandex.ru">Yajizn@yandex.ru</a>
+        </div>
+        <a href="#" class="btn btn-white" onclick="openModal('booking');return false;">Записаться</a>
+    </div>
 </section>
 
 <!-- Footer -->
-<footer id="contacts">
-  <div class="footer-grid">
-    <div>
-      <h4>Контакты</h4>
-      <p>+7 903 792 80 03</p>
-      <p>+7 495 792 80 03</p>
-      <p>Yajizn@yandex.ru</p>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4><img src="logo.png" alt="ЯЖИЗНЬ" style="height:32px;width:auto;filter:brightness(0) invert(1);"></h4>
+                <p>Клиника интегративной медицины</p>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p>+7 903 792 80 03</p>
+                <p>+7 495 792 80 03</p>
+                <p>Yajizn@yandex.ru</p>
+            </div>
+            <div class="footer-col">
+                <h4>Направления</h4>
+                <a href="deti.html">Детская интегративная медицина</a>
+                <a href="vzroslye.html">Взрослая превентивная медицина</a>
+                <a href="#" onclick="openModal('booking');return false;">Записаться на приём</a>
+            </div>
+            <div class="footer-col">
+                <h4>Информация</h4>
+                <p>ООО «ВОССТАНОВЛЕНИЕ»</p>
+                <p>ИНН: 9722108070</p>
+                <p>Лицензия № Л041-01137-77/04132361</p>
+                <p>от 13.01.2026 г.</p>
+                <a href="politika.html">Политика обработки данных</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ЯЖИЗНЬ. Все права защищены.</div>
     </div>
-    <div>
-      <h4>Часы работы</h4>
-      <p>Пн–Пт: 10:00–19:00</p>
-      <p>Сб–Вс: выходной</p>
-    </div>
-    <div>
-      <h4>Направления</h4>
-      <a href="deti.html">Детская интегративная медицина</a>
-      <a href="vzroslye.html">Взрослая превентивная медицина</a>
-      <a href="#" onclick="openModal('booking');return false;">Записаться на приём</a>
-    </div>
-    <div>
-      <h4>Информация</h4>
-      <p>ООО «ВОССТАНОВЛЕНИЕ»</p>
-      <p>ИНН: 9722108070</p>
-      <p>Лицензия № Л041-01137-77/04132361</p>
-      <p>от 13.01.2026 г.</p>
-      <a href="politika.html" style="margin-top:8px;display:block">Политика конфиденциальности</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    © 2026 ЯЖИЗНЬ, клиника интегративной медицины. Все права защищены.
-  </div>
 </footer>
 
 <!-- Booking Modal -->
-<div class="modal-overlay" id="modal-booking">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('booking')">✕</button>
-    <div class="modal-body" id="booking-form">
-      <h2>Записаться на приём</h2>
-      <p>Заполните форму — мы свяжемся с вами в течение рабочего дня.</p>
-      <form id="bookingForm" onsubmit="return submitBooking(event)">
-        <div class="form-group">
-          <label>Имя *</label>
-          <input type="text" name="name" required placeholder="Ваше имя">
+<div class="modal-overlay" id="modal-booking" onclick="if(event.target===this)closeModal('booking')">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('booking')">×</button>
+        <div class="modal-header">
+            <h2>Записаться на приём</h2>
+            <p>Оставьте заявку — мы свяжемся с вами в течение 30 минут</p>
         </div>
-        <div class="form-group">
-          <label>Телефон *</label>
-          <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__">
+        <div class="modal-body">
+            <form onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label>Ваше имя</label>
+                    <input type="text" name="name" required placeholder="Как к вам обращаться?">
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="form-group">
+                    <label>Направление</label>
+                    <select name="direction">
+                        <option value="Ребёнок">Ребёнок</option>
+                        <option value="Взрослый">Взрослый</option>
+                        <option value="Check-up">Check-up</option>
+                        <option value="Не знаю">Не знаю</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Комментарий</label>
+                    <textarea name="comment" placeholder="Опишите ситуацию или задайте вопрос"></textarea>
+                </div>
+                <button type="submit" class="form-submit">Отправить заявку</button>
+            </form>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" placeholder="your@email.com">
-        </div>
-        <div class="form-group">
-          <label>Услуга</label>
-          <select name="service">
-            <option value="">Выберите услугу</option>
-            <option>Приём врача-эндокринолога, 60 мин — 8 000 ₽</option>
-            <option>Приём врача-терапевта, 60 мин — 8 000 ₽</option>
-            <option>Приём врача-невролога, к.м.н., 60 мин — 30 000 ₽</option>
-            <option>Приём врача-косметолога, 60 мин — 10 000 ₽</option>
-            <option>Врачебная трактовка исследований, 30 мин — 3 500 ₽</option>
-            <option>Консилиум специалистов с заключением — 35 000 ₽</option>
-            <option>Карбокситерапия</option>
-            <option>Ion Detox Foot Spa</option>
-            <option>Программа «Анти-эйдж» — 16 000 ₽</option>
-            <option>Биоимпедансный анализ состава тела — 3 000 ₽</option>
-            <option>Ангиоскан экспресс — 3 000 ₽</option>
-            <option>Мониторинг глюкозы 7 дней — 15 000 ₽</option>
-            <option>Гипокситерапия OXYTERRA</option>
-            <option>Интервальная гипокси-гиперокситерапия</option>
-            <option>Комплексная диагностика (check-up)</option>
-            <option>Другое</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Возраст</label>
-          <input type="number" name="age" placeholder="Возраст пациента" min="1" max="120">
-        </div>
-        <div class="form-group">
-          <label>Предпочитаемая дата</label>
-          <input type="date" name="date">
-        </div>
-        <div class="form-group">
-          <label>Ваш запрос</label>
-          <textarea name="message" placeholder="Опишите вашу ситуацию или вопрос"></textarea>
-        </div>
-        <button type="submit" class="btn-submit">Отправить заявку</button>
-      </form>
     </div>
-    <div class="success-screen" id="booking-success">
-      <div class="check">✅</div>
-      <h2>Заявка отправлена!</h2>
-      <p>Мы свяжемся с вами в ближайшее время.</p>
-      <button class="btn-submit" style="margin-top:24px" onclick="closeModal('booking')">Закрыть</button>
-    </div>
-  </div>
 </div>
 
 <script>
-// Modal system
-var _modalOpen = false;
 function openModal(id) {
-    document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
-    var el = document.getElementById('modal-' + id);
-    if (!el) return;
-    // Reset form
-    var form = el.querySelector('form');
-    if (form) form.reset();
-    var formDiv = document.getElementById('booking-form');
-    var succDiv = document.getElementById('booking-success');
-    if (formDiv) formDiv.style.display = 'block';
-    if (succDiv) succDiv.classList.remove('show');
-    requestAnimationFrame(function() {
-        el.classList.add('show');
+    document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+    requestAnimationFrame(() => {
+        document.getElementById('modal-' + id).classList.add('show');
         document.body.style.overflow = 'hidden';
-        _modalOpen = true;
     });
 }
 function closeModal(id) {
-    var el = document.getElementById('modal-' + id);
-    if (!el) return;
-    el.classList.remove('show');
-    setTimeout(function() {
+    document.getElementById('modal-' + id).classList.remove('show');
+    setTimeout(() => {
         if (!document.querySelector('.modal-overlay.show')) {
             document.body.style.overflow = '';
-            _modalOpen = false;
         }
     }, 50);
 }
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('modal-overlay') && e.target.classList.contains('show')) {
-        closeModal(e.target.id.replace('modal-', ''));
-    }
-});
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && _modalOpen) {
-        document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
-        document.body.style.overflow = '';
-        _modalOpen = false;
-    }
-});
-
-// Booking form submit
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show')); });
 function submitBooking(e) {
     e.preventDefault();
-    var f = document.getElementById('bookingForm');
-    var data = new FormData(f);
-    var body = 'Новая заявка с сайта ЯЖИЗНЬ:\n\n';
-    body += 'Имя: ' + (data.get('name')||'') + '\n';
-    body += 'Телефон: ' + (data.get('phone')||'') + '\n';
-    body += 'Email: ' + (data.get('email')||'') + '\n';
-    body += 'Услуга: ' + (data.get('service')||'') + '\n';
-    body += 'Возраст: ' + (data.get('age')||'') + '\n';
-    body += 'Дата: ' + (data.get('date')||'') + '\n';
-    body += 'Запрос: ' + (data.get('message')||'') + '\n';
-    window.location.href = 'mailto:Yajizn@yandex.ru?subject=' + encodeURIComponent('Заявка с сайта ЯЖИЗНЬ') + '&body=' + encodeURIComponent(body);
-    document.getElementById('booking-form').style.display = 'none';
-    document.getElementById('booking-success').classList.add('show');
-    return false;
+    const f = e.target;
+    const body = `Имя: ${f.name.value}%0AТелефон: ${f.phone.value}%0AНаправление: ${f.direction.value}%0AКомментарий: ${f.comment.value}`;
+    window.location.href = `mailto:Yajizn@yandex.ru?subject=Запись на приём&body=${body}`;
+    f.reset();
+    closeModal('booking');
 }
-
-// Fade-up observer
-var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
+
 </body>
 </html>
