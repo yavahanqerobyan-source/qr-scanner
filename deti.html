@@ -1,0 +1,534 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Детское направление клиники ЯЖИЗНЬ: интегративная и превентивная педиатрия, диагностика 6 систем организма, персональный план для ребёнка.">
+    <meta property="og:title" content="Детская интегративная медицина — ЯЖИЗНЬ">
+    <meta property="og:description" content="Когда ребёнок часто болеет, устаёт или анализы в норме, но проблема остаётся. Ищем причину системно и бережно.">
+    <meta property="og:image" content="deti-hero.png">
+    <title>Дети — ЯЖИЗНЬ</title>
+    <style>
+        @font-face { font-family: "NunitoLocal"; src: url("Nunito-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+        @font-face { font-family: "NunitoLocal"; src: url("Nunito-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+        @font-face { font-family: "NunitoLocal"; src: url("Nunito-ExtraBold.ttf") format("truetype"); font-weight: 800; font-display: swap; }
+
+        :root {
+            --paper: #fbfaf7;
+            --ink: #18211f;
+            --muted: #66736f;
+            --line: rgba(24, 33, 31, 0.12);
+            --soft: #edf7f3;
+            --accent: #00897d;
+            --accent-dark: #006a61;
+            --warm: #d77956;
+            --shadow: 0 24px 80px rgba(24, 33, 31, 0.14);
+            --radius: 8px;
+            --header-h: 74px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; background: var(--paper); }
+        body { margin: 0; font-family: "NunitoLocal", system-ui, sans-serif; color: var(--ink); background: var(--paper); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        body.menu-open, body.modal-open { overflow: hidden; }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; }
+        button, input, select, textarea { font: inherit; }
+        :focus-visible { outline: 3px solid rgba(0, 137, 125, 0.35); outline-offset: 4px; }
+        .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+        .site-header { position: fixed; inset: 0 0 auto; z-index: 1000; min-height: var(--header-h); border-bottom: 1px solid rgba(255,255,255,0.18); background: rgba(251,250,247,0.86); backdrop-filter: blur(18px); }
+        .site-header__inner { min-height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand img { width: 128px; height: auto; }
+        .brand span { max-width: 170px; padding-left: 12px; border-left: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.25; }
+        .desktop-nav { display: flex; align-items: center; gap: 22px; }
+        .desktop-nav a { color: rgba(24,33,31,0.72); font-size: 15px; font-weight: 800; text-decoration: none; transition: color 0.2s ease; }
+        .desktop-nav a:hover { color: var(--ink); }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .phone-link { font-weight: 800; text-decoration: none; white-space: nowrap; }
+        .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; color: var(--ink); cursor: pointer; }
+        .menu-toggle span { display: block; width: 18px; height: 2px; margin: 4px auto; border-radius: 999px; background: currentColor; transition: transform 0.2s ease, opacity 0.2s ease; }
+        .menu-open .menu-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .menu-open .menu-toggle span:nth-child(2) { opacity: 0; }
+        .menu-open .menu-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        .mobile-nav { display: none; position: fixed; inset: var(--header-h) 0 auto; z-index: 990; padding: 18px 24px 28px; border-bottom: 1px solid var(--line); background: rgba(251,250,247,0.98); box-shadow: 0 24px 60px rgba(24,33,31,0.12); }
+        .mobile-nav.is-open { display: block; }
+        .mobile-nav a, .mobile-nav button { display: flex; width: 100%; align-items: center; justify-content: space-between; min-height: 48px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); font-weight: 800; text-align: left; text-decoration: none; cursor: pointer; }
+
+        .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 13px 20px; border: 1px solid transparent; border-radius: var(--radius); font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 14px 34px rgba(0,137,125,0.23); }
+        .btn-primary:hover { background: var(--accent-dark); }
+        .btn-ghost { border-color: rgba(255,255,255,0.48); background: rgba(255,255,255,0.15); color: #fff; }
+        .btn-soft { border-color: var(--line); background: #fff; color: var(--ink); }
+
+        main { overflow-x: hidden; }
+        .hero { position: relative; min-height: 100svh; display: grid; align-items: end; overflow: hidden; padding: calc(var(--header-h) + 70px) 0 42px; color: #fff; isolation: isolate; }
+        .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("deti-hero.png") center / cover; transform: scale(1.02); }
+        .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(9,25,21,0.9) 0%, rgba(9,25,21,0.68) 44%, rgba(9,25,21,0.16) 100%), linear-gradient(0deg, rgba(9,25,21,0.7) 0%, rgba(9,25,21,0.05) 52%); }
+        .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; color: rgba(255,255,255,0.82); font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+        .eyebrow::before { content: ""; width: 38px; height: 2px; border-radius: 999px; background: var(--warm); }
+        h1, h2, h3, p { margin: 0; }
+        .hero h1 { max-width: 760px; font-size: clamp(46px, 7vw, 96px); font-weight: 800; line-height: 0.95; letter-spacing: 0; text-wrap: balance; animation: enter 0.75s ease both; }
+        .hero__lead { max-width: 650px; margin-top: 24px; color: rgba(255,255,255,0.86); font-size: clamp(20px, 2.2vw, 30px); font-weight: 800; line-height: 1.18; animation: enter 0.75s 0.08s ease both; }
+        .hero__text { max-width: 610px; margin-top: 18px; color: rgba(255,255,255,0.76); font-size: 18px; animation: enter 0.75s 0.14s ease both; }
+        .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; animation: enter 0.75s 0.2s ease both; }
+        .hero-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; max-width: 760px; margin-top: 72px; border-top: 1px solid rgba(255,255,255,0.26); animation: enter 0.75s 0.28s ease both; }
+        .hero-proof div { padding: 18px 20px 0 0; }
+        .hero-proof strong { display: block; color: #fff; font-size: 30px; font-weight: 800; line-height: 1; }
+        .hero-proof span { display: block; margin-top: 7px; color: rgba(255,255,255,0.74); font-size: 14px; }
+
+        .section { padding: 102px 0; }
+        .section--soft { background: var(--soft); }
+        .section-head { max-width: 790px; margin-bottom: 48px; }
+        .kicker { display: block; margin-bottom: 12px; color: var(--accent-dark); font-size: 13px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+        .section-title { font-size: clamp(34px, 5vw, 62px); font-weight: 800; line-height: 1.02; text-wrap: balance; }
+        .section-copy { max-width: 650px; margin-top: 18px; color: var(--muted); font-size: 19px; }
+
+        .pain-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .pain-card { min-height: 250px; padding: 28px; background: #fff; }
+        .pain-card span { color: var(--warm); font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+        .pain-card h3 { margin-top: 42px; font-size: 25px; font-weight: 800; line-height: 1.08; }
+        .pain-card p { margin-top: 12px; color: var(--muted); font-size: 16px; }
+
+        .split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 68px; align-items: start; }
+        .sticky { position: sticky; top: calc(var(--header-h) + 34px); }
+        .steps { border-top: 1px solid var(--line); }
+        .step { display: grid; grid-template-columns: 110px 1fr; gap: 26px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+        .step strong { color: var(--accent-dark); font-size: 38px; font-weight: 800; line-height: 1; }
+        .step h3 { margin-bottom: 6px; font-size: 22px; font-weight: 800; }
+        .step p { color: var(--muted); font-size: 16px; }
+
+        .services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+        .service { display: grid; align-content: space-between; min-height: 330px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .service:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+        .service h3 { font-size: 30px; font-weight: 800; line-height: 1.05; }
+        .service p { margin-top: 14px; color: var(--muted); font-size: 17px; }
+        .service ul { display: grid; gap: 8px; margin: 24px 0 0; padding: 0; list-style: none; color: var(--muted); }
+        .service li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 999px; background: var(--accent); vertical-align: 1px; }
+
+        .equipment { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .equipment button { min-height: 210px; padding: 24px; border: 0; background: #fff; color: var(--ink); text-align: left; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }
+        .equipment button:hover { position: relative; z-index: 2; background: #fbfffd; box-shadow: var(--shadow); transform: translateY(-3px); }
+        .equipment h3 { font-size: 21px; font-weight: 800; }
+        .equipment p { margin-top: 9px; color: var(--muted); font-size: 15px; }
+        .diag-icon { display: block; margin-bottom: 20px; font-size: 30px; line-height: 1; }
+        .diag-hint { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; color: var(--accent-dark); font-size: 13px; font-weight: 800; }
+        .diag-hint::after { content: "→"; transition: transform 0.2s ease; }
+        .equipment button:hover .diag-hint::after { transform: translateX(4px); }
+
+        .price { display: grid; gap: 0; border-top: 1px solid var(--line); }
+        .price-row { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--line); }
+        .price-row h3 { font-size: 22px; font-weight: 800; }
+        .price-row p { margin-top: 4px; color: var(--muted); }
+        .price-row strong { color: var(--accent-dark); font-size: 24px; font-weight: 800; white-space: nowrap; }
+
+        .doctor-mini { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: start; }
+        .doctor-mini img { width: 150px; height: 190px; border-radius: 18px; object-fit: cover; object-position: center top; box-shadow: 0 18px 44px rgba(24,33,31,0.14); }
+        .doctor-mini h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 800; line-height: 1.05; }
+        .doctor-mini p { margin-top: 12px; color: var(--muted); font-size: 17px; font-weight: 700; }
+        .doctor-stats { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 24px; }
+        .doctor-stats strong { display: block; font-size: 32px; font-weight: 800; line-height: 1; }
+        .doctor-stats span { display: block; margin-top: 7px; color: var(--muted); font-size: 14px; }
+
+        .cta { padding: 88px 0; background: var(--ink); color: #fff; }
+        .cta__layout { display: grid; grid-template-columns: 1fr minmax(280px, 420px); gap: 64px; align-items: center; }
+        .cta h2 { max-width: 760px; font-size: clamp(38px, 6vw, 74px); font-weight: 800; line-height: 0.98; text-wrap: balance; }
+        .cta p { max-width: 580px; margin-top: 18px; color: rgba(255,255,255,0.72); font-size: 19px; }
+        .cta__contacts { display: grid; gap: 12px; }
+        .cta__contacts a { display: flex; justify-content: space-between; gap: 20px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.16); color: #fff; font-weight: 800; text-decoration: none; }
+        .cta__contacts span { color: rgba(255,255,255,0.52); font-size: 14px; font-weight: 700; }
+
+        .footer { padding: 50px 0 28px; background: #101815; color: rgba(255,255,255,0.66); }
+        .footer__grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.2fr; gap: 32px; }
+        .footer img { width: 132px; height: auto; filter: brightness(0) invert(1); }
+        .footer h3 { margin: 0 0 14px; color: #fff; font-size: 16px; font-weight: 800; }
+        .footer p, .footer a { display: block; margin: 0 0 8px; color: rgba(255,255,255,0.66); font-size: 14px; text-decoration: none; }
+        .footer__bottom { margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.42); font-size: 13px; }
+
+        .modal-overlay { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(7,17,16,0.62); backdrop-filter: blur(10px); }
+        .modal-overlay.is-open { display: flex; }
+        .modal { position: relative; width: min(620px, 100%); max-height: min(760px, calc(100svh - 40px)); overflow-y: auto; border-radius: var(--radius); background: #fff; box-shadow: 0 28px 90px rgba(0,0,0,0.28); animation: modalIn 0.24s ease both; }
+        .modal__header { padding: 32px 32px 22px; border-bottom: 1px solid var(--line); }
+        .modal__header h2 { max-width: 460px; font-size: 32px; font-weight: 800; line-height: 1.08; }
+        .modal__header p { margin-top: 10px; color: var(--muted); font-size: 16px; }
+        .modal__close { position: absolute; top: 18px; right: 18px; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; color: var(--ink); cursor: pointer; }
+        .modal__body { padding: 28px 32px 32px; }
+        .form-grid { display: grid; gap: 18px; }
+        .field label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 800; }
+        .field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: 13px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: #fbfaf7; color: var(--ink); }
+        .field textarea { min-height: 112px; resize: vertical; }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: rgba(0,137,125,0.54); background: #fff; box-shadow: 0 0 0 4px rgba(0,137,125,0.1); outline: 0; }
+        .privacy { color: var(--muted); font-size: 13px; }
+        .privacy a { color: var(--accent-dark); font-weight: 800; }
+        .info-list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+        .info-list li { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: #fbfaf7; }
+        .info-list strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 15px; font-weight: 800; }
+        .info-list span { color: var(--muted); font-size: 15px; }
+        .modal__tag { display: inline-flex; margin-bottom: 12px; color: var(--accent-dark); font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+        .modal__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+        .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+        @keyframes enter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        @media (max-width: 980px) {
+            .desktop-nav, .phone-link, .header-actions .btn { display: none; }
+            .menu-toggle { display: block; }
+            .split, .doctor-mini, .cta__layout, .footer__grid { grid-template-columns: 1fr; }
+            .sticky { position: static; }
+        }
+
+        @media (max-width: 760px) {
+            :root { --header-h: 68px; }
+            .container { width: min(100% - 32px, 1180px); }
+            .brand img { width: 112px; }
+            .brand span { display: none; }
+            .hero { min-height: auto; padding: calc(var(--header-h) + 58px) 0 30px; }
+            .hero__actions { display: grid; grid-template-columns: 1fr; }
+            .hero-proof, .pain-grid, .services, .equipment { grid-template-columns: 1fr; }
+            .section { padding: 72px 0; }
+            .step, .price-row { grid-template-columns: 1fr; gap: 10px; }
+            .doctor-mini img { width: 150px; height: 190px; }
+            .cta__contacts a { display: block; }
+            .cta__contacts span { display: block; margin-bottom: 4px; }
+            .modal-overlay { align-items: end; padding: 12px; }
+            .modal__header, .modal__body { padding-left: 22px; padding-right: 22px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a class="brand" href="index.html" aria-label="ЯЖИЗНЬ, главная">
+                <img src="logo.png" width="2508" height="627" alt="ЯЖИЗНЬ">
+                <span>Детская интегративная медицина</span>
+            </a>
+            <nav class="desktop-nav" aria-label="Основная навигация">
+                <a href="#problems">Ситуации</a>
+                <a href="#approach">Подход</a>
+                <a href="#services">Услуги</a>
+                <a href="#price">Прайс</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+            <div class="header-actions">
+                <a class="phone-link" href="tel:+79037928003">+7 903 792 80 03</a>
+                <button class="btn btn-primary" type="button" data-open-modal>Записаться</button>
+                <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Мобильная навигация">
+        <a href="#problems">Ситуации <span>→</span></a>
+        <a href="#approach">Подход <span>→</span></a>
+        <a href="#services">Услуги <span>→</span></a>
+        <a href="#price">Прайс <span>→</span></a>
+        <button type="button" data-open-modal>Записаться <span>→</span></button>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <span class="eyebrow">Дети 2–10 лет</span>
+                <h1>Медицина, которая ищет причину у ребёнка</h1>
+                <p class="hero__lead">Когда ребёнок часто болеет, быстро устаёт или анализы “в норме”, но состояние не улучшается.</p>
+                <p class="hero__text">Проводим комплексную диагностику 6 систем организма и собираем понятный план действий для родителей.</p>
+                <div class="hero__actions">
+                    <button class="btn btn-primary" type="button" data-open-modal>Записаться на диагностику</button>
+                    <a class="btn btn-ghost" href="#approach">Как проходит приём</a>
+                </div>
+                <div class="hero-proof">
+                    <div><strong>6</strong><span>систем организма</span></div>
+                    <div><strong>15–30</strong><span>минут диагностики</span></div>
+                    <div><strong>бережно</strong><span>без боли и лишнего стресса</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="problems">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">Знакомая ситуация?</span>
+                    <h2 class="section-title">Родители приходят, когда обычный маршрут не даёт ответа</h2>
+                    <p class="section-copy">Главная задача детского направления — собрать разрозненные симптомы в одну понятную картину.</p>
+                </div>
+                <div class="pain-grid">
+                    <div class="pain-card reveal"><span>01</span><h3>Круговорот врачей</h3><p>Педиатр, невролог, иммунолог, гастроэнтеролог — каждый видит свой участок, но общей картины нет.</p></div>
+                    <div class="pain-card reveal"><span>02</span><h3>Анализы в норме</h3><p>Показатели формально хорошие, а ребёнок устаёт, капризничает, плохо восстанавливается и часто болеет.</p></div>
+                    <div class="pain-card reveal"><span>03</span><h3>Лечат симптомы</h3><p>Насморк, кашель, температура уходят на время, но причина остаётся и всё повторяется снова.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--soft" id="approach">
+            <div class="container split">
+                <div class="sticky reveal">
+                    <span class="kicker">Подход</span>
+                    <h2 class="section-title">От жалобы к персональному плану</h2>
+                    <p class="section-copy">Мы не перегружаем родителей терминами. После приёма должно быть понятно, что происходит и какой шаг первый.</p>
+                </div>
+                <div class="steps">
+                    <div class="step reveal"><strong>01</strong><div><h3>Собираем историю</h3><p>Развитие, питание, сон, нагрузки, частота болезней, жалобы и предыдущие обследования.</p></div></div>
+                    <div class="step reveal"><strong>02</strong><div><h3>Проводим диагностику</h3><p>Оцениваем функциональное состояние организма через 6 диагностических направлений.</p></div></div>
+                    <div class="step reveal"><strong>03</strong><div><h3>Ищем взаимосвязи</h3><p>Смотрим, как связаны иммунитет, сосуды, микроциркуляция, дефициты, стресс и восстановление.</p></div></div>
+                    <div class="step reveal"><strong>04</strong><div><h3>Даём план</h3><p>Рекомендации по питанию, режиму, коррекции, наблюдению и контрольным точкам.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">Услуги</span>
+                    <h2 class="section-title">Два понятных маршрута для ребёнка</h2>
+                </div>
+                <div class="services">
+                    <article class="service reveal">
+                        <div>
+                            <h3>Интегративная педиатрия</h3>
+                            <p>Когда уже есть жалобы: частые болезни, усталость, головные боли, проблемы с весом, поведением или восстановлением.</p>
+                            <ul>
+                                <li>комплексная диагностика</li>
+                                <li>поиск причины, а не только симптома</li>
+                                <li>индивидуальные рекомендации</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-soft" type="button" data-open-modal>Записаться</button>
+                    </article>
+                    <article class="service reveal">
+                        <div>
+                            <h3>Превентивная педиатрия</h3>
+                            <p>Когда хочется предупредить проблемы заранее: оценить риски, укрепить здоровье и понимать слабые места организма.</p>
+                            <ul>
+                                <li>оценка рисков</li>
+                                <li>раннее выявление нарушений</li>
+                                <li>профилактический маршрут</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-soft" type="button" data-open-modal>Записаться</button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--soft">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">Диагностика</span>
+                    <h2 class="section-title">Оборудование, которое помогает увидеть функциональные нарушения</h2>
+                    <p class="section-copy">Нажмите на метод, чтобы понять, при каких жалобах он полезен и какой результат даёт родителям.</p>
+                </div>
+                <div class="equipment">
+                    <button class="reveal" type="button" data-info="kme"><span class="diag-icon">🧭</span><h3>КМЕ</h3><p>Функциональное состояние органов и систем.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="capillary"><span class="diag-icon">🔬</span><h3>Капилляроскопия</h3><p>Микроциркуляция крови в капиллярах.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="bioimpedance"><span class="diag-icon">⚖️</span><h3>Биоимпеданс</h3><p>Состав тела: мышцы, жир, вода.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="oligoscan"><span class="diag-icon">🧪</span><h3>ОлигоСкан</h3><p>Антиоксидантный и минеральный статус.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="angiocode"><span class="diag-icon">💓</span><h3>АнгиоКод</h3><p>Состояние сосудов и гемодинамика.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="webwellness"><span class="diag-icon">🌿</span><h3>ВебВелнесс</h3><p>Wellness-индекс и адаптационные резервы.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="price">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">Прайс</span>
+                    <h2 class="section-title">Прозрачная стоимость</h2>
+                    <p class="section-copy">Цены можно уточнить у администратора при записи, если нужен расширенный маршрут.</p>
+                </div>
+                <div class="price">
+                    <div class="price-row reveal"><div><h3>Первичная консультация и диагностика</h3><p>Сбор истории, диагностика, разбор результата.</p></div><strong>по записи</strong></div>
+                    <div class="price-row reveal"><div><h3>Интегративная педиатрия</h3><p>Комплексный маршрут при жалобах.</p></div><strong>по записи</strong></div>
+                    <div class="price-row reveal"><div><h3>Превентивная педиатрия</h3><p>Профилактический осмотр и оценка рисков.</p></div><strong>по записи</strong></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--soft" id="doctor">
+            <div class="container doctor-mini reveal">
+                <img src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
+                <div>
+                    <span class="kicker">О враче</span>
+                    <h2>Ровенская Елена Викторовна</h2>
+                    <p>Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог. Врач превентивной, интегративной, антивозрастной медицины и функциональной диагностики.</p>
+                    <div class="doctor-stats">
+                        <div><strong>32</strong><span>года стажа</span></div>
+                        <div><strong>к.м.н.</strong><span>учёная степень</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" id="contacts">
+            <div class="container cta__layout">
+                <div class="reveal">
+                    <span class="kicker" style="color:#78d6ca;">Запись</span>
+                    <h2>Разберём ситуацию ребёнка системно и бережно</h2>
+                    <p>Оставьте заявку. Администратор поможет выбрать направление и удобное время.</p>
+                    <div style="margin-top:30px;"><button class="btn btn-primary" type="button" data-open-modal>Оставить заявку</button></div>
+                </div>
+                <div class="cta__contacts reveal">
+                    <a href="tel:+79037928003"><span>Мобильный</span>+7 903 792 80 03</a>
+                    <a href="tel:+74957928003"><span>Городской</span>+7 495 792 80 03</a>
+                    <a href="mailto:Yajizn@yandex.ru"><span>Email</span>Yajizn@yandex.ru</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div><img src="logo.png" width="2508" height="627" loading="lazy" alt="ЯЖИЗНЬ"><p style="margin-top:14px;">Клиника интегративной медицины</p></div>
+                <div><h3>Навигация</h3><a href="index.html">Главная</a><a href="deti.html">Дети</a><a href="vzroslye.html">Взрослые</a></div>
+                <div><h3>Контакты</h3><a href="tel:+79037928003">+7 903 792 80 03</a><a href="tel:+74957928003">+7 495 792 80 03</a><a href="mailto:Yajizn@yandex.ru">Yajizn@yandex.ru</a></div>
+                <div><h3>Информация</h3><p>ООО «ВОССТАНОВЛЕНИЕ»</p><p>ИНН: 9722108070</p><p>Лицензия № Л041-01137-77/04132361</p><p>от 13.01.2026 г.</p><a href="politika.html">Политика данных</a></div>
+            </div>
+            <div class="footer__bottom">© 2026 ЯЖИЗНЬ. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="booking-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+            <button class="modal__close" type="button" aria-label="Закрыть форму записи" data-close-modal>×</button>
+            <div class="modal__header"><h2 id="booking-title">Записаться на детскую диагностику</h2><p>Оставьте контакты. Мы свяжемся с вами и подберём маршрут.</p></div>
+            <div class="modal__body">
+                <form class="form-grid" id="booking-form">
+                    <div class="field"><label for="patient-name">Ваше имя</label><input id="patient-name" name="name" type="text" autocomplete="name" required placeholder="Как к вам обращаться…"></div>
+                    <div class="field"><label for="patient-phone">Телефон</label><input id="patient-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="+7 900 000 00 00…"></div>
+                    <div class="field"><label for="patient-direction">Направление</label><select id="patient-direction" name="direction"><option value="Детская интегративная медицина">Детская интегративная медицина</option><option value="Превентивная педиатрия">Превентивная педиатрия</option><option value="Не знаю">Пока не знаю</option></select></div>
+                    <div class="field"><label for="patient-comment">Комментарий</label><textarea id="patient-comment" name="comment" placeholder="Коротко опишите ситуацию ребёнка…"></textarea></div>
+                    <p class="privacy">Нажимая кнопку, вы соглашаетесь с <a href="politika.html">политикой обработки персональных данных</a>.</p>
+                    <button class="btn btn-primary" type="submit">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="info-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="info-title">
+            <button class="modal__close" type="button" aria-label="Закрыть описание диагностики" data-close-info>×</button>
+            <div class="modal__header">
+                <span class="modal__tag">Подходит ли вашему ребёнку</span>
+                <h2 id="info-title">Диагностика</h2>
+                <p id="info-lead">Короткое описание метода.</p>
+            </div>
+            <div class="modal__body">
+                <ul class="info-list">
+                    <li><strong>Проблема</strong><span id="info-problem"></span></li>
+                    <li><strong>Что показывает</strong><span id="info-shows"></span></li>
+                    <li><strong>Что делать дальше</strong><span id="info-solution"></span></li>
+                </ul>
+                <div class="modal__actions">
+                    <button class="btn btn-primary" type="button" data-open-modal>Записаться</button>
+                    <button class="btn btn-soft" type="button" data-close-info>Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const body = document.body;
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mobileNav = document.getElementById("mobile-nav");
+        const bookingModal = document.getElementById("booking-modal");
+        const bookingPanel = bookingModal.querySelector(".modal");
+        const infoModal = document.getElementById("info-modal");
+        const infoPanel = infoModal.querySelector(".modal");
+        const form = document.getElementById("booking-form");
+        let lastFocus = null;
+        const infoContent = {
+            kme: {
+                title: "КМЕ",
+                lead: "Базовая карта функционального состояния организма.",
+                problem: "Ребёнок часто болеет, быстро устаёт, жалобы разные, а стандартные обследования не дают единой причины.",
+                shows: "Какие органы и системы работают с напряжением, где есть функциональная перегрузка и что требует внимания в первую очередь.",
+                solution: "Врач сопоставляет результат с жалобами и собирает маршрут: что проверить глубже, что корректировать режимом, питанием и наблюдением."
+            },
+            capillary: {
+                title: "Капилляроскопия",
+                lead: "Проверка микроциркуляции в самых мелких сосудах.",
+                problem: "Бледность, холодные руки, головные боли, утомляемость, метеозависимость, при этом гемоглобин может быть в норме.",
+                shows: "Как кровь доходит до тканей: есть ли спазм, застой, нарушение тока крови или слабая доставка кислорода.",
+                solution: "Помогает понять, связаны ли жалобы с микроциркуляцией, и выбрать корректировку нагрузки, режима и поддержки сосудов."
+            },
+            bioimpedance: {
+                title: "Биоимпеданс",
+                lead: "Состав тела ребёнка в цифрах, а не только вес на весах.",
+                problem: "Есть лишний или недостаточный вес, отёчность, слабая мышечная масса, ребёнок быстро устаёт на тренировках.",
+                shows: "Соотношение мышц, жира и воды, признаки скрытых отёков и дефицита мышечной массы.",
+                solution: "Даёт врачу основу для рекомендаций по питанию, активности и контролю динамики без догадок."
+            },
+            oligoscan: {
+                title: "ОлигоСкан",
+                lead: "Оценка минерального и антиоксидантного статуса.",
+                problem: "Частые болезни, слабое восстановление, витамины “не помогают”, есть подозрение на дефициты.",
+                shows: "Каких минералов и антиоксидантов может не хватать тканям, а где возможен избыток.",
+                solution: "Позволяет точнее подобрать коррекцию, не назначая добавки вслепую."
+            },
+            angiocode: {
+                title: "АнгиоКод",
+                lead: "Оценка сосудистого тонуса и гемодинамики.",
+                problem: "Головные боли, метеозависимость, слабость, перепады самочувствия, подозрение на сосудистый компонент.",
+                shows: "Состояние сосудов, тонус, особенности кровотока и возможные причины нестабильного самочувствия.",
+                solution: "Помогает понять, нужна ли сосудистая коррекция, режимные изменения и дополнительное наблюдение."
+            },
+            webwellness: {
+                title: "ВебВелнесс",
+                lead: "Оценка адаптационных резервов и wellness-индекса.",
+                problem: "Ребёнок эмоционально перегружен, плохо восстанавливается, быстро истощается после школы, секций или болезней.",
+                shows: "Баланс нагрузки и восстановления, уровень стресса и резерв адаптации организма.",
+                solution: "Помогает выстроить щадящий режим, восстановление и контроль динамики."
+            }
+        };
+        function closeMenu() { body.classList.remove("menu-open"); mobileNav.classList.remove("is-open"); menuToggle.setAttribute("aria-expanded", "false"); menuToggle.setAttribute("aria-label", "Открыть меню"); }
+        menuToggle.addEventListener("click", () => { const isOpen = body.classList.toggle("menu-open"); mobileNav.classList.toggle("is-open", isOpen); menuToggle.setAttribute("aria-expanded", String(isOpen)); menuToggle.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню"); });
+        mobileNav.addEventListener("click", (event) => { if (event.target.closest("a, button")) closeMenu(); });
+        function openModal() { lastFocus = document.activeElement; closeMenu(); closeInfo(false); bookingModal.classList.add("is-open"); bookingModal.setAttribute("aria-hidden", "false"); body.classList.add("modal-open"); requestAnimationFrame(() => document.getElementById("patient-name").focus()); }
+        function closeModal(restoreFocus = true) { bookingModal.classList.remove("is-open"); bookingModal.setAttribute("aria-hidden", "true"); if (!infoModal.classList.contains("is-open")) body.classList.remove("modal-open"); if (restoreFocus && lastFocus && typeof lastFocus.focus === "function") lastFocus.focus(); }
+        function openInfo(key) {
+            const item = infoContent[key];
+            if (!item) return;
+            lastFocus = document.activeElement;
+            document.getElementById("info-title").textContent = item.title;
+            document.getElementById("info-lead").textContent = item.lead;
+            document.getElementById("info-problem").textContent = item.problem;
+            document.getElementById("info-shows").textContent = item.shows;
+            document.getElementById("info-solution").textContent = item.solution;
+            closeMenu();
+            infoModal.classList.add("is-open");
+            infoModal.setAttribute("aria-hidden", "false");
+            body.classList.add("modal-open");
+            requestAnimationFrame(() => infoModal.querySelector("[data-close-info]").focus());
+        }
+        function closeInfo(restoreFocus = true) { infoModal.classList.remove("is-open"); infoModal.setAttribute("aria-hidden", "true"); if (!bookingModal.classList.contains("is-open")) body.classList.remove("modal-open"); if (restoreFocus && lastFocus && typeof lastFocus.focus === "function") lastFocus.focus(); }
+        document.querySelectorAll("[data-open-modal]").forEach((button) => button.addEventListener("click", openModal));
+        document.querySelectorAll("[data-close-modal]").forEach((button) => button.addEventListener("click", () => closeModal()));
+        document.querySelectorAll("[data-info]").forEach((button) => button.addEventListener("click", () => openInfo(button.dataset.info)));
+        document.querySelectorAll("[data-close-info]").forEach((button) => button.addEventListener("click", () => closeInfo()));
+        bookingModal.addEventListener("click", (event) => { if (!bookingPanel.contains(event.target)) closeModal(); });
+        infoModal.addEventListener("click", (event) => { if (!infoPanel.contains(event.target)) closeInfo(); });
+        document.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape") return;
+            if (infoModal.classList.contains("is-open")) closeInfo();
+            else if (bookingModal.classList.contains("is-open")) closeModal();
+        });
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const data = new FormData(form);
+            const lines = [`Имя: ${data.get("name")}`, `Телефон: ${data.get("phone")}`, `Направление: ${data.get("direction")}`, `Комментарий: ${data.get("comment") || "Не указан"}`];
+            window.location.href = `mailto:Yajizn@yandex.ru?subject=${encodeURIComponent("Запись на детскую диагностику")}&body=${encodeURIComponent(lines.join("\n"))}`;
+            form.reset();
+            closeModal();
+        });
+        const revealObserver = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.14 });
+        document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+    </script>
+</body>
+</html>
