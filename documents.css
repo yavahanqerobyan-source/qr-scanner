@@ -1,0 +1,225 @@
+.doc-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 800;
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.doc-license-trigger {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.doc-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 30000;
+    display: none;
+    place-items: center;
+    padding: 24px;
+    background: rgba(10, 16, 14, 0.72);
+    backdrop-filter: blur(10px);
+}
+
+.doc-modal-overlay.is-open {
+    display: grid;
+}
+
+.doc-modal {
+    width: min(1080px, 100%);
+    max-height: calc(100svh - 48px);
+    overflow: hidden;
+    border-radius: 10px;
+    background: #fff;
+    color: #18211f;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.34);
+    animation: docModalIn 0.22s ease both;
+}
+
+.doc-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 24px;
+    border-bottom: 1px solid rgba(24, 33, 31, 0.12);
+}
+
+.doc-modal__header h2 {
+    margin: 0;
+    font-size: clamp(26px, 4vw, 42px);
+    line-height: 1.05;
+}
+
+.doc-modal__header p {
+    margin: 8px 0 0;
+    color: #62706b;
+    line-height: 1.55;
+}
+
+.doc-modal__close {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid rgba(24, 33, 31, 0.16);
+    border-radius: 8px;
+    background: #fff;
+    color: #18211f;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.doc-modal__body {
+    max-height: calc(100svh - 180px);
+    overflow: auto;
+    padding: 24px;
+}
+
+.doc-requisites {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.doc-requisite {
+    display: grid;
+    gap: 8px;
+    padding: 16px;
+    border: 1px solid rgba(24, 33, 31, 0.12);
+    border-radius: 8px;
+    background: #fbfaf7;
+}
+
+.doc-requisite span {
+    color: #62706b;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.doc-requisite strong {
+    overflow-wrap: anywhere;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.doc-copy {
+    justify-self: start;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 124, 114, 0.24);
+    border-radius: 8px;
+    background: rgba(0, 124, 114, 0.08);
+    color: #007c72;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.doc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.doc-actions a,
+.doc-actions button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border: 1px solid rgba(24, 33, 31, 0.14);
+    border-radius: 8px;
+    background: #fff;
+    color: #18211f;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.doc-pdf-frame {
+    width: 100%;
+    height: min(72svh, 760px);
+    border: 1px solid rgba(24, 33, 31, 0.14);
+    border-radius: 8px;
+    background: #f3f3ef;
+}
+
+@keyframes docModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+html.a11y-on .doc-modal,
+html.a11y-on .doc-modal *,
+html.a11y-on .doc-trigger,
+html.a11y-on .doc-license-trigger {
+    background-color: var(--a11y-bg) !important;
+    color: var(--a11y-text) !important;
+    border-color: var(--a11y-border) !important;
+}
+
+html.a11y-on .doc-copy,
+html.a11y-on .doc-actions a,
+html.a11y-on .doc-actions button,
+html.a11y-on .doc-trigger,
+html.a11y-on .doc-license-trigger {
+    color: var(--a11y-link) !important;
+}
+
+@media (max-width: 760px) {
+    .doc-modal-overlay {
+        align-items: end;
+        padding: 10px;
+    }
+
+    .doc-modal {
+        max-height: calc(100svh - 20px);
+    }
+
+    .doc-requisites {
+        grid-template-columns: 1fr;
+    }
+
+    .doc-modal__header,
+    .doc-modal__body {
+        padding: 18px;
+    }
+
+    .doc-pdf-frame {
+        height: 70svh;
+    }
+}
