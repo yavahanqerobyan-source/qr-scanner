@@ -173,7 +173,7 @@
         .cta__contacts span { color: rgba(255,255,255,0.52); font-size: 14px; font-weight: 700; }
 
         .footer { padding: 50px 0 28px; background: #101815; color: rgba(255,255,255,0.66); }
-        .footer__grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.2fr; gap: 32px; }
+        .footer__grid { display: grid; grid-template-columns: 1.25fr 0.9fr 1fr 1fr 1.15fr; gap: 32px; }
         .footer img { width: 132px; height: auto; filter: brightness(0) invert(1); }
         .footer h3 { margin: 0 0 14px; color: #fff; font-size: 16px; font-weight: 800; }
         .footer p, .footer a { display: block; margin: 0 0 8px; color: rgba(255,255,255,0.66); font-size: 14px; text-decoration: none; }
@@ -243,6 +243,7 @@
     </style>
     <link rel="stylesheet" href="accessibility.css">
     <link rel="stylesheet" href="documents.css">
+    <link rel="stylesheet" href="messengers.css">
 </head>
 <body>
     <a class="skip-link" href="#main">Перейти к содержанию</a>
@@ -764,6 +765,7 @@
         const revealObserver = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.14 });
         document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
     </script>
+    <script src="messengers.js" defer></script>
     <script src="documents.js" defer></script>
     <script src="accessibility.js" defer></script>
 </body>

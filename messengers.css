@@ -1,0 +1,131 @@
+.messenger-links {
+    display: grid;
+    gap: 8px;
+}
+
+.messenger-links a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.messenger-icon {
+    display: inline-grid;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.messenger-icon svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+
+.messenger-icon--telegram {
+    background: #2aabee;
+}
+
+.messenger-icon--max {
+    background: #fff;
+    color: #101815;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+}
+
+.messenger-label {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.footer .messenger-links a {
+    margin-bottom: 8px;
+}
+
+.footer .messenger-links .messenger-label span,
+.messenger-note {
+    display: block;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.booking-channels {
+    display: grid;
+    gap: 10px;
+    padding: 16px;
+    border: 1px solid var(--line, rgba(24, 33, 31, 0.12));
+    border-radius: var(--radius, 8px);
+    background: #fbfaf7;
+}
+
+.booking-channels__title {
+    margin: 0;
+    color: var(--ink, #18211f);
+    font-weight: 800;
+}
+
+.booking-channels__text {
+    margin: 0;
+    color: var(--muted, #62706b);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.booking-channel-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.booking-channel-actions a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid rgba(0, 124, 114, 0.2);
+    border-radius: var(--radius, 8px);
+    background: rgba(0, 124, 114, 0.08);
+    color: var(--accent-dark, #007c72);
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+}
+
+.booking-channel-actions .messenger-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.booking-channel-actions .messenger-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+html.a11y-on .booking-channels,
+html.a11y-on .booking-channels *,
+html.a11y-on .messenger-links,
+html.a11y-on .messenger-links * {
+    background-color: var(--a11y-bg) !important;
+    color: var(--a11y-text) !important;
+    border-color: var(--a11y-border) !important;
+}
+
+html.a11y-on .booking-channel-actions a,
+html.a11y-on .messenger-links a {
+    color: var(--a11y-link) !important;
+}
+
+@media (max-width: 760px) {
+    .booking-channel-actions {
+        grid-template-columns: 1fr;
+    }
+}
