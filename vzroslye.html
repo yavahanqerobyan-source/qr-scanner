@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Взрослое направление клиники ЯЖИЗНЬ: превентивная медицина, биофизический check-up, биологический возраст, сосуды, метаболизм и мониторинг.">
+    <meta name="description" content="Взрослое направление ЯЖИЗНЬ: превентивный check-up, Oxyterra, карбокситерапия, AngioCode, КМЕ Anti-Age, Ion Detox Foot Spa и биоимпеданс.">
     <meta property="og:title" content="Взрослая превентивная медицина — ЯЖИЗНЬ">
-    <meta property="og:description" content="Узнайте реальный ресурс организма, сосудистый и метаболический профиль, получите персональный план восстановления.">
+    <meta property="og:description" content="Check-up с КМЕ Anti-Age, AngioCode, биоимпедансом, Oxyterra, карбокситерапией и персональным планом восстановления.">
     <meta property="og:image" content="adults.png">
     <title>Взрослые — ЯЖИЗНЬ</title>
     <style>
@@ -119,6 +119,18 @@
         .diagnostics button:hover { position: relative; z-index: 2; background: #fbfffd; box-shadow: var(--shadow); transform: translateY(-3px); }
         .diagnostics h3 { font-size: 21px; font-weight: 800; }
         .diagnostics p { margin-top: 9px; color: var(--muted); font-size: 15px; }
+        .therapy-highlight { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 1px; overflow: hidden; margin-bottom: 34px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .therapy-highlight__intro, .therapy-highlight__card { padding: 30px; background: #fff; }
+        .therapy-highlight__intro { background: #101815; color: #fff; }
+        .therapy-highlight__intro span { display: inline-flex; margin-bottom: 18px; color: #78d6ca; font-size: 13px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+        .therapy-highlight h3 { max-width: 520px; font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.04; }
+        .therapy-highlight p { margin-top: 14px; color: rgba(255,255,255,0.72); font-size: 17px; }
+        .therapy-highlight__card { display: grid; align-content: space-between; gap: 22px; }
+        .therapy-highlight__card h3 { font-size: 26px; line-height: 1.08; }
+        .therapy-highlight__card p { color: var(--muted); }
+        .therapy-points { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; color: var(--muted); }
+        .therapy-points li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 999px; background: var(--accent); vertical-align: 1px; }
+        .therapy-open { justify-self: start; min-height: 46px; padding: 12px 16px; border: 1px solid rgba(0,124,114,0.2); border-radius: var(--radius); background: rgba(0,124,114,0.08); color: var(--accent-dark); font-weight: 800; cursor: pointer; }
         .diag-icon { display: block; margin-bottom: 20px; font-size: 30px; line-height: 1; }
         .diag-hint { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; color: var(--accent-dark); font-size: 13px; font-weight: 800; }
         .diag-hint::after { content: "→"; transition: transform 0.2s ease; }
@@ -212,7 +224,7 @@
             .brand span { display: none; }
             .hero { min-height: auto; padding: calc(var(--header-h) + 58px) 0 30px; }
             .hero__actions { display: grid; grid-template-columns: 1fr; }
-            .hero-proof, .signal-grid, .programs, .diagnostics, .result-grid { grid-template-columns: 1fr; }
+            .hero-proof, .signal-grid, .programs, .diagnostics, .result-grid, .therapy-highlight { grid-template-columns: 1fr; }
             .section { padding: 72px 0; }
             .check-row, .price-row { grid-template-columns: 1fr; gap: 10px; }
             .price-group { padding: 22px; }
@@ -319,16 +331,16 @@
             <div class="container split">
                 <div class="sticky reveal">
                     <span class="kicker">Check-up</span>
-                    <h2 class="section-title">Что входит в диагностику</h2>
-                    <p class="section-copy">Мы собираем данные по ключевым системам, чтобы увидеть не отдельную жалобу, а профиль здоровья.</p>
+                    <h2 class="section-title">Что может входить в маршрут</h2>
+                    <p class="section-copy">Врач подбирает технологии по задаче: оценить функциональные системы, сосуды, метаболизм, восстановление и адаптационные резервы.</p>
                 </div>
                 <div class="check-list">
-                    <div class="check-row reveal"><strong>01</strong><div><h3>Клеточный анализ крови</h3><p>Оценка клеточного состава, признаков воспаления и дефицитных состояний.</p></div></div>
-                    <div class="check-row reveal"><strong>02</strong><div><h3>АнгиоКод</h3><p>Жёсткость сосудов, сосудистый возраст и сердечно-сосудистые риски.</p></div></div>
-                    <div class="check-row reveal"><strong>03</strong><div><h3>Капилляроскопия</h3><p>Микроциркуляция в реальном времени: спазмы, застойные явления, доставка крови к тканям.</p></div></div>
-                    <div class="check-row reveal"><strong>04</strong><div><h3>Биоимпеданс</h3><p>Состав тела, вода, мышцы, жир, метаболический возраст.</p></div></div>
-                    <div class="check-row reveal"><strong>05</strong><div><h3>Олигоскан</h3><p>Минеральный и антиоксидантный профиль организма.</p></div></div>
-                    <div class="check-row reveal"><strong>06</strong><div><h3>ВебВелнесс</h3><p>Вегетативный статус, уровень стресса и резервы адаптации.</p></div></div>
+                    <div class="check-row reveal"><strong>01</strong><div><h3>Аппарат Oxyterra</h3><p>Интервальная гипокси-гипероксическая тренировка для работы с ресурсом, восстановлением, сердечно-сосудистой и дыхательной системой.</p></div></div>
+                    <div class="check-row reveal"><strong>02</strong><div><h3>Карбокситерапия</h3><p>Медицинский CO₂ для локальной работы с микроциркуляцией, спазмом, отёчностью и восстановлением тканей.</p></div></div>
+                    <div class="check-row reveal"><strong>03</strong><div><h3>Аппарат AngioCode</h3><p>Сосудистый тонус, жесткость и эластичность сосудов, эндотелиальная функция, центральное давление и индекс стресса.</p></div></div>
+                    <div class="check-row reveal"><strong>04</strong><div><h3>КМЕ Anti-Age</h3><p>Оценка функциональных систем организма, органов и тканей, нервной системы, гормонального баланса, иммунного статуса и резервов адаптации.</p></div></div>
+                    <div class="check-row reveal"><strong>05</strong><div><h3>Ion Detox Foot Spa</h3><p>Аппарат для ионной детоксикации организма в составе восстановительных программ по показаниям врача.</p></div></div>
+                    <div class="check-row reveal"><strong>06</strong><div><h3>Биоимпедансное исследование</h3><p>Состав тела, гидратация, мышечная и жировая масса, метаболические риски и контроль динамики.</p></div></div>
                 </div>
             </div>
         </section>
@@ -356,10 +368,10 @@
                     <article class="program reveal">
                         <div>
                             <h3>Вес и метаболизм</h3>
-                            <p>Когда вес растёт, диеты не работают, а нужно понять состав тела, глюкозу и метаболические риски.</p>
+                            <p>Когда вес растёт, диеты не работают, а нужно понять состав тела, нагрузку на обмен веществ и метаболические риски.</p>
                             <ul>
-                                <li>7-дневный мониторинг глюкозы</li>
-                                <li>биоимпеданс</li>
+                                <li>биоимпедансное исследование</li>
+                                <li>план коррекции метаболических факторов</li>
                                 <li>питание и нагрузка</li>
                             </ul>
                         </div>
@@ -395,18 +407,36 @@
 
         <section class="section section--soft">
             <div class="container">
+                <div class="therapy-highlight reveal">
+                    <div class="therapy-highlight__intro">
+                        <span>Коррекция после диагностики</span>
+                        <h3>IV и инфузионная терапия - отдельный врачебный этап</h3>
+                        <p>Это не аппаратный метод и не самостоятельная процедура “на всякий случай”. Состав, дозировки и курс определяются после оценки жалоб, анализов, целей восстановления и противопоказаний.</p>
+                    </div>
+                    <div class="therapy-highlight__card">
+                        <div>
+                            <h3>Когда врач может рассмотреть инфузии</h3>
+                            <ul class="therapy-points">
+                                <li>хроническая усталость и слабое восстановление</li>
+                                <li>дефицитные, метаболические и anti-age программы</li>
+                                <li>поддержка после стресса, болезни или высокой нагрузки</li>
+                            </ul>
+                        </div>
+                        <button class="therapy-open" type="button" data-info="iv">Понять, подходит ли</button>
+                    </div>
+                </div>
                 <div class="section-head reveal">
-                    <span class="kicker">Диагностические блоки</span>
-                    <h2 class="section-title">Каждый метод закрывает конкретный вопрос</h2>
-                    <p class="section-copy">Нажмите на блок, чтобы понять, при каких симптомах он нужен и какой результат вы получите.</p>
+                    <span class="kicker">Технологии клиники</span>
+                    <h2 class="section-title">Аппаратные методы, которые есть в программах ЯЖИЗНЬ</h2>
+                    <p class="section-copy">Нажмите на блок, чтобы понять, при каких задачах метод может быть полезен и как врач использует результат.</p>
                 </div>
                 <div class="diagnostics">
-                    <button class="reveal" type="button" data-info="blood"><span class="diag-icon">🩸</span><h3>Клеточный анализ крови</h3><p>Дефициты, воспаление и качество клеточного состава.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="angiocode"><span class="diag-icon">💓</span><h3>АнгиоКод</h3><p>Состояние сосудов, тонус и гемодинамика.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="capillaries"><span class="diag-icon">🔬</span><h3>Капилляроскопия</h3><p>Как кровь доходит до тканей и где есть застой.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="body"><span class="diag-icon">⚖️</span><h3>Биоимпеданс</h3><p>Мышцы, жир, вода и метаболический возраст.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="oligoscan"><span class="diag-icon">🧪</span><h3>ОлигоСкан</h3><p>Минералы, антиоксиданты и карта дефицитов.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="webwellness"><span class="diag-icon">🌿</span><h3>ВебВелнесс</h3><p>Баланс нервной системы и адаптационные резервы.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="oxyterra"><span class="diag-icon">🌬️</span><h3>Аппарат Oxyterra</h3><p>Гипокси-гипероксическая тренировка.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="carboxy"><span class="diag-icon">🫧</span><h3>Карбокситерапия</h3><p>CO₂-методика для микроциркуляции и восстановления тканей.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="angiocode"><span class="diag-icon">💓</span><h3>Аппарат AngioCode</h3><p>Состояние сосудов, тонус и гемодинамика.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="kme"><span class="diag-icon">🧭</span><h3>КМЕ Anti-Age</h3><p>Функциональные системы, резервы адаптации и баланс процессов.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="detox"><span class="diag-icon">🦶</span><h3>Ion Detox Foot Spa</h3><p>Аппарат для ионной детоксикации организма.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="body"><span class="diag-icon">⚖️</span><h3>Биоимпедансное исследование</h3><p>Мышцы, жир, вода и метаболический возраст.</p><span class="diag-hint">Понять, подходит ли</span></button>
                 </div>
             </div>
         </section>
@@ -438,9 +468,8 @@
                         <div class="price">
                             <div class="price-row"><div><h3>Программа «Анти-эйдж»</h3><p>Комплексная оценка возрастных и ресурсных показателей.</p></div><strong>16 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Биоимпедансный анализ состава тела</h3><p>Компонентный состав: мышцы, жир, вода.</p></div><strong>3 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Исследование эндотелиальной функции сосудов</h3><p>Аппарат «Ангиоскан» экспресс.</p></div><strong>3 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Исследование эндотелиальной функции сосудов</h3><p>Аппарат AngioCode • сосудистый тонус и эндотелиальная функция.</p></div><strong>3 000 ₽</strong></div>
                             <div class="price-row"><div><h3>ВРТ</h3><p>Биорезонансное тестирование • 2 часа.</p></div><strong>10 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Миниинвазивный мониторинг глюкозы</h3><p>Контроль уровня глюкозы крови в течение 7 дней.</p></div><strong>15 000 ₽</strong></div>
                         </div>
                     </section>
 
@@ -450,7 +479,6 @@
                             <div class="price-row"><div><h3>1 процедура управляемой гипоксии</h3><p>OXYTERRA.</p></div><strong>5 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Интервальная гипокси-гиперокситерапия</h3><p>5 сеансов.</p></div><strong>20 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Интервальная гипокси-гиперокситерапия</h3><p>10 сеансов.</p></div><strong>35 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Датчик для мониторирования глюкозы Lumiflex</h3><p>Для динамического контроля глюкозы.</p></div><strong>6 500 ₽</strong></div>
                         </div>
                     </section>
 
@@ -643,47 +671,54 @@
         }
         renderPriceCatalog();
         const infoContent = {
-            blood: {
-                title: "Клеточный анализ крови",
-                lead: "Когда обычные цифры анализа не объясняют самочувствие.",
-                problem: "Хроническая усталость, частые воспаления, слабое восстановление, выпадение волос, ощущение “ресурса нет”.",
-                shows: "Качество клеточного состава, признаки скрытого воспаления, дефицитные состояния и ранние маркеры перегрузки.",
-                solution: "Врач понимает, какие дефициты и процессы нужно корректировать в первую очередь, а не назначает поддержку вслепую."
+            kme: {
+                title: "КМЕ Anti-Age",
+                lead: "Система оценки функционального состояния организма и резервов адаптации.",
+                problem: "Жалобы разные: усталость, стресс, сон, снижение ресурса, ощущение “организм работает не так”, а стандартные обследования не дают общей картины.",
+                shows: "Состояние функциональных систем, органов и тканей, нервной системы, гормонального и иммунного баланса, адаптационных резервов и возможных перегрузок.",
+                solution: "Врач видит, какие системы требуют внимания в первую очередь, и собирает индивидуальный план: образ жизни, питание, дообследование, восстановительные процедуры и контроль динамики."
             },
             angiocode: {
                 title: "АнгиоКод",
                 lead: "Оценка сосудистого тонуса, гемодинамики и сосудистого возраста.",
                 problem: "Скачки давления, головные боли, одышка при нагрузке, семейные сердечно-сосудистые риски.",
-                shows: "Тонус сосудов, особенности кровотока, эластичность и факторы риска, которые часто не ощущаются заранее.",
+                shows: "Жесткость, эластичность и тонус сосудов, центральное давление, состояние эндотелия, индекс стресса и другие показатели работы сердца и сосудов.",
                 solution: "Помогает выбрать стратегию профилактики: нагрузка, питание, контроль давления, дополнительные обследования."
             },
-            capillaries: {
-                title: "Капилляры",
-                lead: "Микроциркуляция: доставка крови и кислорода к тканям.",
-                problem: "Холодные руки и ноги, головные боли, усталость, метеозависимость, ощущение “тело не восстанавливается”.",
-                shows: "Спазмы, застойные явления, особенности кровотока и качество микроциркуляции.",
-                solution: "Даёт понимание, связан ли симптом с доставкой крови к тканям, и помогает точнее подобрать коррекцию."
-            },
             body: {
-                title: "Состав тела",
-                lead: "Вес в килограммах не показывает качество тела.",
-                problem: "Вес растёт, диеты не помогают, есть отёки, потеря мышц, снижение силы и выносливости.",
-                shows: "Процент жира, мышечную массу, воду, внутренний жир и метаболический возраст.",
-                solution: "Помогает построить реалистичный план питания и нагрузки: что снижать, что восстанавливать, что отслеживать."
+                title: "Биоимпеданс",
+                lead: "Исследование состава тела и метаболических коррелятов.",
+                problem: "Вес растёт или снижается непонятно, есть отёки, потеря мышц, слабость, подозрение на метаболический синдром или нарушение водного баланса.",
+                shows: "Жировую и мышечную массу, гидратацию, водно-солевой баланс, антропометрические индексы и индивидуальные нормы с учетом пола, возраста и роста.",
+                solution: "Помогает построить реалистичный план питания, нагрузки и контроля динамики: что снижать, что восстанавливать, что отслеживать."
             },
-            oligoscan: {
-                title: "ОлигоСкан",
-                lead: "Карта дефицитов и избытков, которые влияют на энергию и восстановление.",
-                problem: "Усталость, судороги, раздражительность, проблемы с кожей, волосами, иммунитетом и сном.",
-                shows: "Минеральный и антиоксидантный статус: что может быть в дефиците, а что в избытке.",
-                solution: "Позволяет точнее подобрать нутритивную коррекцию и не тратить деньги на случайные добавки."
+            oxyterra: {
+                title: "Oxyterra",
+                lead: "Интервальная гипокси-гипероксическая тренировка для запуска адаптационных механизмов.",
+                problem: "Хроническая усталость, слабое восстановление, одышка, стрессовая нагрузка, снижение концентрации, метаболические риски.",
+                shows: "Как организм реагирует на управляемую кислородную нагрузку и насколько готов к восстановительным программам.",
+                solution: "Метод включают в программу для поддержки сердечно-сосудистой и дыхательной системы, сна, стресса, метаболизма и anti-age задач."
             },
-            webwellness: {
-                title: "ВебВелнесс",
-                lead: "Оценка баланса нервной системы и ресурса восстановления.",
-                problem: "Сон не восстанавливает, тревожность, раздражительность, усталость утром, перегрузка работой.",
-                shows: "Вегетативный баланс, уровень стресса и адаптационные резервы организма.",
-                solution: "Помогает понять, нужно ли начинать с сна, режима, дыхательных практик, нагрузки или дополнительной диагностики."
+            carboxy: {
+                title: "Карбокситерапия",
+                lead: "Методика с медицинским CO₂ для локальной перезагрузки микроциркуляции.",
+                problem: "Мышечный спазм, болевой синдром, отечность, локальное нарушение питания тканей, восстановление после нагрузки.",
+                shows: "Это лечебно-восстановительная процедура: врач оценивает зону, показания и противопоказания перед назначением.",
+                solution: "Помогает расслабить спазмированные мышцы, улучшить микроциркуляцию, снизить отечность и поддержать регенерацию тканей."
+            },
+            iv: {
+                title: "IV-терапия",
+                lead: "Инфузионная терапия с индивидуальным подбором состава.",
+                problem: "Нужна быстрая восстановительная поддержка: энергия, антистресс, иммунная поддержка, детокс-программа или anti-age задача.",
+                shows: "Это не диагностика, а лечебно-восстановительный метод. Врач оценивает показания, противопоказания и выбирает состав программы.",
+                solution: "Может входить в персональную программу восстановления после консультации и оценки состояния."
+            },
+            detox: {
+                title: "Ion Detox Foot Spa",
+                lead: "Аппаратная ионная процедура для восстановительных программ.",
+                problem: "Отечность, усталость, ощущение перегрузки, необходимость мягкой восстановительной поддержки.",
+                shows: "Метод относится к процедурам поддержки: врач оценивает, уместен ли он в вашей программе с учетом состояния и противопоказаний.",
+                solution: "Используется как дополнительный элемент программы восстановления, расслабления и поддержки циркуляции."
             }
         };
         function closeMenu() { body.classList.remove("menu-open"); mobileNav.classList.remove("is-open"); menuToggle.setAttribute("aria-expanded", "false"); menuToggle.setAttribute("aria-label", "Открыть меню"); }
