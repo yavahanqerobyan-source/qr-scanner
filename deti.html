@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Детское направление клиники ЯЖИЗНЬ: интегративная и превентивная педиатрия, диагностика 6 систем организма, персональный план для ребёнка.">
+    <meta name="description" content="Детское направление клиники ЯЖИЗНЬ: разбор сложной истории ребёнка, КМЕ Anti-Age, AngioCode, биоимпеданс, Oxyterra и план действий по показаниям.">
     <meta property="og:title" content="Детская интегративная медицина — ЯЖИЗНЬ">
-    <meta property="og:description" content="Когда ребёнок часто болеет, устаёт или анализы в норме, но проблема остаётся. Ищем причину системно и бережно.">
+    <meta property="og:description" content="Когда у ребёнка сложная история, много обследований и нет понятного маршрута. Разбираем ситуацию системно и по показаниям.">
     <meta property="og:image" content="deti-hero.png">
     <title>Дети — ЯЖИЗНЬ</title>
     <style>
@@ -113,6 +113,18 @@
         .equipment button:hover { position: relative; z-index: 2; background: #fbfffd; box-shadow: var(--shadow); transform: translateY(-3px); }
         .equipment h3 { font-size: 21px; font-weight: 800; }
         .equipment p { margin-top: 9px; color: var(--muted); font-size: 15px; }
+        .therapy-highlight { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 1px; overflow: hidden; margin-bottom: 34px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .therapy-highlight__intro, .therapy-highlight__card { padding: 30px; background: #fff; }
+        .therapy-highlight__intro { background: #101815; color: #fff; }
+        .therapy-highlight__intro span { display: inline-flex; margin-bottom: 18px; color: #78d6ca; font-size: 13px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+        .therapy-highlight h3 { max-width: 520px; font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.04; }
+        .therapy-highlight p { margin-top: 14px; color: rgba(255,255,255,0.72); font-size: 17px; }
+        .therapy-highlight__card { display: grid; align-content: space-between; gap: 22px; }
+        .therapy-highlight__card h3 { font-size: 26px; line-height: 1.08; }
+        .therapy-highlight__card p { color: var(--muted); }
+        .therapy-points { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; color: var(--muted); }
+        .therapy-points li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 999px; background: var(--accent); vertical-align: 1px; }
+        .therapy-open { justify-self: start; min-height: 46px; padding: 12px 16px; border: 1px solid rgba(0,137,125,0.2); border-radius: var(--radius); background: rgba(0,137,125,0.08); color: var(--accent-dark); font-weight: 800; cursor: pointer; }
         .diag-icon { display: block; margin-bottom: 20px; font-size: 30px; line-height: 1; }
         .diag-hint { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; color: var(--accent-dark); font-size: 13px; font-weight: 800; }
         .diag-hint::after { content: "→"; transition: transform 0.2s ease; }
@@ -239,7 +251,7 @@
             .brand span { display: none; }
             .hero { min-height: auto; padding: calc(var(--header-h) + 58px) 0 30px; }
             .hero__actions { display: grid; grid-template-columns: 1fr; }
-            .hero-proof, .pain-grid, .services, .equipment, .analysis-grid { grid-template-columns: 1fr; }
+            .hero-proof, .pain-grid, .services, .equipment, .analysis-grid, .therapy-highlight { grid-template-columns: 1fr; }
             .section { padding: 72px 0; }
             .step, .price-row { grid-template-columns: 1fr; gap: 10px; }
             .price-group { padding: 22px; }
@@ -393,18 +405,36 @@
 
         <section class="section section--soft">
             <div class="container">
+                <div class="therapy-highlight reveal">
+                    <div class="therapy-highlight__intro">
+                        <span>Коррекция после диагностики</span>
+                        <h3>IV и инфузионная терапия - отдельный врачебный этап</h3>
+                        <p>Это не аппаратный метод и не самостоятельный “быстрый витаминный коктейль”. Состав, дозировки и курс определяются после очной оценки, жалоб, анализов и противопоказаний.</p>
+                    </div>
+                    <div class="therapy-highlight__card">
+                        <div>
+                            <h3>Когда врач может рассмотреть инфузии</h3>
+                            <ul class="therapy-points">
+                                <li>дефицитные состояния и слабое восстановление</li>
+                                <li>поддержка после стресса, болезни или высокой нагрузки</li>
+                                <li>метаболические и восстановительные программы по показаниям</li>
+                            </ul>
+                        </div>
+                        <button class="therapy-open" type="button" data-info="iv">Понять, подходит ли</button>
+                    </div>
+                </div>
                 <div class="section-head reveal">
-                    <span class="kicker">Диагностика</span>
-                    <h2 class="section-title">Оборудование, которое помогает увидеть функциональные нарушения</h2>
-                    <p class="section-copy">Нажмите на метод, чтобы понять, при каких жалобах он полезен и какой результат даёт родителям.</p>
+                    <span class="kicker">Технологии клиники</span>
+                    <h2 class="section-title">Аппаратные методы, которые врач назначает по показаниям</h2>
+                    <p class="section-copy">Нажмите на метод, чтобы понять, при каких задачах он может быть полезен и какой результат получает врач.</p>
                 </div>
                 <div class="equipment">
-                    <button class="reveal" type="button" data-info="kme"><span class="diag-icon">🧭</span><h3>КМЕ</h3><p>Функциональное состояние органов и систем.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="capillary"><span class="diag-icon">🔬</span><h3>Капилляроскопия</h3><p>Микроциркуляция крови в капиллярах.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="bioimpedance"><span class="diag-icon">⚖️</span><h3>Биоимпеданс</h3><p>Состав тела: мышцы, жир, вода.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="oligoscan"><span class="diag-icon">🧪</span><h3>ОлигоСкан</h3><p>Антиоксидантный и минеральный статус.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="angiocode"><span class="diag-icon">💓</span><h3>АнгиоКод</h3><p>Состояние сосудов и гемодинамика.</p><span class="diag-hint">Понять, подходит ли</span></button>
-                    <button class="reveal" type="button" data-info="webwellness"><span class="diag-icon">🌿</span><h3>ВебВелнесс</h3><p>Wellness-индекс и адаптационные резервы.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="oxyterra"><span class="diag-icon">🌬️</span><h3>Аппарат Oxyterra</h3><p>Гипокси-гипероксическая тренировка.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="carboxy"><span class="diag-icon">🫧</span><h3>Карбокситерапия</h3><p>CO₂-методика для микроциркуляции и тканей.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="angiocode"><span class="diag-icon">💓</span><h3>Аппарат AngioCode</h3><p>Сосудистый тонус, гемодинамика и индекс стресса.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="kme"><span class="diag-icon">🧭</span><h3>КМЕ Anti-Age</h3><p>Функциональные системы, адаптация и баланс процессов.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="detox"><span class="diag-icon">🦶</span><h3>Ion Detox Foot Spa</h3><p>Аппарат для ионной детоксикации организма.</p><span class="diag-hint">Понять, подходит ли</span></button>
+                    <button class="reveal" type="button" data-info="bioimpedance"><span class="diag-icon">⚖️</span><h3>Биоимпедансное исследование</h3><p>Состав тела, вода, мышцы и метаболические риски.</p><span class="diag-hint">Понять, подходит ли</span></button>
                 </div>
             </div>
         </section>
@@ -435,9 +465,8 @@
                         <div class="price">
                             <div class="price-row"><div><h3>Программа «Анти-эйдж»</h3><p>Комплексная оценка возрастных и ресурсных показателей.</p></div><strong>16 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Биоимпедансный анализ состава тела</h3><p>Компонентный состав: мышцы, жир, вода.</p></div><strong>3 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Исследование эндотелиальной функции сосудов</h3><p>Аппарат «Ангиоскан» экспресс.</p></div><strong>3 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Исследование эндотелиальной функции сосудов</h3><p>Аппарат AngioCode • сосудистый тонус и эндотелиальная функция.</p></div><strong>3 000 ₽</strong></div>
                             <div class="price-row"><div><h3>ВРТ</h3><p>Биорезонансное тестирование • 2 часа.</p></div><strong>10 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Миниинвазивный мониторинг глюкозы</h3><p>Контроль уровня глюкозы крови в течение 7 дней.</p></div><strong>15 000 ₽</strong></div>
                         </div>
                     </section>
                     <section class="price-group reveal">
@@ -446,7 +475,6 @@
                             <div class="price-row"><div><h3>1 процедура управляемой гипоксии</h3><p>OXYTERRA.</p></div><strong>5 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Интервальная гипокси-гиперокситерапия</h3><p>5 сеансов.</p></div><strong>20 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Интервальная гипокси-гиперокситерапия</h3><p>10 сеансов.</p></div><strong>35 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Датчик для мониторирования глюкозы Lumiflex</h3><p>Для динамического контроля глюкозы.</p></div><strong>6 500 ₽</strong></div>
                         </div>
                     </section>
                     <section class="price-group reveal">
@@ -639,46 +667,53 @@
         renderPriceCatalog();
         const infoContent = {
             kme: {
-                title: "КМЕ",
-                lead: "Базовая карта функционального состояния организма.",
-                problem: "Ребёнок часто болеет, быстро устаёт, жалобы разные, а стандартные обследования не дают единой причины.",
-                shows: "Какие органы и системы работают с напряжением, где есть функциональная перегрузка и что требует внимания в первую очередь.",
-                solution: "Врач сопоставляет результат с жалобами и собирает маршрут: что проверить глубже, что корректировать режимом, питанием и наблюдением."
-            },
-            capillary: {
-                title: "Капилляроскопия",
-                lead: "Проверка микроциркуляции в самых мелких сосудах.",
-                problem: "Бледность, холодные руки, головные боли, утомляемость, метеозависимость, при этом гемоглобин может быть в норме.",
-                shows: "Как кровь доходит до тканей: есть ли спазм, застой, нарушение тока крови или слабая доставка кислорода.",
-                solution: "Помогает понять, связаны ли жалобы с микроциркуляцией, и выбрать корректировку нагрузки, режима и поддержки сосудов."
+                title: "КМЕ Anti-Age",
+                lead: "Оценка функционального состояния организма и адаптационных резервов.",
+                problem: "У ребёнка сложная история: развитие, сон, поведение, усталость, частые болезни или реакции, которые не складываются в понятную картину.",
+                shows: "Функциональные системы, состояние органов и тканей, нервную систему, иммунный и гормональный баланс, резервы адаптации и зоны перегрузки.",
+                solution: "Врач сопоставляет данные КМЕ с жалобами и документами, чтобы определить, что проверять глубже и с чего начинать маршрут."
             },
             bioimpedance: {
                 title: "Биоимпеданс",
                 lead: "Состав тела ребёнка в цифрах, а не только вес на весах.",
                 problem: "Есть лишний или недостаточный вес, отёчность, слабая мышечная масса, ребёнок быстро устаёт на тренировках.",
-                shows: "Соотношение мышц, жира и воды, признаки скрытых отёков и дефицита мышечной массы.",
+                shows: "Соотношение мышц, жира и воды, гидратацию, признаки скрытых отёков и дефицита мышечной массы.",
                 solution: "Даёт врачу основу для рекомендаций по питанию, активности и контролю динамики без догадок."
-            },
-            oligoscan: {
-                title: "ОлигоСкан",
-                lead: "Оценка минерального и антиоксидантного статуса.",
-                problem: "Частые болезни, слабое восстановление, витамины “не помогают”, есть подозрение на дефициты.",
-                shows: "Каких минералов и антиоксидантов может не хватать тканям, а где возможен избыток.",
-                solution: "Позволяет точнее подобрать коррекцию, не назначая добавки вслепую."
             },
             angiocode: {
                 title: "АнгиоКод",
                 lead: "Оценка сосудистого тонуса и гемодинамики.",
                 problem: "Головные боли, метеозависимость, слабость, перепады самочувствия, подозрение на сосудистый компонент.",
-                shows: "Состояние сосудов, тонус, особенности кровотока и возможные причины нестабильного самочувствия.",
+                shows: "Жесткость, эластичность и тонус сосудов, состояние эндотелия, центральное давление и индекс стресса.",
                 solution: "Помогает понять, нужна ли сосудистая коррекция, режимные изменения и дополнительное наблюдение."
             },
-            webwellness: {
-                title: "ВебВелнесс",
-                lead: "Оценка адаптационных резервов и wellness-индекса.",
-                problem: "Ребёнок эмоционально перегружен, плохо восстанавливается, быстро истощается после школы, секций или болезней.",
-                shows: "Баланс нагрузки и восстановления, уровень стресса и резерв адаптации организма.",
-                solution: "Помогает выстроить щадящий режим, восстановление и контроль динамики."
+            oxyterra: {
+                title: "Oxyterra",
+                lead: "Интервальная гипокси-гипероксическая тренировка по показаниям.",
+                problem: "Слабое восстановление, утомляемость, сниженная переносимость нагрузки, стрессовая перегрузка.",
+                shows: "Это восстановительная технология: врач оценивает показания и противопоказания перед включением в программу.",
+                solution: "Может использоваться для поддержки адаптации, дыхательной и сердечно-сосудистой системы, сна и восстановления."
+            },
+            carboxy: {
+                title: "Карбокситерапия",
+                lead: "CO₂-методика для локальной работы с микроциркуляцией и тканями.",
+                problem: "Локальные мышечные спазмы, боль, отёчность или восстановительные задачи по показаниям.",
+                shows: "Врач оценивает зону, состояние тканей, показания и противопоказания перед процедурой.",
+                solution: "Метод может поддерживать микроциркуляцию, расслабление спазмированных мышц и восстановление тканей."
+            },
+            iv: {
+                title: "IV-терапия",
+                lead: "Инфузионная терапия по индивидуальным показаниям.",
+                problem: "Нужна поддержка восстановления, иммунитета, энергии или антистресс-программы, но состав должен подбирать врач.",
+                shows: "Это не диагностика, а лечебно-восстановительный метод. Врач оценивает показания, противопоказания и совместимость с основным маршрутом.",
+                solution: "Может быть частью программы восстановления после обследования и очной консультации."
+            },
+            detox: {
+                title: "Ion Detox Foot Spa",
+                lead: "Ионная восстановительная процедура по показаниям.",
+                problem: "Усталость, отёчность, необходимость мягкой восстановительной поддержки в комплексной программе.",
+                shows: "Это дополнительная процедура, а не самостоятельное обследование. Врач решает, нужна ли она ребёнку.",
+                solution: "Используется как элемент программы восстановления, расслабления и поддержки циркуляции."
             }
         };
         function closeMenu() { body.classList.remove("menu-open"); mobileNav.classList.remove("is-open"); menuToggle.setAttribute("aria-expanded", "false"); menuToggle.setAttribute("aria-label", "Открыть меню"); }
