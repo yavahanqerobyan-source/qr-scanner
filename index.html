@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -590,6 +590,63 @@
             transform: translateX(5px);
         }
 
+        .symptom-map {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--line);
+        }
+
+        .symptom-card {
+            display: grid;
+            min-height: 250px;
+            padding: 28px;
+            background: #fff;
+            text-decoration: none;
+            color: var(--ink);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .symptom-card:hover {
+            background: #f7fcfb;
+            transform: translateY(-2px);
+        }
+
+        .symptom-card__icon {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: var(--surface-soft);
+            font-size: 24px;
+        }
+
+        .symptom-card h3 {
+            align-self: end;
+            margin-top: 44px;
+            font-size: 25px;
+            font-weight: 800;
+            line-height: 1.08;
+        }
+
+        .symptom-card p {
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .symptom-card span:last-child {
+            display: inline-flex;
+            margin-top: 22px;
+            color: var(--accent-dark);
+            font-weight: 800;
+        }
+
         .proof-layout {
             display: grid;
             grid-template-columns: 0.82fr 1.18fr;
@@ -771,9 +828,126 @@
             font-size: 14px;
         }
 
+        .doctor-team {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .doctor-card {
+            display: grid;
+            grid-template-columns: 150px minmax(0, 1fr);
+            gap: 26px;
+            height: auto;
+            padding: 28px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #fff;
+            box-shadow: 0 18px 44px rgba(24, 33, 31, 0.06);
+        }
+
+        .doctor-card > div {
+            min-width: 0;
+        }
+
+        .doctor-card__photo {
+            width: 150px;
+            height: 178px;
+            border-radius: 18px;
+            object-fit: cover;
+            object-position: center top;
+            box-shadow: 0 18px 44px rgba(24, 33, 31, 0.14);
+        }
+
+        .doctor-card h3:first-child {
+            font-size: clamp(25px, 2.6vw, 34px);
+            font-weight: 800;
+            line-height: 1.05;
+            text-wrap: balance;
+            overflow-wrap: anywhere;
+        }
+
+        .doctor-name {
+            display: grid;
+            gap: 2px;
+        }
+
+        .doctor-name span {
+            display: block;
+        }
+
+        .doctor-card .doctor__timeline-title {
+            font-size: 18px;
+            line-height: 1.12;
+            overflow-wrap: normal;
+        }
+
+        .doctor-card__focus {
+            display: grid;
+            gap: 10px;
+            margin: 22px 0 0;
+            padding: 0;
+            list-style: none;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .doctor-card__focus li::before {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-right: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+            vertical-align: 1px;
+        }
+
+        .doctor-history {
+            margin-top: 24px;
+            padding-top: 20px;
+        }
+
+        .doctor-history summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            min-height: 48px;
+            color: var(--ink);
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .doctor-history summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .doctor-history summary::after {
+            content: "+";
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--accent);
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .doctor-history[open] summary::after {
+            content: "−";
+        }
+
         .process {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 1px;
             overflow: hidden;
             border: 1px solid var(--line);
@@ -806,6 +980,217 @@
             margin-top: 12px;
             color: var(--muted);
             font-size: 16px;
+        }
+
+        .quiz {
+            display: grid;
+            grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+            grid-template-areas:
+                "intro panel"
+                "result panel";
+            gap: 36px;
+            align-items: start;
+        }
+
+        .quiz .section-head {
+            grid-area: intro;
+            margin-bottom: 0;
+        }
+
+        .quiz-panel,
+        .quiz-result {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #fff;
+            box-shadow: 0 18px 44px rgba(17, 28, 26, 0.06);
+        }
+
+        .quiz-panel {
+            grid-area: panel;
+            padding: 28px;
+        }
+
+        .quiz-step + .quiz-step {
+            margin-top: 28px;
+            padding-top: 28px;
+            border-top: 1px solid var(--line);
+        }
+
+        .quiz-step h3 {
+            margin-bottom: 14px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .quiz-option span {
+            display: block;
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            color: var(--muted);
+            font-weight: 800;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .quiz-option input:checked + span {
+            color: var(--ink);
+            border-color: rgba(0, 124, 114, 0.46);
+            background: var(--surface-soft);
+        }
+
+        .quiz-result {
+            grid-area: result;
+            position: sticky;
+            top: calc(var(--header-h) + 30px);
+            padding: 34px;
+        }
+
+        .quiz-result__label {
+            color: var(--accent-dark);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .quiz-result h3 {
+            margin-top: 18px;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 800;
+            line-height: 1.03;
+        }
+
+        .quiz-result p {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 18px;
+        }
+
+        .quiz-result ul {
+            display: grid;
+            gap: 10px;
+            margin: 24px 0 0;
+            padding: 0;
+            list-style: none;
+            color: var(--muted);
+        }
+
+        .quiz-result li::before {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-right: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+            vertical-align: 1px;
+        }
+
+        .quiz-result__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+        }
+
+        .strategy-card {
+            display: grid;
+            align-content: space-between;
+            min-height: 340px;
+            padding: 30px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #fff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .strategy-card h3 {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.05;
+        }
+
+        .strategy-card p {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .strategy-card ul {
+            display: grid;
+            gap: 8px;
+            margin: 22px 0 0;
+            padding: 0;
+            list-style: none;
+            color: var(--muted);
+        }
+
+        .strategy-card li::before {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-right: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+            vertical-align: 1px;
+        }
+
+        .faq {
+            display: grid;
+            gap: 1px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--line);
+        }
+
+        .faq details {
+            background: #fff;
+        }
+
+        .faq summary {
+            min-height: 64px;
+            padding: 20px 24px;
+            color: var(--ink);
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .faq p {
+            padding: 0 24px 22px;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .medical-note {
+            margin-top: 26px;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 13px;
         }
 
         .cta {
@@ -1072,6 +1457,8 @@
 
             .hero__bottom,
             .proof-layout,
+            .quiz,
+            .doctor-team,
             .doctor,
             .cta__layout,
             .footer__grid {
@@ -1085,6 +1472,17 @@
 
             .proof-sticky {
                 position: static;
+            }
+
+            .quiz-result {
+                position: static;
+            }
+
+            .quiz {
+                grid-template-areas:
+                    "intro"
+                    "panel"
+                    "result";
             }
 
             .doctor__media {
@@ -1159,6 +1557,14 @@
                 grid-template-columns: 1fr;
             }
 
+            .symptom-map {
+                grid-template-columns: 1fr;
+            }
+
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+
             .route {
                 min-height: 440px;
             }
@@ -1192,6 +1598,10 @@
             .doctor__timeline li {
                 grid-template-columns: 1fr;
                 gap: 4px;
+            }
+
+            .doctor-card {
+                grid-template-columns: 1fr;
             }
 
             .cta {
@@ -1234,6 +1644,8 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="accessibility.css">
+    <link rel="stylesheet" href="documents.css">
 </head>
 <body>
     <a class="skip-link" href="#main">Перейти к содержанию</a>
@@ -1246,7 +1658,9 @@
             </a>
 
             <nav class="desktop-nav" aria-label="Основная навигация">
+                <a href="#symptoms">Симптомы</a>
                 <a href="#directions">Направления</a>
+                <a href="#quiz">Подбор</a>
                 <a href="#method">Метод</a>
                 <a href="#doctor">Врач</a>
                 <a href="#contacts">Контакты</a>
@@ -1265,7 +1679,9 @@
     </header>
 
     <nav class="mobile-nav" id="mobile-nav" aria-label="Мобильная навигация">
+        <a href="#symptoms">Симптомы <span>→</span></a>
         <a href="#directions">Направления <span>→</span></a>
+        <a href="#quiz">Подбор направления <span>→</span></a>
         <a href="#method">Метод <span>→</span></a>
         <a href="#doctor">Врач <span>→</span></a>
         <a href="#contacts">Контакты <span>→</span></a>
@@ -1278,11 +1694,12 @@
                 <div class="hero__content">
                     <span class="eyebrow">Москва · интегративная медицина</span>
                     <h1 id="hero-title">ЯЖИЗНЬ</h1>
-                    <p class="hero__lead">Медицина, которая ищет причину, а не маскирует симптом.</p>
-                    <p class="hero__text">Комплексная диагностика 6 систем организма за 15–30 минут и персональный план действий для детей и взрослых.</p>
+                    <p class="hero__lead">Когда стандартные обследования не дают ответа — мы смотрим глубже.</p>
+                    <p class="hero__text">Разбираем сложные состояния у детей и взрослых через врачебную экспертизу, аппаратную диагностику, анализ истории пациента и персональный план действий.</p>
                     <div class="hero__actions">
-                        <button class="btn btn-primary" type="button" data-open-modal>Записаться на приём</button>
-                        <a class="btn btn-ghost" href="#directions">Выбрать направление</a>
+                        <a class="btn btn-primary" href="deti.html">Разобрать ситуацию ребёнка</a>
+                        <a class="btn btn-ghost" href="vzroslye.html">Пройти check-up организма</a>
+                        <a class="btn btn-ghost" href="#quiz">Подобрать направление</a>
                     </div>
                 </div>
 
@@ -1306,12 +1723,61 @@
             </div>
         </section>
 
+        <section class="section" id="symptoms">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-kicker">С чем к нам приходят</span>
+                    <h2 class="section-title">Выберите не услугу, а вашу ситуацию</h2>
+                    <p class="section-copy">Пациенту не нужно заранее понимать, какой аппарат или анализ нужен. Начинаем с жалобы, истории и цели визита.</p>
+                </div>
+
+                <div class="symptom-map" data-symptom-grid>
+                    <a class="symptom-card reveal" href="deti.html">
+                        <span class="symptom-card__icon">🧩</span>
+                        <h3>У ребёнка есть диагноз, но нет понятного плана</h3>
+                        <p>РАС, эпилепсия, СДВГ, задержка речи или развития, много заключений и мало ясности.</p>
+                        <span>К детскому маршруту</span>
+                    </a>
+                    <a class="symptom-card reveal" href="deti.html">
+                        <span class="symptom-card__icon">🌙</span>
+                        <h3>Сон, поведение или развитие резко беспокоят</h3>
+                        <p>Истерики, откаты, тревожность, слабая адаптация, сложности с питанием и нагрузкой.</p>
+                        <span>Разобрать ребёнка</span>
+                    </a>
+                    <a class="symptom-card reveal" href="vzroslye.html">
+                        <span class="symptom-card__icon">⚡</span>
+                        <h3>Усталость есть, а анализы “в норме”</h3>
+                        <p>Нет энергии, плохое восстановление, стресс, сон не помогает, сложно понять причину.</p>
+                        <span>К взрослому check-up</span>
+                    </a>
+                    <a class="symptom-card reveal" href="vzroslye.html">
+                        <span class="symptom-card__icon">⚖️</span>
+                        <h3>Вес, отёки, гормоны и метаболизм</h3>
+                        <p>Вес меняется, тело не реагирует на привычные меры, есть ощущение возрастного снижения ресурса.</p>
+                        <span>Оценить ресурс</span>
+                    </a>
+                    <a class="symptom-card reveal" href="vzroslye.html">
+                        <span class="symptom-card__icon">💓</span>
+                        <h3>Хочется проверить сосуды и риски заранее</h3>
+                        <p>Давление, головные боли, семейные риски, тревога за сердце и сосудистое здоровье.</p>
+                        <span>Посмотреть диагностику</span>
+                    </a>
+                    <a class="symptom-card reveal" href="#quiz">
+                        <span class="symptom-card__icon">🧭</span>
+                        <h3>Не понимаю, с чего начать</h3>
+                        <p>Ответьте на несколько вопросов — сайт предложит первый маршрут и что подготовить к звонку.</p>
+                        <span>Пройти подбор</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section class="section" id="directions">
             <div class="container">
                 <div class="section-head reveal">
                     <span class="section-kicker">С чего начать</span>
                     <h2 class="section-title">Выберите маршрут диагностики</h2>
-                    <p class="section-copy">Вам не нужно заранее понимать, какой аппарат или анализ нужен. Начинаем с жалобы, истории и цели визита.</p>
+                    <p class="section-copy">Мы не смешиваем детские сложные состояния и взрослый check-up: у каждого направления своя боль, свой входной продукт и свой маршрут.</p>
                 </div>
 
                 <div class="routes">
@@ -1319,9 +1785,9 @@
                         <img src="deti-2.png" width="1122" height="1402" loading="lazy" alt="Ребёнок на приёме в клинике">
                         <span class="route__content">
                             <span class="route__label">Дети 2–10 лет</span>
-                            <h3>Когда ребёнок часто болеет или быстро устаёт</h3>
-                            <p>Смотрим не только жалобу, а причины нагрузки на организм и нервную систему.</p>
-                            <span class="route__action">Перейти в детское направление</span>
+                            <h3>Когда диагноз есть, а понятного плана нет</h3>
+                            <p>Если у ребёнка задержка речи/развития, РАС, эпилепсия или сложная история обследований — помогаем собрать данные в единую картину.</p>
+                            <span class="route__action">Разобрать ситуацию ребёнка</span>
                         </span>
                     </a>
 
@@ -1329,11 +1795,49 @@
                         <img src="adults-2.png" width="1122" height="1402" loading="lazy" alt="Взрослый пациент на консультации">
                         <span class="route__content">
                             <span class="route__label">Взрослые 35–75 лет</span>
-                            <h3>Когда хочется понять реальный ресурс организма</h3>
-                            <p>Диагностика биологического возраста, рисков и персональных точек восстановления.</p>
-                            <span class="route__action">Перейти во взрослое направление</span>
+                            <h3>Когда усталость, вес и стресс уже мешают жить</h3>
+                            <p>Check-up биологического возраста помогает понять ресурс организма, метаболические риски и первые шаги восстановления.</p>
+                            <span class="route__action">Пройти check-up организма</span>
                         </span>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--soft">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-kicker">Входные продукты</span>
+                    <h2 class="section-title">Начинаем не с большого прайса, а с понятного первого шага</h2>
+                    <p class="section-copy">Стратегия сайта строится вокруг двух продуктов, которые дают пациенту ясность, план и решение, куда двигаться дальше.</p>
+                </div>
+                <div class="strategy-grid">
+                    <article class="strategy-card reveal">
+                        <div>
+                            <h3>Интегративный разбор развития ребёнка</h3>
+                            <p>Для родителей, которые уже были у разных специалистов, но не получили общей врачебной картины и понятного плана.</p>
+                            <ul>
+                                <li>анализ истории и выписок</li>
+                                <li>врачебные гипотезы</li>
+                                <li>список недостающих данных</li>
+                                <li>план следующих шагов</li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-soft" href="deti.html">Разобрать ситуацию ребёнка</a>
+                    </article>
+                    <article class="strategy-card reveal">
+                        <div>
+                            <h3>Check-up биологического возраста</h3>
+                            <p>Для взрослых 35–75, которые хотят понять ресурс организма, стресс-нагрузку, метаболизм и факторы риска до серьёзных диагнозов.</p>
+                            <ul>
+                                <li>состав тела и метаболические риски</li>
+                                <li>стресс и адаптационные резервы</li>
+                                <li>сосудистые показатели</li>
+                                <li>персональный план восстановления</li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-soft" href="vzroslye.html">Пройти check-up</a>
+                    </article>
                 </div>
             </div>
         </section>
@@ -1342,8 +1846,8 @@
             <div class="container proof-layout">
                 <div class="proof-sticky reveal">
                     <span class="section-kicker">Метод</span>
-                    <h2 class="section-title">Пациент получает понятный план, а не список разрозненных советов</h2>
-                    <p class="section-copy">Фокус главной страницы — снять тревогу и быстро объяснить, почему приём отличается от обычной консультации.</p>
+                    <h2 class="section-title">Почему обычного приёма иногда бывает мало</h2>
+                    <p class="section-copy">Стандартные обследования не всегда дают полную картину. Мы не противопоставляем себя другим врачам, а помогаем собрать данные в единую врачебную систему.</p>
                 </div>
 
                 <div class="proof-list">
@@ -1357,15 +1861,15 @@
                     <div class="proof-row reveal">
                         <strong>02</strong>
                         <div>
-                            <h3>Проводим экспресс-диагностику</h3>
-                            <p>Оцениваем 6 систем организма и ищем причины, которые могут поддерживать проблему.</p>
+                            <h3>Проверяем возможные причины</h3>
+                            <p>Оцениваем показатели, которые могут влиять на состояние, и понимаем, каких данных не хватает.</p>
                         </div>
                     </div>
                     <div class="proof-row reveal">
                         <strong>03</strong>
                         <div>
-                            <h3>Формируем маршрут</h3>
-                            <p>Пациент понимает, что делать дальше: обследования, коррекция, наблюдение, контрольные точки.</p>
+                            <h3>Формируем план действий</h3>
+                            <p>Пациент понимает, что корректировать, что проверить дополнительно и как контролировать динамику.</p>
                         </div>
                     </div>
                     <div class="proof-row reveal">
@@ -1380,77 +1884,80 @@
         </section>
 
         <section class="section" id="doctor">
-            <div class="container doctor">
-                <div class="doctor__media reveal">
-                    <img src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-kicker">О враче</span>
+                    <h2 class="section-title">Врачи клиники</h2>
+                    <p class="section-copy">Ведём детей и взрослых через врачебную экспертизу, функциональную диагностику и персональный план действий.</p>
                 </div>
 
-                <div class="doctor__content reveal">
-                    <span class="section-kicker">О враче</span>
-                    <h2>Ровенская Елена Викторовна</h2>
-                    <p class="doctor__role">Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог</p>
-                    <p class="doctor__text">Врач превентивной, интегративной и антивозрастной медицины, функциональной диагностики.</p>
+                <div class="doctor-team">
+                    <article class="doctor-card reveal">
+                        <img class="doctor-card__photo" src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
+                        <div>
+                            <h3 class="doctor-name"><span>Ровенская</span><span>Елена</span><span>Викторовна</span></h3>
+                            <p class="doctor__role">Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог</p>
+                            <p class="doctor__text">Врач превентивной, интегративной и антивозрастной медицины, функциональной диагностики.</p>
 
-                    <div class="doctor__stats" aria-label="Опыт врача">
-                        <div class="doctor__stat">
-                            <strong>32</strong>
-                            <span>года в должности врача-невролога, врача паллиативной помощи, скорой медицинской помощи и функциональной диагностики</span>
+                            <div class="doctor__stats" aria-label="Опыт врача">
+                                <div class="doctor__stat">
+                                    <strong>32</strong>
+                                    <span>года в должности врача-невролога, врача паллиативной помощи, скорой медицинской помощи и функциональной диагностики</span>
+                                </div>
+                                <div class="doctor__stat">
+                                    <strong>к.м.н.</strong>
+                                    <span>кандидат медицинских наук</span>
+                                </div>
+                            </div>
+
+                            <details class="doctor-history">
+                                <summary>Образование и карьера</summary>
+                                <ol class="doctor__timeline">
+                                    <li><span class="doctor__year">1983–1989</span><span class="doctor__event"><strong>ИГМА им. Бубнова</strong><span>Педиатрия</span></span></li>
+                                    <li><span class="doctor__year">1989–1990</span><span class="doctor__event"><strong>Интернатура</strong><span>Педиатрия</span></span></li>
+                                    <li><span class="doctor__year">1991–1993</span><span class="doctor__event"><strong>Ординатура</strong><span>Неврология</span></span></li>
+                                    <li><span class="doctor__year">1992–1993</span><span class="doctor__event"><strong>Научный сотрудник</strong><span>Лаборатория гематологии и реологии крови</span></span></li>
+                                    <li><span class="doctor__year">1993–1995</span><span class="doctor__event"><strong>Аспирантура</strong><span>Неврология</span></span></li>
+                                    <li><span class="doctor__year">1995–2002</span><span class="doctor__event"><strong>Ассистент кафедры неврологии ИГМА</strong><span>Преподавательская и клиническая работа</span></span></li>
+                                </ol>
+                            </details>
+
+                            <div style="margin-top: 28px;">
+                                <button class="btn btn-primary" type="button" data-open-modal>Записаться к врачу</button>
+                            </div>
                         </div>
-                        <div class="doctor__stat">
-                            <strong>к.м.н.</strong>
-                            <span>кандидат медицинских наук</span>
+                    </article>
+
+                    <article class="doctor-card reveal">
+                        <img class="doctor-card__photo" src="popov.png" width="900" height="1200" loading="lazy" alt="Павел Алексеевич Попов">
+                        <div>
+                            <h3 class="doctor-name"><span>Попов</span><span>Павел</span><span>Алексеевич</span></h3>
+                            <p class="doctor__role">Врач-нефролог, врач-рефлексотерапевт</p>
+                            <p class="doctor__text">Врач интегральной превентивной и антивозрастной медицины. Специалист метаболомной, митохондриальной и биорезонансной медицины (ВРТ/БРТ).</p>
+
+                            <div class="doctor__stats" aria-label="Опыт врача">
+                                <div class="doctor__stat">
+                                    <strong>17+</strong>
+                                    <span>лет клинического опыта</span>
+                                </div>
+                                <div class="doctor__stat">
+                                    <strong>ХБП</strong>
+                                    <span>ведение пациентов додиализных и диализной стадий</span>
+                                </div>
+                            </div>
+
+                            <h3 class="doctor__timeline-title">Профессиональный фокус</h3>
+                            <ul class="doctor-card__focus">
+                                <li>комплексные программы укрепления здоровья с акцентом на нефропротекцию</li>
+                                <li>активное долголетие, метаболомика и клиническая биохимия</li>
+                                <li>нутригенетика, фитотерапия, ароматерапия и традиционная медицина</li>
+                            </ul>
+
+                            <div style="margin-top: 28px;">
+                                <button class="btn btn-primary" type="button" data-open-modal>Записаться к нефрологу</button>
+                            </div>
                         </div>
-                    </div>
-
-                    <h3 class="doctor__timeline-title">Образование и опыт</h3>
-                    <ol class="doctor__timeline">
-                        <li>
-                            <span class="doctor__year">1983–1989</span>
-                            <span class="doctor__event">
-                                <strong>ИГМА им. Бубнова</strong>
-                                <span>Педиатрия</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="doctor__year">1989–1990</span>
-                            <span class="doctor__event">
-                                <strong>Интернатура</strong>
-                                <span>Педиатрия</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="doctor__year">1991–1993</span>
-                            <span class="doctor__event">
-                                <strong>Ординатура</strong>
-                                <span>Неврология</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="doctor__year">1992–1993</span>
-                            <span class="doctor__event">
-                                <strong>Научный сотрудник</strong>
-                                <span>Лаборатория гематологии и реологии крови</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="doctor__year">1993–1995</span>
-                            <span class="doctor__event">
-                                <strong>Аспирантура</strong>
-                                <span>Неврология</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="doctor__year">1995–2002</span>
-                            <span class="doctor__event">
-                                <strong>Ассистент кафедры неврологии ИГМА</strong>
-                                <span>Преподавательская и клиническая работа</span>
-                            </span>
-                        </li>
-                    </ol>
-
-                    <div style="margin-top: 28px;">
-                        <button class="btn btn-primary" type="button" data-open-modal>Записаться к врачу</button>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -1458,26 +1965,117 @@
         <section class="section section--soft">
             <div class="container">
                 <div class="section-head reveal">
-                    <span class="section-kicker">Как проходит запись</span>
-                    <h2 class="section-title">Три шага до первого приёма</h2>
+                    <span class="section-kicker">Маршрут пациента</span>
+                    <h2 class="section-title">Что происходит после заявки</h2>
+                    <p class="section-copy">Мы заранее снимаем неопределённость: пациент понимает, зачем он приходит, что взять с собой и какой результат ждать после первого контакта.</p>
                 </div>
 
                 <div class="process">
                     <div class="process-step reveal">
                         <span>Шаг 1</span>
-                        <h3>Оставьте заявку</h3>
-                        <p>Укажите имя, телефон и направление. Комментарий можно оставить свободно.</p>
+                        <h3>Короткая заявка</h3>
+                        <p>Вы выбираете направление или проходите подбор. Достаточно имени и телефона.</p>
                     </div>
                     <div class="process-step reveal">
                         <span>Шаг 2</span>
-                        <h3>Администратор уточнит детали</h3>
-                        <p>Подберёт время, направление и подскажет, что взять с собой.</p>
+                        <h3>Уточнение ситуации</h3>
+                        <p>Администратор уточняет возраст, жалобу, срочность и подбирает подходящий формат визита.</p>
                     </div>
                     <div class="process-step reveal">
                         <span>Шаг 3</span>
-                        <h3>Приходите на диагностику</h3>
-                        <p>После обследования получите объяснение результата и понятный маршрут действий.</p>
+                        <h3>Подготовка документов</h3>
+                        <p>Вы берёте выписки, анализы, список препаратов и вопросы, чтобы врач не начинал с нуля.</p>
                     </div>
+                    <div class="process-step reveal">
+                        <span>Шаг 4</span>
+                        <h3>Приём и диагностика</h3>
+                        <p>Врач собирает картину, при необходимости использует аппаратные методы и объясняет результат.</p>
+                    </div>
+                    <div class="process-step reveal">
+                        <span>Шаг 5</span>
+                        <h3>План действий</h3>
+                        <p>Вы получаете приоритеты: что проверить, что корректировать и как отслеживать динамику.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="quiz">
+            <div class="container quiz">
+                <div class="section-head reveal">
+                    <span class="section-kicker">Подбор направления</span>
+                    <h2 class="section-title">Ответьте на 3 вопроса — покажем лучший первый шаг</h2>
+                    <p class="section-copy">Это не диагноз и не онлайн-консультация. Квиз помогает понять, с каким запросом обратиться и что написать администратору.</p>
+                </div>
+
+                <div class="quiz-panel reveal" aria-label="Квиз подбора направления">
+                    <div class="quiz-step">
+                        <h3>Для кого нужна помощь?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="quiz-audience" value="child" checked><span>Ребёнок</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-audience" value="adult"><span>Взрослый</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-audience" value="unknown"><span>Пока не уверен</span></label>
+                        </div>
+                    </div>
+                    <div class="quiz-step">
+                        <h3>Что сильнее всего беспокоит?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="quiz-problem" value="development" checked><span>Развитие, поведение, сон, речь</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-problem" value="energy"><span>Усталость, стресс, нет энергии</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-problem" value="metabolic"><span>Вес, гормоны, возрастные изменения</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-problem" value="risk"><span>Хочу проверить риски заранее</span></label>
+                        </div>
+                    </div>
+                    <div class="quiz-step">
+                        <h3>Что уже есть на руках?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="quiz-history" value="many" checked><span>Есть анализы, заключения, обследования</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-history" value="few"><span>Почти ничего нет</span></label>
+                            <label class="quiz-option"><input type="radio" name="quiz-history" value="normal"><span>Обследования “в норме”, но жалобы есть</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="quiz-result reveal" aria-live="polite">
+                    <span class="quiz-result__label">Рекомендованный первый шаг</span>
+                    <h3 id="quiz-title">Интегративный разбор развития ребёнка</h3>
+                    <p id="quiz-copy">Подходит, если есть диагноз, сложная история или много разрозненных заключений. Цель — собрать данные в единую врачебную картину.</p>
+                    <ul id="quiz-list">
+                        <li>подготовить выписки и анализы</li>
+                        <li>описать главные изменения за последние месяцы</li>
+                        <li>записать вопросы к врачу</li>
+                    </ul>
+                    <div class="quiz-result__actions">
+                        <button class="btn btn-primary" type="button" id="quiz-book">Записаться с этим запросом</button>
+                        <a class="btn btn-soft" id="quiz-link" href="deti.html">Открыть направление</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-kicker">FAQ</span>
+                    <h2 class="section-title">Что важно знать перед первым визитом</h2>
+                </div>
+                <div class="faq">
+                    <details class="reveal">
+                        <summary>Что взять с собой?</summary>
+                        <p>Возьмите выписки, заключения, результаты анализов, обследований, список препаратов и коротко запишите основные жалобы. Если речь о ребёнке — важны история развития, сон, питание, поведение и динамика навыков.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Можно прийти, если диагноз уже есть?</summary>
+                        <p>Да. Мы не заменяем профильных специалистов, а помогаем систематизировать данные, проверить сопутствующие факторы и сформировать понятный план дальнейших шагов.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Вы гарантируете, что найдёте причину?</summary>
+                        <p>Нет. Корректная задача — проверить возможные причины, собрать данные в единую врачебную картину и объяснить, какие шаги имеют смысл дальше.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Что будет после первого визита?</summary>
+                        <p>Вы получите объяснение результатов, приоритеты и маршрут: что корректировать, какие данные собрать, когда нужен контроль и какое сопровождение может быть полезно.</p>
+                    </details>
                 </div>
             </div>
         </section>
@@ -1487,10 +2085,11 @@
                 <div class="reveal">
                     <span class="section-kicker" style="color: #78d6ca;">Контакты</span>
                     <h2>Запишитесь на диагностику</h2>
-                    <p>Оставьте заявку или свяжитесь напрямую. На первом контакте достаточно коротко описать ситуацию.</p>
+                    <p>Оставьте заявку — администратор уточнит вашу ситуацию, подберёт направление и предложит удобное время приёма.</p>
                     <div style="margin-top: 30px;">
                         <button class="btn btn-primary" type="button" data-open-modal>Оставить заявку</button>
                     </div>
+                    <p class="medical-note">Имеются противопоказания. Необходима консультация специалиста.</p>
                 </div>
 
                 <div class="cta__contacts reveal">
@@ -1521,6 +2120,7 @@
                     <a href="deti.html">Детская медицина</a>
                     <a href="vzroslye.html">Взрослая медицина</a>
                     <a href="politika.html">Политика данных</a>
+                    <a href="way.png">Схема проезда</a>
                 </div>
                 <div>
                     <h3>Информация</h3>
@@ -1575,6 +2175,7 @@
         </div>
     </div>
 
+    <script src="site-data.js"></script>
     <script>
         const body = document.body;
         const menuToggle = document.querySelector(".menu-toggle");
@@ -1583,6 +2184,32 @@
         const modalPanel = modal.querySelector(".modal");
         const form = document.getElementById("booking-form");
         let lastFocus = null;
+
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;",
+                "'": "&#039;"
+            }[char]));
+        }
+
+        function renderSymptoms() {
+            const root = document.querySelector("[data-symptom-grid]");
+            const symptoms = window.SITE_DATA?.homepage?.symptoms;
+            if (!root || !Array.isArray(symptoms) || !symptoms.length) return;
+            root.innerHTML = symptoms.map((item) => `
+                <a class="symptom-card reveal" href="${escapeHtml(item.href)}">
+                    <span class="symptom-card__icon">${escapeHtml(item.icon)}</span>
+                    <h3>${escapeHtml(item.title)}</h3>
+                    <p>${escapeHtml(item.description)}</p>
+                    <span>${escapeHtml(item.action)}</span>
+                </a>
+            `).join("");
+        }
+
+        renderSymptoms();
 
         function closeMenu() {
             body.classList.remove("menu-open");
@@ -1654,6 +2281,73 @@
             closeModal();
         });
 
+        const quizResults = {
+            child: {
+                title: "Интегративный разбор развития ребёнка",
+                copy: "Подходит, если есть диагноз, сложная история или много разрозненных заключений. Цель — собрать данные в единую врачебную картину.",
+                link: "deti.html",
+                direction: "Ребёнок",
+                bullets: ["подготовить выписки и анализы", "описать главные изменения за последние месяцы", "записать вопросы к врачу"]
+            },
+            adultEnergy: {
+                title: "Взрослый check-up ресурса организма",
+                copy: "Подходит при усталости, стрессе, плохом восстановлении и ощущении, что базовые анализы не объясняют состояние.",
+                link: "vzroslye.html",
+                direction: "Check-up",
+                bullets: ["собрать последние анализы", "описать сон, нагрузку и стресс", "указать препараты и добавки"]
+            },
+            adultMetabolic: {
+                title: "Check-up метаболизма и биологического возраста",
+                copy: "Подходит при изменении веса, отёках, гормональных вопросах и желании оценить возрастные риски заранее.",
+                link: "vzroslye.html#programs",
+                direction: "Check-up",
+                bullets: ["указать динамику веса", "подготовить гормональные и биохимические анализы, если есть", "описать питание и активность"]
+            },
+            adultRisk: {
+                title: "Профилактический сосудистый и ресурсный check-up",
+                copy: "Подходит, если есть давление, головные боли, семейные риски или желание проверить состояние сосудов и адаптационные резервы.",
+                link: "vzroslye.html#diagnostics",
+                direction: "Взрослый",
+                bullets: ["вспомнить семейные сердечно-сосудистые риски", "подготовить данные давления, если измеряли", "описать нагрузку и симптомы"]
+            }
+        };
+
+        function getChecked(name) {
+            return document.querySelector(`input[name="${name}"]:checked`)?.value;
+        }
+
+        function getQuizResult() {
+            const audience = getChecked("quiz-audience");
+            const problem = getChecked("quiz-problem");
+            if (audience === "child" || problem === "development") return quizResults.child;
+            if (problem === "metabolic") return quizResults.adultMetabolic;
+            if (problem === "risk") return quizResults.adultRisk;
+            return quizResults.adultEnergy;
+        }
+
+        function renderQuizResult() {
+            const result = getQuizResult();
+            document.getElementById("quiz-title").textContent = result.title;
+            document.getElementById("quiz-copy").textContent = result.copy;
+            document.getElementById("quiz-link").href = result.link;
+            document.getElementById("quiz-list").innerHTML = result.bullets.map((item) => `<li>${item}</li>`).join("");
+        }
+
+        document.querySelectorAll(".quiz input").forEach((input) => {
+            input.addEventListener("change", renderQuizResult);
+        });
+
+        document.getElementById("quiz-book").addEventListener("click", () => {
+            const result = getQuizResult();
+            const direction = document.getElementById("patient-direction");
+            const comment = document.getElementById("patient-comment");
+            direction.value = result.direction;
+            comment.value = `Запрос из квиза: ${result.title}. ${result.copy}`;
+            openModal();
+        });
+
+        renderQuizResult();
+
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -1665,5 +2359,9 @@
 
         document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
     </script>
+    <script src="documents.js" defer></script>
+    <script src="accessibility.js" defer></script>
 </body>
 </html>
+
+

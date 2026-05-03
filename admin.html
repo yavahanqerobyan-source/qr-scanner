@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | ЯЖИЗНЬ</title>
+    <script src="site-data.js"></script>
+    <style>
+        @font-face { font-family: "Nunito"; src: url("Nunito-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+        @font-face { font-family: "Nunito"; src: url("Nunito-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+        @font-face { font-family: "Nunito"; src: url("Nunito-ExtraBold.ttf") format("truetype"); font-weight: 800; font-display: swap; }
+        :root {
+            --bg: #f3f7f5;
+            --panel: #ffffff;
+            --ink: #111c1a;
+            --muted: #60706c;
+            --line: #d8e2df;
+            --accent: #007c72;
+            --accent-2: #0d9488;
+            --danger: #b42318;
+            --soft: #e7f3f1;
+            --radius: 18px;
+            --shadow: 0 22px 60px rgba(17, 28, 26, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--bg);
+            font-family: "Nunito", Arial, sans-serif;
+        }
+        button, input, textarea, select { font: inherit; }
+        .shell {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+        }
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 26px;
+            background: #101815;
+            color: #fff;
+        }
+        .brand img { width: 154px; height: auto; filter: brightness(0) invert(1); }
+        .brand p { margin: 14px 0 0; color: rgba(255,255,255,0.64); line-height: 1.45; }
+        .nav { display: grid; gap: 10px; margin-top: 34px; }
+        .nav button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            min-height: 48px;
+            padding: 0 16px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.82);
+            background: rgba(255,255,255,0.04);
+            cursor: pointer;
+        }
+        .nav button.is-active {
+            color: #fff;
+            border-color: rgba(120, 214, 202, 0.5);
+            background: rgba(120, 214, 202, 0.14);
+        }
+        .side-note {
+            margin-top: 28px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.04);
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .main { padding: 34px; }
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+        h1 { margin: 0; font-size: clamp(34px, 5vw, 62px); line-height: 0.94; letter-spacing: 0; }
+        .lead { max-width: 760px; margin: 14px 0 0; color: var(--muted); font-size: 18px; line-height: 1.55; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 0 16px;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary { color: #fff; background: var(--accent); }
+        .btn-primary:hover { background: var(--accent-2); }
+        .btn-soft { color: var(--ink); border-color: var(--line); background: #fff; }
+        .btn-soft:hover { background: var(--soft); }
+        .btn-danger { color: var(--danger); border-color: rgba(180, 35, 24, 0.2); background: #fff7f6; }
+        .btn-small { min-height: 38px; padding: 0 12px; border-radius: 10px; font-size: 14px; }
+        .panel {
+            margin-top: 22px;
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--panel);
+            box-shadow: var(--shadow);
+        }
+        .panel-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+        .panel h2 { margin: 0; font-size: 28px; line-height: 1.05; }
+        .panel p { margin: 8px 0 0; color: var(--muted); line-height: 1.45; }
+        .tabs { display: inline-flex; gap: 6px; padding: 5px; border: 1px solid var(--line); border-radius: 14px; background: #eef5f3; }
+        .tabs button {
+            min-height: 38px;
+            padding: 0 14px;
+            border: 0;
+            border-radius: 10px;
+            color: var(--muted);
+            background: transparent;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .tabs button.is-active { color: var(--ink); background: #fff; box-shadow: 0 8px 18px rgba(17,28,26,0.08); }
+        .groups { display: grid; gap: 18px; }
+        .group-card {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: #fbfdfc;
+            overflow: hidden;
+        }
+        .group-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: end;
+            padding: 18px;
+            border-bottom: 1px solid var(--line);
+            background: #fff;
+        }
+        .field { display: grid; gap: 7px; }
+        .field label { color: var(--muted); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+        .field input, .field textarea, .field select {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--ink);
+            background: #fff;
+            outline: none;
+        }
+        .field textarea { min-height: 86px; resize: vertical; }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            border-color: rgba(0,124,114,0.55);
+            box-shadow: 0 0 0 4px rgba(0,124,114,0.09);
+        }
+        .items { display: grid; gap: 12px; padding: 18px; }
+        .item-row {
+            display: grid;
+            grid-template-columns: minmax(180px, 1.2fr) minmax(220px, 1.6fr) minmax(120px, 0.5fr) auto;
+            gap: 10px;
+            align-items: end;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: #fff;
+        }
+        .empty {
+            padding: 22px;
+            border: 1px dashed var(--line);
+            border-radius: 14px;
+            color: var(--muted);
+            text-align: center;
+            background: #fff;
+        }
+        .save-box {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 18px;
+            align-items: center;
+            margin-top: 22px;
+            padding: 18px;
+            border: 1px solid rgba(0,124,114,0.22);
+            border-radius: 16px;
+            background: var(--soft);
+        }
+        .status { color: var(--muted); font-weight: 700; }
+        .status strong { color: var(--accent); }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+        .mini-card {
+            padding: 20px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: #fff;
+        }
+        .mini-card h3 { margin: 0; font-size: 21px; }
+        .mini-card p { margin-top: 8px; color: var(--muted); line-height: 1.45; }
+        .file-input {
+            position: relative;
+            overflow: hidden;
+        }
+        .file-input input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        [hidden] { display: none !important; }
+        @media (max-width: 980px) {
+            .shell { grid-template-columns: 1fr; }
+            .sidebar { position: static; height: auto; }
+            .topbar, .panel-head, .save-box { display: grid; }
+            .actions { justify-content: start; }
+            .item-row, .admin-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .main, .sidebar { padding: 20px; }
+            .group-head { grid-template-columns: 1fr; }
+            .tabs { display: grid; }
+        }
+    </style>
+    <link rel="stylesheet" href="accessibility.css">
+    <link rel="stylesheet" href="documents.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="logo.png" width="2508" height="627" alt="ЯЖИЗНЬ">
+                <p>Локальная панель управления статическим сайтом.</p>
+            </div>
+            <nav class="nav" aria-label="Разделы админки">
+                <button class="is-active" type="button" data-view="prices">Прайс <span>01</span></button>
+                <button type="button" data-view="contacts">Контакты <span>02</span></button>
+                <button type="button" data-view="homepage">Главная <span>03</span></button>
+                <button type="button" data-view="ideas">Что добавить <span>04</span></button>
+            </nav>
+            <div class="side-note">
+                Админка работает без сервера. После правок сохраните файл `site-data.js` в эту же папку и загрузите папку на хостинг.
+            </div>
+        </aside>
+
+        <main id="main" class="main">
+            <div class="topbar">
+                <div>
+                    <h1>Админ-панель</h1>
+                    <p class="lead">Редактирование прайса, контактов и обслуживаемых данных сайта. Основной сценарий: изменили услуги → сохранили `site-data.js` → сайт показывает новые данные.</p>
+                </div>
+                <div class="actions">
+                    <label class="btn btn-soft file-input">Загрузить site-data.js<input id="import-file" type="file" accept=".js,.json"></label>
+                    <button class="btn btn-soft" type="button" id="reset-data">Сбросить</button>
+                    <button class="btn btn-primary" type="button" id="save-data">Сохранить файл</button>
+                </div>
+            </div>
+
+            <section class="panel" data-panel="prices">
+                <div class="panel-head">
+                    <div>
+                        <h2>Прайс-лист</h2>
+                        <p>Добавляйте блоки, услуги, описания и стоимость. Единый прайс используется на страницах взрослых и детей.</p>
+                    </div>
+                    <div class="tabs" role="tablist" aria-label="Направление прайса">
+                        <button class="is-active" type="button" data-direction="adults">Единый прайс</button>
+                    </div>
+                </div>
+                <div class="groups" id="price-groups"></div>
+                <div style="margin-top:18px;">
+                    <button class="btn btn-soft" type="button" id="add-group">+ Добавить блок прайса</button>
+                </div>
+            </section>
+
+            <section class="panel" data-panel="contacts" hidden>
+                <div class="panel-head">
+                    <div>
+                        <h2>Контакты и реквизиты</h2>
+                        <p>Эти данные уже сохраняются в `site-data.js`. Следующий шаг — полностью подключить их к футерам всех страниц.</p>
+                    </div>
+                </div>
+                <div class="admin-grid">
+                    <div class="field"><label for="mobile">Мобильный телефон</label><input id="mobile" data-contact="mobile" type="text"></div>
+                    <div class="field"><label for="phone">Городской телефон</label><input id="phone" data-contact="phone" type="text"></div>
+                    <div class="field"><label for="email">Email</label><input id="email" data-contact="email" type="email"></div>
+                    <div class="field"><label for="company">Юрлицо</label><input id="company" data-contact="company" type="text"></div>
+                    <div class="field"><label for="inn">ИНН</label><input id="inn" data-contact="inn" type="text"></div>
+                    <div class="field"><label for="license">Лицензия</label><input id="license" data-contact="license" type="text"></div>
+                </div>
+            </section>
+
+            <section class="panel" data-panel="homepage" hidden>
+                <div class="panel-head">
+                    <div>
+                        <h2>Главная страница</h2>
+                        <p>Карточки блока “С чем к нам приходят”. Они показываются на главной и помогают пациенту выбрать направление по своей ситуации.</p>
+                    </div>
+                    <button class="btn btn-soft" type="button" id="add-symptom">+ Добавить ситуацию</button>
+                </div>
+                <div class="groups" id="symptom-groups"></div>
+            </section>
+
+            <section class="panel" data-panel="ideas" hidden>
+                <div class="panel-head">
+                    <div>
+                        <h2>Что стоит добавить дальше</h2>
+                        <p>Приоритеты для полноценного обслуживания сайта без разработчика.</p>
+                    </div>
+                </div>
+                <div class="admin-grid">
+                    <article class="mini-card"><h3>Тексты страниц</h3><p>Редактирование заголовков, подзаголовков, FAQ и CTA без правки HTML.</p></article>
+                    <article class="mini-card"><h3>Диагностика и попапы</h3><p>Добавлять оборудование, эмодзи, проблему, решение и текст в модальном окне.</p></article>
+                    <article class="mini-card"><h3>Фото и баннеры</h3><p>Загрузка изображения врача, детского и взрослого направления с подсказкой оптимального размера.</p></article>
+                    <article class="mini-card"><h3>SEO</h3><p>Title, description, Open Graph, индексация и подписи изображений для каждой страницы.</p></article>
+                    <article class="mini-card"><h3>Заявки</h3><p>Если подключить backend или форму, админка сможет показывать новые обращения и статусы.</p></article>
+                    <article class="mini-card"><h3>Публикация</h3><p>Кнопка “опубликовать” через хостинг/Git вместо ручной загрузки файлов.</p></article>
+                </div>
+            </section>
+
+            <div class="save-box">
+                <div class="status" id="status">Готово к редактированию. Изменений пока нет.</div>
+                <div class="actions">
+                    <a class="btn btn-soft" href="index.html">На сайт</a>
+                    <button class="btn btn-primary" type="button" id="save-data-bottom">Сохранить файл</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const cloneData = (value) => JSON.parse(JSON.stringify(value || {}));
+        const initialData = cloneData(window.SITE_DATA || { prices: { adults: [], children: [] }, contacts: {} });
+        let data = cloneData(initialData);
+        let currentDirection = "adults";
+        let dirty = false;
+
+        const groupsRoot = document.getElementById("price-groups");
+        const symptomsRoot = document.getElementById("symptom-groups");
+        const statusEl = document.getElementById("status");
+
+        function ensureShape() {
+            data.contacts = data.contacts || {};
+            data.homepage = data.homepage || {};
+            data.homepage.symptoms = Array.isArray(data.homepage.symptoms) ? data.homepage.symptoms : [];
+            data.prices = data.prices || {};
+            data.prices.adults = Array.isArray(data.prices.adults) ? data.prices.adults : [];
+            data.prices.children = Array.isArray(data.prices.children) ? data.prices.children : [];
+        }
+
+        function setDirty(value = true) {
+            dirty = value;
+            statusEl.innerHTML = dirty ? "<strong>Есть несохраненные изменения.</strong> Сохраните `site-data.js` перед загрузкой сайта." : "Все изменения сохранены в текущем сеансе.";
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;",
+                "'": "&#039;"
+            }[char]));
+        }
+
+        function renderPrices() {
+            ensureShape();
+            const groups = data.prices[currentDirection];
+            groupsRoot.innerHTML = groups.length ? groups.map((group, groupIndex) => `
+                <article class="group-card">
+                    <div class="group-head">
+                        <div class="field">
+                            <label>Название блока</label>
+                            <input type="text" value="${escapeHtml(group.title)}" data-group-title="${groupIndex}">
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-soft btn-small" type="button" data-add-item="${groupIndex}">+ Услуга</button>
+                            <button class="btn btn-danger btn-small" type="button" data-delete-group="${groupIndex}">Удалить блок</button>
+                        </div>
+                    </div>
+                    <div class="items">
+                        ${(group.items || []).length ? group.items.map((item, itemIndex) => `
+                            <div class="item-row">
+                                <div class="field">
+                                    <label>Услуга</label>
+                                    <input type="text" value="${escapeHtml(item.name)}" data-item-field="${groupIndex}:${itemIndex}:name">
+                                </div>
+                                <div class="field">
+                                    <label>Описание</label>
+                                    <input type="text" value="${escapeHtml(item.description)}" data-item-field="${groupIndex}:${itemIndex}:description">
+                                </div>
+                                <div class="field">
+                                    <label>Цена</label>
+                                    <input type="text" value="${escapeHtml(item.price)}" data-item-field="${groupIndex}:${itemIndex}:price">
+                                </div>
+                                <button class="btn btn-danger btn-small" type="button" data-delete-item="${groupIndex}:${itemIndex}">Удалить</button>
+                            </div>
+                        `).join("") : `<div class="empty">В блоке пока нет услуг.</div>`}
+                    </div>
+                </article>
+            `).join("") : `<div class="empty">Прайс пуст. Добавьте первый блок.</div>`;
+        }
+
+        function renderContacts() {
+            document.querySelectorAll("[data-contact]").forEach((input) => {
+                input.value = data.contacts[input.dataset.contact] || "";
+            });
+        }
+
+        function renderSymptomsAdmin() {
+            ensureShape();
+            symptomsRoot.innerHTML = data.homepage.symptoms.length ? data.homepage.symptoms.map((item, index) => `
+                <article class="group-card">
+                    <div class="items">
+                        <div class="item-row">
+                            <div class="field">
+                                <label>Иконка</label>
+                                <input type="text" value="${escapeHtml(item.icon)}" data-symptom-field="${index}:icon">
+                            </div>
+                            <div class="field">
+                                <label>Заголовок</label>
+                                <input type="text" value="${escapeHtml(item.title)}" data-symptom-field="${index}:title">
+                            </div>
+                            <div class="field">
+                                <label>Ссылка</label>
+                                <input type="text" value="${escapeHtml(item.href)}" data-symptom-field="${index}:href">
+                            </div>
+                            <button class="btn btn-danger btn-small" type="button" data-delete-symptom="${index}">Удалить</button>
+                        </div>
+                        <div class="item-row" style="grid-template-columns: minmax(0, 1.4fr) minmax(160px, 0.6fr) auto;">
+                            <div class="field">
+                                <label>Описание</label>
+                                <input type="text" value="${escapeHtml(item.description)}" data-symptom-field="${index}:description">
+                            </div>
+                            <div class="field">
+                                <label>Текст действия</label>
+                                <input type="text" value="${escapeHtml(item.action)}" data-symptom-field="${index}:action">
+                            </div>
+                            <span></span>
+                        </div>
+                    </div>
+                </article>
+            `).join("") : `<div class="empty">Ситуаций пока нет. Добавьте первую карточку.</div>`;
+        }
+
+        function renderAll() {
+            renderPrices();
+            renderContacts();
+            renderSymptomsAdmin();
+        }
+
+        groupsRoot.addEventListener("input", (event) => {
+            const titleIndex = event.target.dataset.groupTitle;
+            const itemField = event.target.dataset.itemField;
+            if (titleIndex !== undefined) {
+                data.prices[currentDirection][Number(titleIndex)].title = event.target.value;
+                setDirty();
+            }
+            if (itemField) {
+                const [groupIndex, itemIndex, field] = itemField.split(":");
+                data.prices[currentDirection][Number(groupIndex)].items[Number(itemIndex)][field] = event.target.value;
+                setDirty();
+            }
+        });
+
+        groupsRoot.addEventListener("click", (event) => {
+            const addItem = event.target.dataset.addItem;
+            const deleteGroup = event.target.dataset.deleteGroup;
+            const deleteItem = event.target.dataset.deleteItem;
+            if (addItem !== undefined) {
+                const group = data.prices[currentDirection][Number(addItem)];
+                group.items = group.items || [];
+                group.items.push({ name: "Новая услуга", description: "Краткое описание.", price: "по записи" });
+                setDirty();
+                renderPrices();
+            }
+            if (deleteGroup !== undefined && confirm("Удалить весь блок прайса?")) {
+                data.prices[currentDirection].splice(Number(deleteGroup), 1);
+                setDirty();
+                renderPrices();
+            }
+            if (deleteItem) {
+                const [groupIndex, itemIndex] = deleteItem.split(":");
+                data.prices[currentDirection][Number(groupIndex)].items.splice(Number(itemIndex), 1);
+                setDirty();
+                renderPrices();
+            }
+        });
+
+        document.getElementById("add-group").addEventListener("click", () => {
+            data.prices[currentDirection].push({
+                title: "Новый блок",
+                items: [{ name: "Новая услуга", description: "Краткое описание.", price: "по записи" }]
+            });
+            setDirty();
+            renderPrices();
+        });
+
+        document.querySelectorAll("[data-direction]").forEach((button) => {
+            button.addEventListener("click", () => {
+                currentDirection = button.dataset.direction;
+                document.querySelectorAll("[data-direction]").forEach((item) => item.classList.toggle("is-active", item === button));
+                renderPrices();
+            });
+        });
+
+        document.querySelectorAll("[data-view]").forEach((button) => {
+            button.addEventListener("click", () => {
+                document.querySelectorAll("[data-view]").forEach((item) => item.classList.toggle("is-active", item === button));
+                document.querySelectorAll("[data-panel]").forEach((panel) => {
+                    panel.hidden = panel.dataset.panel !== button.dataset.view;
+                });
+            });
+        });
+
+        document.querySelectorAll("[data-contact]").forEach((input) => {
+            input.addEventListener("input", () => {
+                data.contacts[input.dataset.contact] = input.value;
+                setDirty();
+            });
+        });
+
+        symptomsRoot.addEventListener("input", (event) => {
+            const fieldData = event.target.dataset.symptomField;
+            if (!fieldData) return;
+            const [index, field] = fieldData.split(":");
+            data.homepage.symptoms[Number(index)][field] = event.target.value;
+            setDirty();
+        });
+
+        symptomsRoot.addEventListener("click", (event) => {
+            const index = event.target.dataset.deleteSymptom;
+            if (index === undefined) return;
+            data.homepage.symptoms.splice(Number(index), 1);
+            setDirty();
+            renderSymptomsAdmin();
+        });
+
+        document.getElementById("add-symptom").addEventListener("click", () => {
+            data.homepage.symptoms.push({
+                icon: "🧭",
+                title: "Новая ситуация пациента",
+                description: "Коротко опишите проблему понятным языком.",
+                action: "Выбрать маршрут",
+                href: "#quiz"
+            });
+            setDirty();
+            renderSymptomsAdmin();
+        });
+
+        function toSiteDataFile() {
+            data.prices.children = cloneData(data.prices.adults);
+            data.updatedAt = new Date().toISOString().slice(0, 10);
+            return "window.SITE_DATA = " + JSON.stringify(data, null, 2) + ";\n\nwindow.SITE_DATA.prices.children = window.SITE_DATA.prices.adults;\n";
+        }
+
+        async function saveFile() {
+            const content = toSiteDataFile();
+            if ("showSaveFilePicker" in window) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: "site-data.js",
+                        types: [{ description: "JavaScript", accept: { "text/javascript": [".js"] } }]
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(content);
+                    await writable.close();
+                    setDirty(false);
+                    return;
+                } catch (error) {
+                    if (error.name === "AbortError") return;
+                }
+            }
+            const blob = new Blob([content], { type: "text/javascript;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "site-data.js";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            setDirty(false);
+        }
+
+        document.getElementById("save-data").addEventListener("click", saveFile);
+        document.getElementById("save-data-bottom").addEventListener("click", saveFile);
+
+        document.getElementById("reset-data").addEventListener("click", () => {
+            if (!confirm("Сбросить изменения текущего сеанса?")) return;
+            data = cloneData(initialData);
+            currentDirection = "adults";
+            document.querySelectorAll("[data-direction]").forEach((item) => item.classList.toggle("is-active", item.dataset.direction === currentDirection));
+            setDirty(false);
+            renderAll();
+        });
+
+        document.getElementById("import-file").addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            const jsonText = text.replace(/^\s*window\.SITE_DATA\s*=\s*/, "").replace(/;\s*$/, "");
+            try {
+                data = JSON.parse(jsonText);
+                ensureShape();
+                setDirty(true);
+                renderAll();
+            } catch (error) {
+                alert("Не удалось прочитать файл. Загрузите корректный site-data.js или JSON.");
+            } finally {
+                event.target.value = "";
+            }
+        });
+
+        window.addEventListener("beforeunload", (event) => {
+            if (!dirty) return;
+            event.preventDefault();
+            event.returnValue = "";
+        });
+
+        ensureShape();
+        renderAll();
+    </script>
+    <script src="documents.js" defer></script>
+    <script src="accessibility.js" defer></script>
+</body>
+</html>
+
+

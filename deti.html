@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -118,16 +118,63 @@
         .diag-hint::after { content: "→"; transition: transform 0.2s ease; }
         .equipment button:hover .diag-hint::after { transform: translateX(4px); }
 
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--line);
+        }
+
+        .analysis-grid div {
+            min-height: 160px;
+            padding: 22px;
+            background: #fff;
+        }
+
+        .analysis-grid span {
+            display: block;
+            margin-bottom: 16px;
+            font-size: 26px;
+        }
+
+        .analysis-grid h3 {
+            font-size: 19px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .analysis-grid p {
+            margin-top: 9px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
         .price { display: grid; gap: 0; border-top: 1px solid var(--line); }
-        .price-row { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--line); }
+        .price-catalog { display: grid; gap: 34px; }
+        .price-group { padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+        .price-group__head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+        .price-group__head h3 { font-size: 26px; font-weight: 800; line-height: 1.08; }
+        .price-group__head span { color: var(--accent-dark); font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+        .price-row { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin: 0 -14px; padding: 24px 14px; border-bottom: 1px solid var(--line); border-radius: var(--radius); transition: background-color 0.2s ease, transform 0.2s ease; }
+        .price-row:hover { background: rgba(0, 124, 114, 0.055); transform: translateX(3px); }
+        .price-row:last-child { border-bottom: 0; }
         .price-row h3 { font-size: 22px; font-weight: 800; }
         .price-row p { margin-top: 4px; color: var(--muted); }
-        .price-row strong { color: var(--accent-dark); font-size: 24px; font-weight: 800; white-space: nowrap; }
+        .price-row strong { color: var(--accent-dark); font-size: 24px; font-weight: 800; white-space: nowrap; transition: color 0.2s ease; }
+        .price-row:hover strong { color: var(--accent); }
 
-        .doctor-mini { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: start; }
+        .doctors-list { display: grid; gap: 18px; }
+        .doctor-mini { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: start; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: 0 18px 44px rgba(24,33,31,0.05); }
         .doctor-mini img { width: 150px; height: 190px; border-radius: 18px; object-fit: cover; object-position: center top; box-shadow: 0 18px 44px rgba(24,33,31,0.14); }
         .doctor-mini h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 800; line-height: 1.05; }
         .doctor-mini p { margin-top: 12px; color: var(--muted); font-size: 17px; font-weight: 700; }
+        .doctor-name { display: grid; gap: 2px; }
+        .doctor-name span { display: block; }
+        .doctor-mini__focus { display: grid; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--muted); }
+        .doctor-mini__focus li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 999px; background: var(--accent); vertical-align: 1px; }
         .doctor-stats { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 24px; }
         .doctor-stats strong { display: block; font-size: 32px; font-weight: 800; line-height: 1; }
         .doctor-stats span { display: block; margin-top: 7px; color: var(--muted); font-size: 14px; }
@@ -168,6 +215,11 @@
         .info-list span { color: var(--muted); font-size: 15px; }
         .modal__tag { display: inline-flex; margin-bottom: 12px; color: var(--accent-dark); font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
         .modal__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+        .faq { display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .faq details { background: #fff; }
+        .faq summary { min-height: 64px; padding: 20px 24px; color: var(--ink); font-size: 18px; font-weight: 800; cursor: pointer; }
+        .faq p { padding: 0 24px 22px; color: var(--muted); font-size: 16px; }
+        .medical-note { margin-top: 20px; color: rgba(255,255,255,0.58); font-size: 13px; }
         .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
         @keyframes enter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
@@ -187,9 +239,12 @@
             .brand span { display: none; }
             .hero { min-height: auto; padding: calc(var(--header-h) + 58px) 0 30px; }
             .hero__actions { display: grid; grid-template-columns: 1fr; }
-            .hero-proof, .pain-grid, .services, .equipment { grid-template-columns: 1fr; }
+            .hero-proof, .pain-grid, .services, .equipment, .analysis-grid { grid-template-columns: 1fr; }
             .section { padding: 72px 0; }
             .step, .price-row { grid-template-columns: 1fr; gap: 10px; }
+            .price-group { padding: 22px; }
+            .price-group__head { display: block; }
+            .price-group__head span { display: block; margin-bottom: 8px; }
             .doctor-mini img { width: 150px; height: 190px; }
             .cta__contacts a { display: block; }
             .cta__contacts span { display: block; margin-bottom: 4px; }
@@ -201,8 +256,11 @@
             *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
     </style>
+    <link rel="stylesheet" href="accessibility.css">
+    <link rel="stylesheet" href="documents.css">
 </head>
 <body>
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
     <header class="site-header">
         <div class="container site-header__inner">
             <a class="brand" href="index.html" aria-label="ЯЖИЗНЬ, главная">
@@ -232,15 +290,15 @@
         <button type="button" data-open-modal>Записаться <span>→</span></button>
     </nav>
 
-    <main>
+    <main id="main">
         <section class="hero">
             <div class="container">
                 <span class="eyebrow">Дети 2–10 лет</span>
-                <h1>Медицина, которая ищет причину у ребёнка</h1>
-                <p class="hero__lead">Когда ребёнок часто болеет, быстро устаёт или анализы “в норме”, но состояние не улучшается.</p>
-                <p class="hero__text">Проводим комплексную диагностику 6 систем организма и собираем понятный план действий для родителей.</p>
+                <h1>Ребёнок прошёл обследования, но общей картины нет?</h1>
+                <p class="hero__lead">Интегративный разбор развития ребёнка, если диагноз есть, а понимания причин и плана действий нет.</p>
+                <p class="hero__text">Помогаем систематизировать историю, выписки, обследования и сопутствующие факторы, чтобы родители получили понятный маршрут дальнейших шагов.</p>
                 <div class="hero__actions">
-                    <button class="btn btn-primary" type="button" data-open-modal>Записаться на диагностику</button>
+                    <button class="btn btn-primary" type="button" data-open-modal>Разобрать ситуацию ребёнка</button>
                     <a class="btn btn-ghost" href="#approach">Как проходит приём</a>
                 </div>
                 <div class="hero-proof">
@@ -255,13 +313,29 @@
             <div class="container">
                 <div class="section-head reveal">
                     <span class="kicker">Знакомая ситуация?</span>
-                    <h2 class="section-title">Родители приходят, когда обычный маршрут не даёт ответа</h2>
-                    <p class="section-copy">Главная задача детского направления — собрать разрозненные симптомы в одну понятную картину.</p>
+                    <h2 class="section-title">Когда заключений много, а понятного маршрута нет</h2>
+                    <p class="section-copy">Мы аккуратно работаем со сложными детскими историями без обещаний излечения и громких диагнозов.</p>
                 </div>
                 <div class="pain-grid">
-                    <div class="pain-card reveal"><span>01</span><h3>Круговорот врачей</h3><p>Педиатр, невролог, иммунолог, гастроэнтеролог — каждый видит свой участок, но общей картины нет.</p></div>
-                    <div class="pain-card reveal"><span>02</span><h3>Анализы в норме</h3><p>Показатели формально хорошие, а ребёнок устаёт, капризничает, плохо восстанавливается и часто болеет.</p></div>
-                    <div class="pain-card reveal"><span>03</span><h3>Лечат симптомы</h3><p>Насморк, кашель, температура уходят на время, но причина остаётся и всё повторяется снова.</p></div>
+                    <div class="pain-card reveal"><span>01</span><h3>Сложная история развития</h3><p>Задержка речи или развития, регресс навыков, РАС, эпилепсия или сложная неврологическая история.</p></div>
+                    <div class="pain-card reveal"><span>02</span><h3>Много обследований</h3><p>Есть ЭЭГ, МРТ, анализы, заключения, но родители не понимают, как всё связано и что делать дальше.</p></div>
+                    <div class="pain-card reveal"><span>03</span><h3>Непонятные реакции</h3><p>Частые болезни, реакции на питание, сон, поведение, усталость или восстановление требуют системного разбора.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">Что мы разбираем</span>
+                    <h2 class="section-title">Не один симптом, а всю картину ребёнка</h2>
+                    <p class="section-copy">На первичном разборе важны не только жалобы, но и документы, история развития, поведение, питание, сон и уже пройденные обследования.</p>
+                </div>
+                <div class="analysis-grid">
+                    <div class="reveal"><span>📄</span><h3>Выписки и заключения</h3><p>Систематизируем то, что уже есть на руках.</p></div>
+                    <div class="reveal"><span>🧠</span><h3>ЭЭГ / МРТ / анализы</h3><p>Смотрим, каких данных достаточно, а чего не хватает.</p></div>
+                    <div class="reveal"><span>🧩</span><h3>Развитие и поведение</h3><p>Отмечаем динамику навыков, реакции, нагрузку и регресс.</p></div>
+                    <div class="reveal"><span>🌙</span><h3>Сон, питание, режим</h3><p>Ищем факторы, которые могут влиять на состояние ребёнка.</p></div>
                 </div>
             </div>
         </section>
@@ -270,14 +344,14 @@
             <div class="container split">
                 <div class="sticky reveal">
                     <span class="kicker">Подход</span>
-                    <h2 class="section-title">От жалобы к персональному плану</h2>
-                    <p class="section-copy">Мы не перегружаем родителей терминами. После приёма должно быть понятно, что происходит и какой шаг первый.</p>
+                    <h2 class="section-title">От разрозненных данных к карте ситуации</h2>
+                    <p class="section-copy">После разбора родители получают не обещание “быстрого решения”, а структурированный план: что известно, что проверить и куда двигаться дальше.</p>
                 </div>
                 <div class="steps">
                     <div class="step reveal"><strong>01</strong><div><h3>Собираем историю</h3><p>Развитие, питание, сон, нагрузки, частота болезней, жалобы и предыдущие обследования.</p></div></div>
-                    <div class="step reveal"><strong>02</strong><div><h3>Проводим диагностику</h3><p>Оцениваем функциональное состояние организма через 6 диагностических направлений.</p></div></div>
-                    <div class="step reveal"><strong>03</strong><div><h3>Ищем взаимосвязи</h3><p>Смотрим, как связаны иммунитет, сосуды, микроциркуляция, дефициты, стресс и восстановление.</p></div></div>
-                    <div class="step reveal"><strong>04</strong><div><h3>Даём план</h3><p>Рекомендации по питанию, режиму, коррекции, наблюдению и контрольным точкам.</p></div></div>
+                    <div class="step reveal"><strong>02</strong><div><h3>Разбираем документы</h3><p>Смотрим выписки, заключения, ЭЭГ/МРТ/анализы и отмечаем пробелы в данных.</p></div></div>
+                    <div class="step reveal"><strong>03</strong><div><h3>Формируем гипотезы</h3><p>Проверяем возможные сопутствующие факторы, которые могут влиять на состояние ребёнка.</p></div></div>
+                    <div class="step reveal"><strong>04</strong><div><h3>Даём план шагов</h3><p>Родитель получает понятный список: что проверить, что наблюдать, когда вернуться на контроль.</p></div></div>
                 </div>
             </div>
         </section>
@@ -285,33 +359,33 @@
         <section class="section" id="services">
             <div class="container">
                 <div class="section-head reveal">
-                    <span class="kicker">Услуги</span>
-                    <h2 class="section-title">Два понятных маршрута для ребёнка</h2>
+                    <span class="kicker">Продукты</span>
+                    <h2 class="section-title">Лестница помощи для родителей</h2>
                 </div>
                 <div class="services">
                     <article class="service reveal">
                         <div>
-                            <h3>Интегративная педиатрия</h3>
-                            <p>Когда уже есть жалобы: частые болезни, усталость, головные боли, проблемы с весом, поведением или восстановлением.</p>
+                            <h3>Интегративный разбор развития ребёнка</h3>
+                            <p>Входной продукт: структурируем историю, документы и жалобы, чтобы родитель понял, какие гипотезы проверять и какой шаг первый.</p>
                             <ul>
-                                <li>комплексная диагностика</li>
-                                <li>поиск причины, а не только симптома</li>
-                                <li>индивидуальные рекомендации</li>
+                                <li>анализ выписок и заключений</li>
+                                <li>список недостающих данных</li>
+                                <li>план дальнейших шагов</li>
                             </ul>
                         </div>
-                        <button class="btn btn-soft" type="button" data-open-modal>Записаться</button>
+                        <button class="btn btn-soft" type="button" data-open-modal>Разобрать ситуацию</button>
                     </article>
                     <article class="service reveal">
                         <div>
-                            <h3>Превентивная педиатрия</h3>
-                            <p>Когда хочется предупредить проблемы заранее: оценить риски, укрепить здоровье и понимать слабые места организма.</p>
+                            <h3>Диагностика и сопровождение по показаниям</h3>
+                            <p>Следующий уровень: если после разбора нужны дополнительные данные, врач объясняет, какие методы имеют смысл и зачем.</p>
                             <ul>
-                                <li>оценка рисков</li>
-                                <li>раннее выявление нарушений</li>
-                                <li>профилактический маршрут</li>
+                                <li>расширенная диагностика</li>
+                                <li>контроль динамики 1–3 месяца</li>
+                                <li>повторная консультация</li>
                             </ul>
                         </div>
-                        <button class="btn btn-soft" type="button" data-open-modal>Записаться</button>
+                        <button class="btn btn-soft" type="button" data-open-modal>Подобрать маршрут</button>
                     </article>
                 </div>
             </div>
@@ -339,28 +413,117 @@
             <div class="container">
                 <div class="section-head reveal">
                     <span class="kicker">Прайс</span>
-                    <h2 class="section-title">Прозрачная стоимость</h2>
-                    <p class="section-copy">Цены можно уточнить у администратора при записи, если нужен расширенный маршрут.</p>
+                    <h2 class="section-title">Единый прайс-лист</h2>
+                    <p class="section-copy">Стоимость одинаковая для детского и взрослого направления. Перед визитом администратор подтвердит состав программы.</p>
                 </div>
-                <div class="price">
-                    <div class="price-row reveal"><div><h3>Первичная консультация и диагностика</h3><p>Сбор истории, диагностика, разбор результата.</p></div><strong>по записи</strong></div>
-                    <div class="price-row reveal"><div><h3>Интегративная педиатрия</h3><p>Комплексный маршрут при жалобах.</p></div><strong>по записи</strong></div>
-                    <div class="price-row reveal"><div><h3>Превентивная педиатрия</h3><p>Профилактический осмотр и оценка рисков.</p></div><strong>по записи</strong></div>
+                <div class="price-catalog" data-price-catalog="adults">
+                    <section class="price-group reveal">
+                        <div class="price-group__head"><span>01</span><h3>Консультации</h3></div>
+                        <div class="price">
+                            <div class="price-row"><div><h3>Прием врача-эндокринолога</h3><p>Консультация • 60 мин.</p></div><strong>8 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием врача-терапевта</h3><p>Консультация • 60 мин.</p></div><strong>8 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием врача-нефролога</h3><p>Консультация • 60 мин.</p></div><strong>5 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием врача-невролога, к.м.н.</h3><p>Консультация, осмотр • 60 мин.</p></div><strong>30 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием врача-косметолога</h3><p>Осмотр, консультация без манипуляций • 60 мин.</p></div><strong>10 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Врачебная трактовка исследований</h3><p>Разбор результатов • 30 мин.</p></div><strong>3 500 ₽</strong></div>
+                            <div class="price-row"><div><h3>Консилиум специалистов</h3><p>С выдачей заключения о проведении консилиума.</p></div><strong>35 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>ВРТ</h3><p>Биорезонансное тестирование • 2 часа.</p></div><strong>10 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием интегративного врача</h3><p>Расширенный прием • 2 часа.</p></div><strong>10 000 ₽</strong></div>
+                        </div>
+                    </section>
+                    <section class="price-group reveal">
+                        <div class="price-group__head"><span>02</span><h3>Исследования и диагностика</h3></div>
+                        <div class="price">
+                            <div class="price-row"><div><h3>Программа «Анти-эйдж»</h3><p>Комплексная оценка возрастных и ресурсных показателей.</p></div><strong>16 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Биоимпедансный анализ состава тела</h3><p>Компонентный состав: мышцы, жир, вода.</p></div><strong>3 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Исследование эндотелиальной функции сосудов</h3><p>Аппарат «Ангиоскан» экспресс.</p></div><strong>3 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Миниинвазивный мониторинг глюкозы</h3><p>Контроль уровня глюкозы крови в течение 7 дней.</p></div><strong>15 000 ₽</strong></div>
+                        </div>
+                    </section>
+                    <section class="price-group reveal">
+                        <div class="price-group__head"><span>03</span><h3>Гипоксивоздействие и мониторинг</h3></div>
+                        <div class="price">
+                            <div class="price-row"><div><h3>1 процедура управляемой гипоксии</h3><p>OXYTERRA.</p></div><strong>5 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Интервальная гипокси-гиперокситерапия</h3><p>5 сеансов.</p></div><strong>20 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Интервальная гипокси-гиперокситерапия</h3><p>10 сеансов.</p></div><strong>35 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Датчик для мониторирования глюкозы Lumiflex</h3><p>Для динамического контроля глюкозы.</p></div><strong>6 500 ₽</strong></div>
+                        </div>
+                    </section>
+                    <section class="price-group reveal">
+                        <div class="price-group__head"><span>04</span><h3>Аппаратные процедуры</h3></div>
+                        <div class="price">
+                            <div class="price-row"><div><h3>Карбокситерапия на веках</h3><p>Аппарат MEDEXIM INCO2.</p></div><strong>3 500 ₽</strong></div>
+                            <div class="price-row"><div><h3>Карбокситерапия волосистой части головы</h3><p>Аппарат MEDEXIM INCO2.</p></div><strong>7 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Карбокситерапия одной зоны</h3><p>Аппарат MEDEXIM INCO2.</p></div><strong>5 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Карбокситерапия двух зон на выбор</h3><p>Аппарат MEDEXIM INCO2.</p></div><strong>8 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Карбокситерапия трех зон на выбор</h3><p>Аппарат MEDEXIM INCO2.</p></div><strong>10 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Карбокситерапия всего лица</h3><p>Аппарат MEDEXIM INCO2.</p></div><strong>8 500 ₽</strong></div>
+                            <div class="price-row"><div><h3>Антиоксидантная spa-программа «Ion Detox Foot Spa»</h3><p>Одна процедура.</p></div><strong>5 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Комплекс 5 процедур «Ion Detox Foot Spa»</h3><p>Курс антиоксидантной spa-программы.</p></div><strong>21 000 ₽</strong></div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </section>
 
         <section class="section section--soft" id="doctor">
-            <div class="container doctor-mini reveal">
-                <img src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
-                <div>
-                    <span class="kicker">О враче</span>
-                    <h2>Ровенская Елена Викторовна</h2>
-                    <p>Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог. Врач превентивной, интегративной, антивозрастной медицины и функциональной диагностики.</p>
-                    <div class="doctor-stats">
-                        <div><strong>32</strong><span>года стажа</span></div>
-                        <div><strong>к.м.н.</strong><span>учёная степень</span></div>
+            <div class="container doctors-list">
+                <div class="doctor-mini reveal">
+                    <img src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
+                    <div>
+                        <span class="kicker">Главный врач</span>
+                        <h2 class="doctor-name"><span>Ровенская</span><span>Елена</span><span>Викторовна</span></h2>
+                        <p>Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог. Врач превентивной, интегративной, антивозрастной медицины и функциональной диагностики.</p>
+                        <div class="doctor-stats">
+                            <div><strong>32</strong><span>года стажа</span></div>
+                            <div><strong>к.м.н.</strong><span>учёная степень</span></div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="doctor-mini reveal">
+                    <img src="popov.png" width="900" height="1200" loading="lazy" alt="Павел Алексеевич Попов">
+                    <div>
+                        <span class="kicker">Нефролог</span>
+                        <h2 class="doctor-name"><span>Попов</span><span>Павел</span><span>Алексеевич</span></h2>
+                        <p>Врач-нефролог, врач-рефлексотерапевт. Врач интегральной превентивной и антивозрастной медицины, специалист метаболомной, митохондриальной и биорезонансной медицины.</p>
+                        <div class="doctor-stats">
+                            <div><strong>17+</strong><span>лет клинического опыта</span></div>
+                            <div><strong>ХБП</strong><span>ведение пациентов додиализных и диализной стадий</span></div>
+                        </div>
+                        <ul class="doctor-mini__focus">
+                            <li>нефропротекция и комплексные программы укрепления здоровья</li>
+                            <li>метаболомика, клиническая биохимия и нутригенетика</li>
+                            <li>фитотерапия, ароматерапия и традиционная медицина</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">FAQ</span>
+                    <h2 class="section-title">Частые вопросы родителей</h2>
+                </div>
+                <div class="faq">
+                    <details class="reveal">
+                        <summary>Что взять на интегративный разбор?</summary>
+                        <p>Выписки, заключения, ЭЭГ, МРТ, анализы, список препаратов, дневники сна/питания/поведения, если они есть. Если документов много — это нормально, задача врача как раз систематизировать картину.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Можно ли прийти, если у ребёнка уже есть диагноз?</summary>
+                        <p>Да. Мы не обещаем “лечить диагноз”, а разбираем факторы, которые могут влиять на состояние ребёнка, и формируем план дальнейших шагов.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Если ребёнок плохо переносит врачей?</summary>
+                        <p>Предупредите администратора заранее. Мы подскажем, как подготовиться и какой формат визита будет бережнее.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Можно ли начать онлайн?</summary>
+                        <p>Часть документов и истории можно предварительно обсудить дистанционно, но формат зависит от задачи и медицинских показаний.</p>
+                    </details>
                 </div>
             </div>
         </section>
@@ -370,8 +533,9 @@
                 <div class="reveal">
                     <span class="kicker" style="color:#78d6ca;">Запись</span>
                     <h2>Разберём ситуацию ребёнка системно и бережно</h2>
-                    <p>Оставьте заявку. Администратор поможет выбрать направление и удобное время.</p>
+                    <p>Оставьте заявку — администратор уточнит вашу ситуацию, подберёт направление и предложит удобное время приёма.</p>
                     <div style="margin-top:30px;"><button class="btn btn-primary" type="button" data-open-modal>Оставить заявку</button></div>
+                    <p class="medical-note">Имеются противопоказания. Необходима консультация специалиста.</p>
                 </div>
                 <div class="cta__contacts reveal">
                     <a href="tel:+79037928003"><span>Мобильный</span>+7 903 792 80 03</a>
@@ -388,7 +552,7 @@
                 <div><img src="logo.png" width="2508" height="627" loading="lazy" alt="ЯЖИЗНЬ"><p style="margin-top:14px;">Клиника интегративной медицины</p></div>
                 <div><h3>Навигация</h3><a href="index.html">Главная</a><a href="deti.html">Дети</a><a href="vzroslye.html">Взрослые</a></div>
                 <div><h3>Контакты</h3><a href="tel:+79037928003">+7 903 792 80 03</a><a href="tel:+74957928003">+7 495 792 80 03</a><a href="mailto:Yajizn@yandex.ru">Yajizn@yandex.ru</a></div>
-                <div><h3>Информация</h3><p>ООО «ВОССТАНОВЛЕНИЕ»</p><p>ИНН: 9722108070</p><p>Лицензия № Л041-01137-77/04132361</p><p>от 13.01.2026 г.</p><a href="politika.html">Политика данных</a></div>
+                <div><h3>Информация</h3><p>ООО «ВОССТАНОВЛЕНИЕ»</p><p>ИНН: 9722108070</p><p>Лицензия № Л041-01137-77/04132361</p><p>от 13.01.2026 г.</p><a href="politika.html">Политика данных</a><a href="way.png">Схема проезда</a></div>
             </div>
             <div class="footer__bottom">© 2026 ЯЖИЗНЬ. Все права защищены.</div>
         </div>
@@ -433,6 +597,7 @@
         </div>
     </div>
 
+    <script src="site-data.js"></script>
     <script>
         const body = document.body;
         const menuToggle = document.querySelector(".menu-toggle");
@@ -443,6 +608,35 @@
         const infoPanel = infoModal.querySelector(".modal");
         const form = document.getElementById("booking-form");
         let lastFocus = null;
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;",
+                "'": "&#039;"
+            }[char]));
+        }
+        function renderPriceCatalog() {
+            const root = document.querySelector("[data-price-catalog]");
+            const direction = root ? root.dataset.priceCatalog : "adults";
+            const groups = window.SITE_DATA?.prices?.[direction];
+            if (!root || !Array.isArray(groups) || !groups.length) return;
+            root.innerHTML = groups.map((group, index) => `
+                <section class="price-group reveal">
+                    <div class="price-group__head"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(group.title)}</h3></div>
+                    <div class="price">
+                        ${(group.items || []).map((item) => `
+                            <div class="price-row">
+                                <div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.description)}</p></div>
+                                <strong>${escapeHtml(item.price)}</strong>
+                            </div>
+                        `).join("")}
+                    </div>
+                </section>
+            `).join("");
+        }
+        renderPriceCatalog();
         const infoContent = {
             kme: {
                 title: "КМЕ",
@@ -530,5 +724,9 @@
         const revealObserver = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.14 });
         document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
     </script>
+    <script src="documents.js" defer></script>
+    <script src="accessibility.js" defer></script>
 </body>
 </html>
+
+

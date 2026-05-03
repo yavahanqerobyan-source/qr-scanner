@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -108,6 +108,12 @@
         .program ul { display: grid; gap: 8px; margin: 24px 0 0; padding: 0; list-style: none; color: var(--muted); }
         .program li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 999px; background: var(--accent); vertical-align: 1px; }
 
+        .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .result-grid div { min-height: 170px; padding: 24px; background: #fff; }
+        .result-grid span { display: block; margin-bottom: 18px; font-size: 28px; }
+        .result-grid h3 { font-size: 21px; font-weight: 800; line-height: 1.08; }
+        .result-grid p { margin-top: 9px; color: var(--muted); font-size: 15px; }
+
         .diagnostics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
         .diagnostics button { min-height: 210px; padding: 24px; border: 0; background: #fff; color: var(--ink); text-align: left; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }
         .diagnostics button:hover { position: relative; z-index: 2; background: #fbfffd; box-shadow: var(--shadow); transform: translateY(-3px); }
@@ -133,10 +139,15 @@
         .price-row:hover strong { color: var(--accent); }
         .price-note { margin-top: 18px; color: var(--muted); font-size: 14px; }
 
-        .doctor-mini { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: start; }
+        .doctors-list { display: grid; gap: 18px; }
+        .doctor-mini { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: start; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: 0 18px 44px rgba(23,33,31,0.05); }
         .doctor-mini img { width: 150px; height: 190px; border-radius: 18px; object-fit: cover; object-position: center top; box-shadow: 0 18px 44px rgba(23,33,31,0.14); }
         .doctor-mini h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 800; line-height: 1.05; }
         .doctor-mini p { margin-top: 12px; color: var(--muted); font-size: 17px; font-weight: 700; }
+        .doctor-name { display: grid; gap: 2px; }
+        .doctor-name span { display: block; }
+        .doctor-mini__focus { display: grid; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--muted); }
+        .doctor-mini__focus li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; border-radius: 999px; background: var(--accent); vertical-align: 1px; }
         .doctor-stats { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 24px; }
         .doctor-stats strong { display: block; font-size: 32px; font-weight: 800; line-height: 1; }
         .doctor-stats span { display: block; margin-top: 7px; color: var(--muted); font-size: 14px; }
@@ -177,6 +188,11 @@
         .info-list span { color: var(--muted); font-size: 15px; }
         .modal__tag { display: inline-flex; margin-bottom: 12px; color: var(--accent-dark); font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
         .modal__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+        .faq { display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+        .faq details { background: #fff; }
+        .faq summary { min-height: 64px; padding: 20px 24px; color: var(--ink); font-size: 18px; font-weight: 800; cursor: pointer; }
+        .faq p { padding: 0 24px 22px; color: var(--muted); font-size: 16px; }
+        .medical-note { margin-top: 20px; color: rgba(255,255,255,0.58); font-size: 13px; }
         .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
         @keyframes enter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
@@ -196,7 +212,7 @@
             .brand span { display: none; }
             .hero { min-height: auto; padding: calc(var(--header-h) + 58px) 0 30px; }
             .hero__actions { display: grid; grid-template-columns: 1fr; }
-            .hero-proof, .signal-grid, .programs, .diagnostics { grid-template-columns: 1fr; }
+            .hero-proof, .signal-grid, .programs, .diagnostics, .result-grid { grid-template-columns: 1fr; }
             .section { padding: 72px 0; }
             .check-row, .price-row { grid-template-columns: 1fr; gap: 10px; }
             .price-group { padding: 22px; }
@@ -213,8 +229,11 @@
             *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
     </style>
+    <link rel="stylesheet" href="accessibility.css">
+    <link rel="stylesheet" href="documents.css">
 </head>
 <body>
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
     <header class="site-header">
         <div class="container site-header__inner">
             <a class="brand" href="index.html" aria-label="ЯЖИЗНЬ, главная">
@@ -244,21 +263,39 @@
         <button type="button" data-open-modal>Записаться <span>→</span></button>
     </nav>
 
-    <main>
+    <main id="main">
         <section class="hero">
             <div class="container">
                 <span class="eyebrow">Взрослые 35–75 лет</span>
-                <h1>Узнайте реальный биологический возраст</h1>
-                <p class="hero__lead">Комплексная диагностика показывает, как работает организм на самом деле: сосуды, метаболизм, микроциркуляция, стресс и резервы.</p>
-                <p class="hero__text">Результат — не набор цифр, а персональный план восстановления с понятными приоритетами.</p>
+                <h1>Check-up биологического возраста и ресурсов организма</h1>
+                <p class="hero__lead">Для тех, кто хочет понять состояние до серьёзных диагнозов: усталость, стресс, вес, сон, возрастные изменения и “анализы в норме, а сил нет”.</p>
+                <p class="hero__text">Вы получите понятный снимок состояния и план: что корректировать, что проверить и какие шаги сделать в первую очередь.</p>
                 <div class="hero__actions">
                     <button class="btn btn-primary" type="button" data-open-modal>Записаться на check-up</button>
-                    <a class="btn btn-ghost" href="#checkup">Что входит</a>
+                    <a class="btn btn-ghost" href="#programs">Подобрать программу</a>
                 </div>
                 <div class="hero-proof">
                     <div><strong>6</strong><span>направлений диагностики</span></div>
                     <div><strong>35+</strong><span>возраст для профилактики</span></div>
-                    <div><strong>план</strong><span>коррекции после визита</span></div>
+                    <div><strong>план</strong><span>восстановления ресурса</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--soft">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">Что вы узнаете</span>
+                    <h2 class="section-title">Check-up переводит ощущения в управляемые показатели</h2>
+                    <p class="section-copy">Задача взрослого направления — дать ясность по ресурсу организма, стрессу, метаболизму и факторам риска.</p>
+                </div>
+                <div class="result-grid">
+                    <div class="reveal"><span>⏳</span><h3>Биологический возраст</h3><p>Как организм выглядит по ресурсным показателям, а не только по паспорту.</p></div>
+                    <div class="reveal"><span>🌿</span><h3>Стресс-нагрузка</h3><p>Насколько нервная система справляется с работой, сном и восстановлением.</p></div>
+                    <div class="reveal"><span>⚖️</span><h3>Состав тела</h3><p>Мышцы, жир, вода и метаболический возраст без догадок по весам.</p></div>
+                    <div class="reveal"><span>💓</span><h3>Сосудистые показатели</h3><p>Тонус, микроциркуляция и факторы сердечно-сосудистого риска.</p></div>
+                    <div class="reveal"><span>🧪</span><h3>Дефициты и минералы</h3><p>Какие состояния могут поддерживать усталость и слабое восстановление.</p></div>
+                    <div class="reveal"><span>🧭</span><h3>Первые шаги</h3><p>Что корректировать сейчас, что проверить глубже, а что наблюдать в динамике.</p></div>
                 </div>
             </div>
         </section>
@@ -300,32 +337,57 @@
             <div class="container">
                 <div class="section-head reveal">
                     <span class="kicker">Программы</span>
-                    <h2 class="section-title">От диагностики до наблюдения</h2>
+                    <h2 class="section-title">Выберите задачу, с которой хотите начать</h2>
+                    <p class="section-copy">После check-up врач переводит показатели в программу: энергия, метаболизм, гормональный баланс, anti-age или профилактика рисков.</p>
                 </div>
                 <div class="programs">
                     <article class="program reveal">
                         <div>
-                            <h3>Биофизический check-up</h3>
-                            <p>Полная картина здоровья за один визит: сосуды, кровь, микроциркуляция, состав тела, минералы, стресс.</p>
+                            <h3>Энергия и стресс</h3>
+                            <p>Для тех, кто просыпается уставшим, долго восстанавливается и живёт в постоянной нагрузке.</p>
                             <ul>
-                                <li>персональный отчёт</li>
-                                <li>биологический возраст</li>
-                                <li>план коррекции</li>
+                                <li>стресс-нагрузка</li>
+                                <li>сон и восстановление</li>
+                                <li>адаптационные резервы</li>
                             </ul>
                         </div>
-                        <button class="btn btn-soft" type="button" data-open-modal>Записаться</button>
+                        <button class="btn btn-soft" type="button" data-open-modal>Подобрать программу</button>
                     </article>
                     <article class="program reveal">
                         <div>
-                            <h3>Непрерывный мониторинг</h3>
-                            <p>Для тех, кто хочет увидеть реакцию организма на питание, стресс, нагрузки и восстановление в реальных цифрах.</p>
+                            <h3>Вес и метаболизм</h3>
+                            <p>Когда вес растёт, диеты не работают, а нужно понять состав тела, глюкозу и метаболические риски.</p>
                             <ul>
                                 <li>7-дневный мониторинг глюкозы</li>
-                                <li>гипоксические тренировки</li>
-                                <li>дистанционное наблюдение врача</li>
+                                <li>биоимпеданс</li>
+                                <li>питание и нагрузка</li>
                             </ul>
                         </div>
-                        <button class="btn btn-soft" type="button" data-open-modal>Записаться</button>
+                        <button class="btn btn-soft" type="button" data-open-modal>Подобрать программу</button>
+                    </article>
+                    <article class="program reveal">
+                        <div>
+                            <h3>Гормональный баланс</h3>
+                            <p>Для женщин и мужчин 35+, когда меняется энергия, сон, вес, настроение и восстановление.</p>
+                            <ul>
+                                <li>врачебный разбор симптомов</li>
+                                <li>план дообследования</li>
+                                <li>контроль динамики</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-soft" type="button" data-open-modal>Подобрать программу</button>
+                    </article>
+                    <article class="program reveal">
+                        <div>
+                            <h3>Anti-age и профилактика</h3>
+                            <p>Поддержка ресурса и профилактика возраст-ассоциированных изменений без обещаний “омоложения”.</p>
+                            <ul>
+                                <li>биологический возраст</li>
+                                <li>сосудистые показатели</li>
+                                <li>персональный план риска</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-soft" type="button" data-open-modal>Пройти check-up</button>
                     </article>
                 </div>
             </div>
@@ -353,19 +415,22 @@
             <div class="container">
                 <div class="section-head reveal">
                     <span class="kicker">Стоимость</span>
-                    <h2 class="section-title">Прайс-лист</h2>
-                    <p class="section-copy">Пока отображаем актуальные позиции с текущего сайта. Перед визитом администратор подтвердит состав программы и итоговую стоимость.</p>
+                    <h2 class="section-title">Единый прайс-лист</h2>
+                    <p class="section-copy">Стоимость одинаковая для детского и взрослого направления. Перед визитом администратор подтвердит состав программы и итоговую стоимость.</p>
                 </div>
-                <div class="price-catalog">
+                <div class="price-catalog" data-price-catalog="adults">
                     <section class="price-group reveal">
                         <div class="price-group__head"><span>01</span><h3>Консультации</h3></div>
                         <div class="price">
                             <div class="price-row"><div><h3>Прием врача-эндокринолога</h3><p>Консультация • 60 мин.</p></div><strong>8 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Прием врача-терапевта</h3><p>Консультация • 60 мин.</p></div><strong>8 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием врача-нефролога</h3><p>Консультация • 60 мин.</p></div><strong>5 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Прием врача-невролога, к.м.н.</h3><p>Консультация, осмотр • 60 мин.</p></div><strong>30 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Прием врача-косметолога</h3><p>Осмотр, консультация без манипуляций • 60 мин.</p></div><strong>10 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Врачебная трактовка исследований</h3><p>Разбор результатов • 30 мин.</p></div><strong>3 500 ₽</strong></div>
                             <div class="price-row"><div><h3>Консилиум специалистов</h3><p>С выдачей заключения о проведении консилиума.</p></div><strong>35 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>ВРТ</h3><p>Биорезонансное тестирование • 2 часа.</p></div><strong>10 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием интегративного врача</h3><p>Расширенный прием • 2 часа.</p></div><strong>10 000 ₽</strong></div>
                         </div>
                     </section>
 
@@ -403,21 +468,67 @@
                         </div>
                     </section>
                 </div>
-                <p class="price-note">Цены перенесены с текущего сайта ya-zhizn.ru. Если прайс изменится на основном сайте, этот блок нужно синхронизировать.</p>
             </div>
         </section>
 
         <section class="section section--soft" id="doctor">
-            <div class="container doctor-mini reveal">
-                <img src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
-                <div>
-                    <span class="kicker">О враче</span>
-                    <h2>Ровенская Елена Викторовна</h2>
-                    <p>Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог. Врач превентивной, интегративной, антивозрастной медицины и функциональной диагностики.</p>
-                    <div class="doctor-stats">
-                        <div><strong>32</strong><span>года стажа</span></div>
-                        <div><strong>к.м.н.</strong><span>учёная степень</span></div>
+            <div class="container doctors-list">
+                <div class="doctor-mini reveal">
+                    <img src="doc.png" width="1024" height="1536" loading="lazy" alt="Ровенская Елена Викторовна">
+                    <div>
+                        <span class="kicker">Главный врач</span>
+                        <h2 class="doctor-name"><span>Ровенская</span><span>Елена</span><span>Викторовна</span></h2>
+                        <p>Главный врач, кандидат медицинских наук, невролог, психоневролог, эпилептолог. Врач превентивной, интегративной, антивозрастной медицины и функциональной диагностики.</p>
+                        <div class="doctor-stats">
+                            <div><strong>32</strong><span>года стажа</span></div>
+                            <div><strong>к.м.н.</strong><span>учёная степень</span></div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="doctor-mini reveal">
+                    <img src="popov.png" width="900" height="1200" loading="lazy" alt="Павел Алексеевич Попов">
+                    <div>
+                        <span class="kicker">Нефролог</span>
+                        <h2 class="doctor-name"><span>Попов</span><span>Павел</span><span>Алексеевич</span></h2>
+                        <p>Врач-нефролог, врач-рефлексотерапевт. Врач интегральной превентивной и антивозрастной медицины, специалист метаболомной, митохондриальной и биорезонансной медицины.</p>
+                        <div class="doctor-stats">
+                            <div><strong>17+</strong><span>лет клинического опыта</span></div>
+                            <div><strong>ХБП</strong><span>ведение пациентов додиализных и диализной стадий</span></div>
+                        </div>
+                        <ul class="doctor-mini__focus">
+                            <li>нефропротекция и комплексные программы укрепления здоровья</li>
+                            <li>метаболомика, клиническая биохимия и нутригенетика</li>
+                            <li>фитотерапия, ароматерапия и традиционная медицина</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="kicker">FAQ</span>
+                    <h2 class="section-title">Частые вопросы перед check-up</h2>
+                </div>
+                <div class="faq">
+                    <details class="reveal">
+                        <summary>Если анализы “в норме”, есть смысл приходить?</summary>
+                        <p>Да, если самочувствие не соответствует анализам. Check-up помогает оценить ресурс, стресс, состав тела, сосудистые и метаболические показатели, которые не всегда видны в базовом наборе обследований.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Это про лечение или профилактику?</summary>
+                        <p>Входной продукт — это оценка состояния и план дальнейших шагов. При необходимости врач предложит дообследование, консультацию профильного специалиста или программу контроля динамики.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Что будет результатом визита?</summary>
+                        <p>Вы получите объяснение показателей человеческим языком: что важно корректировать сейчас, какие риски проверить и как отслеживать изменения.</p>
+                    </details>
+                    <details class="reveal">
+                        <summary>Можно ли выбрать отдельную программу?</summary>
+                        <p>Да. Но лучше начинать с check-up, чтобы не выбирать программу наугад. После оценки врач поможет определить, что актуальнее: стресс, вес, гормональный баланс, anti-age или профилактика.</p>
+                    </details>
                 </div>
             </div>
         </section>
@@ -427,8 +538,9 @@
                 <div class="reveal">
                     <span class="kicker" style="color:#78d6ca;">Запись</span>
                     <h2>Проверьте ресурс организма</h2>
-                    <p>Запишитесь на check-up и получите понятный план: что важно исправить сейчас, а что можно наблюдать.</p>
+                    <p>Оставьте заявку — администратор уточнит вашу ситуацию, подберёт направление и предложит удобное время приёма.</p>
                     <div style="margin-top:30px;"><button class="btn btn-primary" type="button" data-open-modal>Оставить заявку</button></div>
+                    <p class="medical-note">Имеются противопоказания. Необходима консультация специалиста.</p>
                 </div>
                 <div class="cta__contacts reveal">
                     <a href="tel:+79037928003"><span>Мобильный</span>+7 903 792 80 03</a>
@@ -445,7 +557,7 @@
                 <div><img src="logo.png" width="2508" height="627" loading="lazy" alt="ЯЖИЗНЬ"><p style="margin-top:14px;">Клиника превентивной и интегративной медицины</p></div>
                 <div><h3>Навигация</h3><a href="index.html">Главная</a><a href="deti.html">Дети</a><a href="vzroslye.html">Взрослые</a></div>
                 <div><h3>Контакты</h3><a href="tel:+79037928003">+7 903 792 80 03</a><a href="tel:+74957928003">+7 495 792 80 03</a><a href="mailto:Yajizn@yandex.ru">Yajizn@yandex.ru</a></div>
-                <div><h3>Информация</h3><p>ООО «ВОССТАНОВЛЕНИЕ»</p><p>ИНН: 9722108070</p><p>Лицензия № Л041-01137-77/04132361</p><p>от 13.01.2026 г.</p><a href="politika.html">Политика данных</a></div>
+                <div><h3>Информация</h3><p>ООО «ВОССТАНОВЛЕНИЕ»</p><p>ИНН: 9722108070</p><p>Лицензия № Л041-01137-77/04132361</p><p>от 13.01.2026 г.</p><a href="politika.html">Политика данных</a><a href="way.png">Схема проезда</a></div>
             </div>
             <div class="footer__bottom">© 2026 ЯЖИЗНЬ. Все права защищены.</div>
         </div>
@@ -490,6 +602,7 @@
         </div>
     </div>
 
+    <script src="site-data.js"></script>
     <script>
         const body = document.body;
         const menuToggle = document.querySelector(".menu-toggle");
@@ -500,6 +613,35 @@
         const infoPanel = infoModal.querySelector(".modal");
         const form = document.getElementById("booking-form");
         let lastFocus = null;
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;",
+                "'": "&#039;"
+            }[char]));
+        }
+        function renderPriceCatalog() {
+            const root = document.querySelector("[data-price-catalog]");
+            const direction = root ? root.dataset.priceCatalog : "adults";
+            const groups = window.SITE_DATA?.prices?.[direction];
+            if (!root || !Array.isArray(groups) || !groups.length) return;
+            root.innerHTML = groups.map((group, index) => `
+                <section class="price-group reveal">
+                    <div class="price-group__head"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(group.title)}</h3></div>
+                    <div class="price">
+                        ${(group.items || []).map((item) => `
+                            <div class="price-row">
+                                <div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.description)}</p></div>
+                                <strong>${escapeHtml(item.price)}</strong>
+                            </div>
+                        `).join("")}
+                    </div>
+                </section>
+            `).join("");
+        }
+        renderPriceCatalog();
         const infoContent = {
             blood: {
                 title: "Клеточный анализ крови",
@@ -587,5 +729,9 @@
         const revealObserver = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.14 });
         document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
     </script>
+    <script src="documents.js" defer></script>
+    <script src="accessibility.js" defer></script>
 </body>
 </html>
+
+
