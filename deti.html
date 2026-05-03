@@ -70,11 +70,11 @@
         .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; color: rgba(255,255,255,0.82); font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
         .eyebrow::before { content: ""; width: 38px; height: 2px; border-radius: 999px; background: var(--warm); }
         h1, h2, h3, p { margin: 0; }
-        .hero h1 { max-width: 760px; font-size: clamp(46px, 7vw, 96px); font-weight: 800; line-height: 0.95; letter-spacing: 0; text-wrap: balance; animation: enter 0.75s ease both; }
-        .hero__lead { max-width: 650px; margin-top: 24px; color: rgba(255,255,255,0.86); font-size: clamp(20px, 2.2vw, 30px); font-weight: 800; line-height: 1.18; animation: enter 0.75s 0.08s ease both; }
+        .hero h1 { max-width: 760px; font-size: clamp(40px, 5.8vw, 76px); font-weight: 800; line-height: 0.98; letter-spacing: 0; text-wrap: balance; animation: enter 0.75s ease both; }
+        .hero__lead { max-width: 650px; margin-top: 20px; color: rgba(255,255,255,0.86); font-size: clamp(19px, 2vw, 27px); font-weight: 800; line-height: 1.18; animation: enter 0.75s 0.08s ease both; }
         .hero__text { max-width: 610px; margin-top: 18px; color: rgba(255,255,255,0.76); font-size: 18px; animation: enter 0.75s 0.14s ease both; }
-        .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; animation: enter 0.75s 0.2s ease both; }
-        .hero-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; max-width: 760px; margin-top: 72px; border-top: 1px solid rgba(255,255,255,0.26); animation: enter 0.75s 0.28s ease both; }
+        .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; animation: enter 0.75s 0.2s ease both; }
+        .hero-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; max-width: 760px; margin-top: 48px; border-top: 1px solid rgba(255,255,255,0.26); animation: enter 0.75s 0.28s ease both; }
         .hero-proof div { padding: 18px 20px 0 0; }
         .hero-proof strong { display: block; color: #fff; font-size: 30px; font-weight: 800; line-height: 1; }
         .hero-proof span { display: block; margin-top: 7px; color: rgba(255,255,255,0.74); font-size: 14px; }
@@ -414,7 +414,7 @@
                 <div class="section-head reveal">
                     <span class="kicker">Прайс</span>
                     <h2 class="section-title">Единый прайс-лист</h2>
-                    <p class="section-copy">Стоимость одинаковая для детского и взрослого направления. Перед визитом администратор подтвердит состав программы.</p>
+                    <p class="section-copy">Один прайс для всех направлений: консультации, диагностика и процедуры собраны в понятные блоки. Состав визита подтверждаем перед записью.</p>
                 </div>
                 <div class="price-catalog" data-price-catalog="adults">
                     <section class="price-group reveal">
@@ -424,11 +424,10 @@
                             <div class="price-row"><div><h3>Прием врача-терапевта</h3><p>Консультация • 60 мин.</p></div><strong>8 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Прием врача-нефролога</h3><p>Консультация • 60 мин.</p></div><strong>5 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Прием врача-невролога, к.м.н.</h3><p>Консультация, осмотр • 60 мин.</p></div><strong>30 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>Прием интегративного врача</h3><p>Расширенный прием • 2 часа.</p></div><strong>10 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Прием врача-косметолога</h3><p>Осмотр, консультация без манипуляций • 60 мин.</p></div><strong>10 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Врачебная трактовка исследований</h3><p>Разбор результатов • 30 мин.</p></div><strong>3 500 ₽</strong></div>
                             <div class="price-row"><div><h3>Консилиум специалистов</h3><p>С выдачей заключения о проведении консилиума.</p></div><strong>35 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>ВРТ</h3><p>Биорезонансное тестирование • 2 часа.</p></div><strong>10 000 ₽</strong></div>
-                            <div class="price-row"><div><h3>Прием интегративного врача</h3><p>Расширенный прием • 2 часа.</p></div><strong>10 000 ₽</strong></div>
                         </div>
                     </section>
                     <section class="price-group reveal">
@@ -437,6 +436,7 @@
                             <div class="price-row"><div><h3>Программа «Анти-эйдж»</h3><p>Комплексная оценка возрастных и ресурсных показателей.</p></div><strong>16 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Биоимпедансный анализ состава тела</h3><p>Компонентный состав: мышцы, жир, вода.</p></div><strong>3 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Исследование эндотелиальной функции сосудов</h3><p>Аппарат «Ангиоскан» экспресс.</p></div><strong>3 000 ₽</strong></div>
+                            <div class="price-row"><div><h3>ВРТ</h3><p>Биорезонансное тестирование • 2 часа.</p></div><strong>10 000 ₽</strong></div>
                             <div class="price-row"><div><h3>Миниинвазивный мониторинг глюкозы</h3><p>Контроль уровня глюкозы крови в течение 7 дней.</p></div><strong>15 000 ₽</strong></div>
                         </div>
                     </section>
