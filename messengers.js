@@ -3,7 +3,8 @@
 
     const telegramChatUrl = "https://t.me/yajizn";
     const telegramChannelUrl = "https://t.me/yazhiznclinic";
-    const maxUrl = "https://max.ru/+79037928003";
+    const maxChatUrl = "https://max.ru/+79037928003";
+    const maxChannelUrl = "https://max.ru/join/FtDQfq3JAG132AwqJ07oSuJiIwbdyfHOIUFeTSVX_u8";
 
     function ready(callback) {
         if (document.readyState === "loading") {
@@ -23,7 +24,7 @@
                 ${telegramIcon()}
                 <span class="messenger-label">Запись в Telegram <span>@yajizn</span></span>
             </a>
-            <a href="${maxUrl}" target="_blank" rel="noopener">
+            <a href="${maxChatUrl}" target="_blank" rel="noopener">
                 ${maxIcon()}
                 <span class="messenger-label">Запись в MAX <span>по номеру клиники</span></span>
             </a>
@@ -31,7 +32,11 @@
                 ${telegramIcon()}
                 <span class="messenger-label">Telegram-канал <span>t.me/yazhiznclinic</span></span>
             </a>
-            <p class="messenger-note">Канал в MAX добавим после запуска.</p>
+            <a href="${maxChannelUrl}" target="_blank" rel="noopener">
+                ${maxIcon()}
+                <span class="messenger-label">MAX-канал <span>новости клиники</span></span>
+            </a>
+            <p class="messenger-note">Выберите удобный мессенджер для записи или вопросов.</p>
         `;
         return block;
     }
@@ -51,7 +56,7 @@
             <p class="booking-channels__text">Можно отправить заявку через форму или перейти в мессенджер. В Telegram пишите на @yajizn, в MAX - по мобильному номеру клиники.</p>
             <div class="booking-channel-actions">
                 <a href="${telegramChatUrl}" target="_blank" rel="noopener">${telegramIcon()} Написать в Telegram</a>
-                <a href="${maxUrl}" target="_blank" rel="noopener">${maxIcon()} Написать в MAX</a>
+                <a href="${maxChatUrl}" target="_blank" rel="noopener">${maxIcon()} Написать в MAX</a>
             </div>
         `;
         return box;
