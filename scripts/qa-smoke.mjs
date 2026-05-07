@@ -49,6 +49,24 @@ await page.click('[data-form="add-vehicle"] button[type="submit"]');
 await page.waitForSelector("[data-vehicle-row]", { timeout: 15000 });
 const vehicleRows = await page.locator("[data-vehicle-row]").count();
 
+await page.click('button[data-view="uploads"]');
+await page.waitForSelector('input[data-upload-section="fuel"]', { timeout: 15000 });
+await page.locator('input[data-upload-section="fuel"]').first().setInputFiles([
+  {
+    name: "fuel-1.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from("Дата;Госномер;Сумма;Литры\n07.05.2026;А001АА761;12000;220\n", "utf8"),
+  },
+  {
+    name: "fuel-2.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from("Дата;Госномер;Сумма;Литры\n08.05.2026;А001АА761;13000;235\n", "utf8"),
+  },
+]);
+await page.waitForFunction(() => document.querySelectorAll("tbody tr").length >= 2, null, { timeout: 30000 });
+const uploadRows = await page.locator("tbody tr").count();
+await page.screenshot({ path: "C:/tmp/antescargo-uploads-desktop.png", fullPage: true });
+
 await page.click('button[data-view="driver"]');
 await page.waitForSelector('[data-form="driver-register"]', { timeout: 15000 });
 await page.fill('[data-form="driver-register"] input[name="full_name"]', "QA Driver");
@@ -81,12 +99,14 @@ console.log(
       kpis,
       navButtons,
       vehicleRows,
+      uploadRows,
       driverTitle,
       mobileOverflow,
       messages,
       screenshots: [
         "C:/tmp/antescargo-auth-desktop.png",
         "C:/tmp/antescargo-finance-desktop.png",
+        "C:/tmp/antescargo-uploads-desktop.png",
         "C:/tmp/antescargo-desktop.png",
         "C:/tmp/antescargo-mobile.png",
       ],

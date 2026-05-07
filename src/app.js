@@ -392,17 +392,17 @@ function renderAuthGate() {
           <div class="brand-mark">AC</div>
           <div>
             <strong>AntesCargo</strong>
-            <span>Публичный код, локальная SQLite-база</span>
+          <span>Операционный контур</span>
           </div>
         </div>
         <div>
-          <h1>Вход в систему учета</h1>
-          <p>Данные не отправляются на GitHub Pages и не попадают в репозиторий. Они остаются в IndexedDB этого браузера, пока вы сами не скачаете и не передадите файл базы или Excel.</p>
+          <h1>Доступ к системе учета</h1>
+          <p>Рабочая база закреплена за этим устройством. Операционные данные, отчеты и экспорт доступны после входа.</p>
         </div>
         <div class="security-notes">
-          <span>${iconSvg("shield-check")} Пароль админа создается на устройстве</span>
-          <span>${iconSvg("database")} SQLite хранится локально</span>
-          <span>${iconSvg("smartphone")} Водитель входит по зарегистрированному телефону</span>
+          <span>${iconSvg("shield-check")} Административный доступ</span>
+          <span>${iconSvg("database")} Локальная база рейсов</span>
+          <span>${iconSvg("smartphone")} Кабинет водителя</span>
         </div>
       </section>
       <section class="auth-grid">
@@ -410,7 +410,7 @@ function renderAuthGate() {
           <div class="panel-title">
             <div>
               <h2>${adminReady ? "Администратор" : "Первичная настройка админа"}</h2>
-              <p>${adminReady ? "Введите пароль администратора для доступа к отчетам и загрузкам." : "Задайте пароль на этом устройстве. В код и Git он не записывается."}</p>
+              <p>${adminReady ? "Финансы, загрузки, заявки и парк." : "Создайте административный доступ для этой базы."}</p>
             </div>
             <span class="badge gold">${adminReady ? "Вход" : "Настройка"}</span>
           </div>
@@ -430,7 +430,7 @@ function renderAuthGate() {
           <div class="panel-title">
             <div>
               <h2>Водитель</h2>
-              <p>Вход по номеру телефона, который указан в карточке водителя.</p>
+              <p>Рейсы, отметки загрузки, выгрузки и заявки.</p>
             </div>
             <span class="badge green">Телефон</span>
           </div>
@@ -466,7 +466,7 @@ function renderTopbar() {
         <div class="brand-mark">AC</div>
         <div>
           <strong>AntesCargo</strong>
-          <span>SQLite в браузере · GitHub Pages ready</span>
+          <span>Финансы · рейсы · парк</span>
         </div>
       </div>
       <nav class="main-nav" aria-label="Главная навигация">
@@ -549,7 +549,7 @@ function renderFinance() {
       <div class="view-head">
         <div>
           <h1>Финансы</h1>
-          <p>Сводки считаются заранее по SQLite, фильтры применяются только по кнопке “Показать”.</p>
+          <p>Контроль расходов по водителям, машинам, заявкам и рейсам.</p>
         </div>
         <div class="inline-actions">
           <button class="btn primary-gold" data-action="recalculate">${iconSvg("refresh-cw")}Пересчитать</button>
@@ -611,7 +611,7 @@ function renderFinanceFilters() {
       </div>
       ${
         state.filterDirty
-          ? `<div class="hint">${iconSvg("info")}Параметры изменены. Нажмите “Показать”, чтобы обновить данные.</div>`
+          ? `<div class="hint">${iconSvg("info")}Фильтры изменены. Примените выборку для обновления отчета.</div>`
           : ""
       }
     </div>
@@ -642,7 +642,7 @@ function renderFinanceOverview() {
       <div class="panel-title">
         <div>
           <h2>Сводка по водителям</h2>
-          <p>Расходы связаны через машину, госномер и транспондер, а не только через ФИО.</p>
+          <p>Итоговые расходы по закрепленным машинам и водителям.</p>
         </div>
       </div>
       ${renderDriverSummaryTable(report.rows)}
@@ -651,7 +651,7 @@ function renderFinanceOverview() {
       <div class="panel-title">
         <div>
           <h2>Сводка по типам</h2>
-          <p>Компактный общий срез по категориям учета.</p>
+          <p>Расходы по категориям учета за выбранный период.</p>
         </div>
       </div>
       ${renderTypeSummaryTable(typeRows)}
@@ -660,7 +660,7 @@ function renderFinanceOverview() {
       <div class="panel-title">
         <div>
           <h2>Связанные отчеты</h2>
-          <p>Экспорт собирает финансы, заявки и рейсы в один Excel-файл.</p>
+          <p>Финансы, заявки и рейсы в едином Excel-файле.</p>
         </div>
         <div class="actions">
           <button class="btn primary-blue" data-action="export-all">${iconSvg("file-spreadsheet")}Общий Excel</button>
@@ -699,7 +699,7 @@ function renderKpis(kpis) {
 }
 
 function renderDriverSummaryTable(rows) {
-  if (!rows.length) return `<div class="empty-state">Нет рассчитанных данных за выбранный период.</div>`;
+  if (!rows.length) return `<div class="empty-state">Нет данных за выбранный период.</div>`;
   return `
     <div class="table-wrap">
       <table class="data-table">
@@ -743,7 +743,7 @@ function renderDriverSummaryTable(rows) {
 }
 
 function renderTypeSummaryTable(rows) {
-  if (!rows.length) return `<div class="empty-state">Нет данных.</div>`;
+  if (!rows.length) return `<div class="empty-state">Нет данных за выбранный период.</div>`;
   return `
     <div class="table-wrap">
       <table class="data-table">
@@ -907,7 +907,7 @@ function renderMiniGroup(title, rows) {
       <div class="panel-title">
         <div>
           <h2>${escapeHtml(title)}</h2>
-          <p>Сгруппированная сводка без вывода тяжелого журнала операций.</p>
+          <p>Обороты, количество операций и объем по группе.</p>
         </div>
       </div>
       <div class="table-wrap">
@@ -947,18 +947,18 @@ function renderMiniGroup(title, rows) {
 function renderUploads() {
   const logs = query("SELECT * FROM uploaded_files ORDER BY uploaded_at DESC LIMIT 60");
   const tiles = [
-    ["fuel", "rosneft", "Топливо · Роснефть", "Дата, водитель, госномер, сумма, литры."],
-    ["fuel", "lukoil", "Топливо · Лукойл", "Новый формат и TransactionsTable."],
-    ["fuel", "gazprom", "Топливо · Газпром", "Универсальный импорт CSV/XLSX."],
-    ["platon", "platon", "Платон · выписка", "Списания, зачисления, километраж."],
-    ["transponder", "transponder", "Транспондер · проезды", "Электронное средство, пункт оплаты, сумма."],
+    ["fuel", "rosneft", "Топливо · Роснефть", "Операции по картам и литрам"],
+    ["fuel", "lukoil", "Топливо · Лукойл", "Транзакции, возвраты и начисления"],
+    ["fuel", "gazprom", "Топливо · Газпром", "Заправки и корректировки по ТС"],
+    ["platon", "platon", "Платон · выписка", "Списания, пополнения и километраж"],
+    ["transponder", "transponder", "Транспондер · проезды", "Проезды, пункты оплаты и пополнения"],
   ];
   return `
     <section>
       <div class="view-head">
         <div>
           <h1>Загрузка отчетов</h1>
-          <p>Файлы парсятся в SQLite, дубли отсеиваются по UID, журнал обновляется рядом с таблицей.</p>
+          <p>Массовый импорт CSV/XLSX в финансовую базу.</p>
         </div>
       </div>
       <div class="upload-grid">
@@ -968,10 +968,11 @@ function renderUploads() {
               <article class="upload-tile">
                 <h3>${escapeHtml(title)}</h3>
                 <p>${escapeHtml(description)}</p>
-                <label class="drop-zone">
+                <label class="drop-zone" data-drop-section="${section}" data-drop-service="${service}">
                   ${iconSvg("upload-cloud")}
-                  <span>Выберите CSV/XLSX файл</span>
-                  <input type="file" accept=".csv,.xlsx,.xls" data-upload-section="${section}" data-upload-service="${service}" />
+                  <span>Перетащите сюда отчеты или выберите файлы</span>
+                  <small>CSV, XLSX, XLS · можно несколько сразу</small>
+                  <input type="file" accept=".csv,.xlsx,.xls" multiple data-upload-section="${section}" data-upload-service="${service}" />
                 </label>
               </article>
             `,
@@ -982,7 +983,7 @@ function renderUploads() {
         <div class="panel-title">
           <div>
             <h2>Журнал загрузок</h2>
-            <p>Кнопка обновления находится рядом с журналом, как в ТЗ.</p>
+            <p>Статус обработки и результат импорта по каждому файлу.</p>
           </div>
           <div class="actions">
             <button class="btn dark-secondary" data-action="refresh">${iconSvg("refresh-cw")}Обновить журнал</button>
@@ -996,7 +997,7 @@ function renderUploads() {
 }
 
 function renderUploadsTable(logs) {
-  if (!logs.length) return `<div class="empty-state">Журнал загрузок пока пуст.</div>`;
+  if (!logs.length) return `<div class="empty-state">Журнал загрузок пуст.</div>`;
   return `
     <div class="table-wrap">
       <table class="data-table">
@@ -1055,7 +1056,7 @@ function renderVehicles() {
       <div class="view-head">
         <div>
           <h1>Машины</h1>
-          <p>Машина — центральная сущность связки. Смена водителя закрывает старую запись истории и создает новую.</p>
+          <p>Парк, закрепления, транспондеры и текущие водители.</p>
         </div>
         <button class="btn primary-blue" data-action="export-vehicles">${iconSvg("file-spreadsheet")}Excel</button>
       </div>
@@ -1063,7 +1064,7 @@ function renderVehicles() {
         <div class="panel-title">
           <div>
             <h2>Добавить машину</h2>
-            <p>Госномер и транспондер нормализуются перед сохранением.</p>
+            <p>Новая единица парка для рейсов и финансовых связок.</p>
           </div>
         </div>
         <form class="form-grid" data-form="add-vehicle">
@@ -1080,8 +1081,8 @@ function renderVehicles() {
         <div class="panel">
           <div class="panel-title">
             <div>
-              <h2>Справочник машин</h2>
-              <p>Изменение водителя не переписывает старую историю.</p>
+              <h2>Парк</h2>
+              <p>Текущие машины, статусы и ответственные водители.</p>
             </div>
           </div>
           ${renderVehiclesTable(vehicles, drivers)}
@@ -1157,7 +1158,7 @@ function renderVehiclesTable(vehicles, drivers) {
 }
 
 function renderAssignmentHistory(history) {
-  if (!history.length) return `<div class="empty-state">История пока пустая.</div>`;
+  if (!history.length) return `<div class="empty-state">История закреплений пустая.</div>`;
   return `
     <div class="table-wrap">
       <table class="data-table">
@@ -1203,7 +1204,7 @@ function renderRequests() {
       <div class="view-head">
         <div>
           <h1>Заявки</h1>
-          <p>Создание заявки и назначение водителя/машины для дальнейшей связки с рейсом.</p>
+          <p>Заявки клиентов, назначения и статусы исполнения.</p>
         </div>
         <button class="btn primary-blue" data-action="export-requests">${iconSvg("file-spreadsheet")}Excel</button>
       </div>
@@ -1211,7 +1212,7 @@ function renderRequests() {
         <div class="panel-title">
           <div>
             <h2>Создать заявку</h2>
-            <p>Минимальная форма для быстрого запуска процесса.</p>
+            <p>Новая перевозка в операционном журнале.</p>
           </div>
         </div>
         <form class="form-grid" data-form="add-request">
@@ -1231,7 +1232,7 @@ function renderRequests() {
         <div class="panel-title">
           <div>
             <h2>Журнал заявок</h2>
-            <p>Изменение статуса сохраняется в SQLite.</p>
+            <p>Рабочий список перевозок и оплат.</p>
           </div>
         </div>
         ${renderRequestsTable(requests, drivers, vehicles)}
@@ -1241,7 +1242,7 @@ function renderRequests() {
 }
 
 function renderRequestsTable(requests, drivers, vehicles) {
-  if (!requests.length) return `<div class="empty-state">Заявок пока нет.</div>`;
+  if (!requests.length) return `<div class="empty-state">Нет активных заявок.</div>`;
   const statuses = ["Новая", "Назначена водителю", "Принята в работу", "В пути на выгрузку", "Выгружена", "Документы отправлены", "Оплачена", "Отклонена"];
   return `
     <div class="table-wrap">
@@ -1308,7 +1309,7 @@ function renderTrips() {
       <div class="view-head">
         <div>
           <h1>Рейсы</h1>
-          <p>Пробег считается как выгрузка минус загрузка, холостой пробег — в рамках той же машины.</p>
+          <p>Журнал выполненных и открытых рейсов по парку.</p>
         </div>
         <button class="btn primary-blue" data-action="export-trips">${iconSvg("file-spreadsheet")}Excel</button>
       </div>
@@ -1320,7 +1321,7 @@ function renderTrips() {
 }
 
 function renderTripsTable(trips) {
-  if (!trips.length) return `<div class="empty-state">Рейсов пока нет.</div>`;
+  if (!trips.length) return `<div class="empty-state">Нет рейсов за выбранный период.</div>`;
   return `
     <div class="table-wrap">
       <table class="data-table">
@@ -1376,7 +1377,7 @@ function renderDrivers() {
       <div class="view-head">
         <div>
           <h1>Водители</h1>
-          <p>Увольнение выключает активность, но история рейсов и расходов остается.</p>
+          <p>Команда водителей, закрепленные машины и финансовые показатели.</p>
         </div>
         <button class="btn primary-blue" data-action="export-drivers">${iconSvg("file-spreadsheet")}Excel</button>
       </div>
@@ -1429,7 +1430,7 @@ function renderDriverApp() {
       <div class="view-head">
         <div>
           <h1>Кабинет водителя</h1>
-          <p>Мобильный сценарий: вход по телефону, загрузка, выгрузка, забытый рейс и заявки.</p>
+          <p>Загрузки, выгрузки, заявки и история рейсов.</p>
         </div>
         ${driver ? `<button class="btn dark-secondary" data-action="driver-logout">${iconSvg("log-out")}Выйти</button>` : ""}
       </div>
@@ -1453,17 +1454,17 @@ function renderDriverAuth() {
     <div class="panel-title">
       <div>
         <h2>Вход / регистрация</h2>
-        <p>Если телефон уже есть в базе, водитель сразу попадает в кабинет.</p>
+        <p>Доступ водителя к рейсам и заявкам.</p>
       </div>
     </div>
     <div class="grid cols-2">
       <form class="panel compact" data-form="driver-login">
-        <div class="panel-title"><div><h2>Войти</h2><p>Пароль на первом этапе не нужен.</p></div></div>
+        <div class="panel-title"><div><h2>Войти</h2><p>Доступ по рабочему номеру телефона.</p></div></div>
         <div class="field"><label>Телефон</label><input class="input" name="phone" required placeholder="+7 999 100-10-03" /></div>
         <button class="btn primary-blue" type="submit" style="margin-top:10px">${iconSvg("log-in")}Войти</button>
       </form>
       <form class="panel compact" data-form="driver-register">
-        <div class="panel-title"><div><h2>Регистрация</h2><p>После регистрации кабинет открывается сразу.</p></div></div>
+        <div class="panel-title"><div><h2>Регистрация</h2><p>Новый водитель в операционной базе.</p></div></div>
         <div class="form-grid">
           <div class="field wide"><label>Фамилия Имя</label><input class="input" name="full_name" required placeholder="Иванов Иван" /></div>
           <div class="field wide"><label>Телефон</label><input class="input" name="phone" required placeholder="8 999 123-45-67" /></div>
@@ -1513,7 +1514,7 @@ function renderDriverCabinet(driver) {
       <div class="panel-title">
         <div>
           <h2>Мои рейсы за ${escapeHtml(state.appliedFilters.month)}</h2>
-          <p>Период берется из фильтра финансов, чтобы не плодить настройки.</p>
+          <p>Рейсы водителя за выбранный период.</p>
         </div>
       </div>
       ${renderTripsTable(monthlyTrips)}
@@ -1554,7 +1555,7 @@ function renderDriverMode(driver, openTrip, requests) {
     return `
       <div class="panel compact">
         <div class="panel-title">
-          <div><h2>Новые заявки</h2><p>Водитель может принять или отклонить назначенную заявку.</p></div>
+          <div><h2>Новые заявки</h2><p>Назначенные перевозки на подтверждение.</p></div>
         </div>
         ${renderDriverRequests(requests)}
       </div>
@@ -1600,7 +1601,7 @@ function renderDriverPhoneIntro() {
   return `
     <div class="phone-top"><span>AntesCargo</span><span>09:41</span></div>
     <h2 style="margin:0 0 6px;font-size:22px">Вход водителя</h2>
-    <p class="muted" style="font-size:13px;line-height:1.45">Телефон приводится к формату 79991234567. Пароль на первом этапе не нужен.</p>
+    <p class="muted" style="font-size:13px;line-height:1.45">Рабочий номер открывает доступ к рейсам и заявкам.</p>
     <div class="driver-actions">
       <button class="btn primary-blue">${iconSvg("log-in")}Войти</button>
       <button class="btn success-green">${iconSvg("user-plus")}Регистрация</button>
@@ -1669,9 +1670,33 @@ function bindEvents() {
 
   root.querySelectorAll("[data-upload-section]").forEach((input) => {
     input.addEventListener("change", async () => {
-      const file = input.files?.[0];
-      if (!file) return;
-      await handleUpload(file, input.dataset.uploadSection, input.dataset.uploadService);
+      const files = Array.from(input.files || []);
+      if (!files.length) return;
+      await handleUploadQueue(files, input.dataset.uploadSection, input.dataset.uploadService);
+      input.value = "";
+    });
+  });
+
+  root.querySelectorAll("[data-drop-section]").forEach((zone) => {
+    ["dragenter", "dragover"].forEach((eventName) => {
+      zone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        zone.classList.add("drag-over");
+      });
+    });
+    ["dragleave", "drop"].forEach((eventName) => {
+      zone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        zone.classList.remove("drag-over");
+      });
+    });
+    zone.addEventListener("drop", async (event) => {
+      const files = Array.from(event.dataTransfer?.files || []).filter(isSupportedReportFile);
+      if (!files.length) {
+        window.alert("Выберите файлы CSV, XLSX или XLS.");
+        return;
+      }
+      await handleUploadQueue(files, zone.dataset.dropSection, zone.dataset.dropService);
     });
   });
 
@@ -1842,7 +1867,22 @@ async function handleForm(name, formData, form) {
   }
 }
 
-async function handleUpload(file, section, service) {
+async function handleUploadQueue(files, section, service) {
+  const queue = files.filter(isSupportedReportFile);
+  if (!queue.length) {
+    window.alert("Выберите файлы CSV, XLSX или XLS.");
+    return;
+  }
+  for (let index = 0; index < queue.length; index += 1) {
+    await handleUpload(queue[index], section, service, {
+      index: index + 1,
+      total: queue.length,
+      renderAfterEach: index === queue.length - 1,
+    });
+  }
+}
+
+async function handleUpload(file, section, service, batch = { index: 1, total: 1, renderAfterEach: true }) {
   const uploadId = createUploadLog({
     section,
     service,
@@ -1858,9 +1898,10 @@ async function handleUpload(file, section, service) {
   });
 
   try {
-    setLoading("Загружаем данные...", `Читаем ${file.name}`, 12);
+    const prefix = batch.total > 1 ? `${batch.index}/${batch.total} · ` : "";
+    setLoading("Импорт отчетов", `${prefix}${file.name}`, Math.max(6, Math.round((batch.index - 1) * (100 / batch.total))));
     const rows = await readRowsFromFile(file);
-    setLoading("Парсинг отчета", `${rows.length} строк`, 35);
+    setLoading("Обработка файла", `${prefix}${formatNumber(rows.length)} строк`, Math.min(88, Math.round((batch.index - 0.45) * (100 / batch.total))));
 
     let result;
     if (section === "fuel") result = await parseFuelRows(rows, service, uploadId);
@@ -1875,13 +1916,15 @@ async function handleUpload(file, section, service) {
       [result.added, result.duplicate, result.skipped, uploadId],
     );
 
-    setLoading("Пересчет не запущен", "Аналитика помечена как устаревшая. Нажмите “Пересчитать” в финансах.", 100);
+    setLoading("Импорт завершен", `${prefix}${file.name}`, Math.min(100, Math.round(batch.index * (100 / batch.total))));
     await saveDb();
-    setTimeout(() => {
-      state.loading = null;
+    if (batch.renderAfterEach) {
+      setTimeout(() => {
+        state.loading = null;
+        render();
+      }, 900);
       render();
-    }, 900);
-    render();
+    }
   } catch (error) {
     run("UPDATE uploaded_files SET status = 'error', error_message = ? WHERE id = ?", [
       error.message || String(error),
@@ -1892,6 +1935,10 @@ async function handleUpload(file, section, service) {
     render();
     window.alert(`Ошибка загрузки: ${error.message || error}`);
   }
+}
+
+function isSupportedReportFile(file) {
+  return /\.(csv|xlsx|xls)$/i.test(file?.name || "");
 }
 
 async function readRowsFromFile(file) {
