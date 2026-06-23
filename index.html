@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Онлайн-консультации врача-эндокринолога Анны Владимировны Гладкой: женское здоровье, функциональная медицина, персональный план восстановления."
+    />
+    <title>Доктор Анна Гладкая - онлайн-консультации эндокринолога</title>
+    <script>
+      document.documentElement.classList.add("has-js");
+    </script>
+    <link rel="preload" href="assets/hero-scene.png" as="image" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"><span></span></div>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Доктор Анна Гладкая">
+        <span class="brand-mark">AG</span>
+        <span>
+          <strong>Доктор</strong>
+          <em>Гладкая Анна Владимировна</em>
+        </span>
+      </a>
+
+      <nav class="main-nav" data-nav aria-label="Основная навигация">
+        <a href="#approach">Подход</a>
+        <a href="#problems">Проблемы</a>
+        <a href="#format">Формат</a>
+        <a href="#tariffs">Тарифы</a>
+        <a href="#about">О враче</a>
+        <a href="#contact">Запись</a>
+      </nav>
+
+      <button class="header-cta" type="button" data-open-booking>Записаться</button>
+      <button class="menu-toggle" type="button" data-menu aria-label="Открыть меню" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell" aria-labelledby="hero-title" data-scroll-depth="-18">
+        <div class="hero-bloom hero-bloom-left" data-scroll-depth="-72" aria-hidden="true"></div>
+        <div class="hero-bloom hero-bloom-right" data-scroll-depth="92" aria-hidden="true"></div>
+
+        <div class="hero-copy reveal" data-scroll-depth="36">
+          <h1 id="hero-title">Онлайн-консультации эндокринолога</h1>
+          <div class="hero-line" aria-hidden="true"></div>
+          <p class="doctor-name">Доктор: Гладкая Анна Владимировна</p>
+          <p class="hero-lead">
+            Женское здоровье, гормональный баланс и энергия без хаоса в назначениях.
+          </p>
+          <figure class="doctor-slogan">
+            <blockquote>Сначала найти причину.<br />Затем восстановить систему.</blockquote>
+            <figcaption class="doctor-signature">Анна Гладкая</figcaption>
+          </figure>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#tariffs" data-magnetic>
+              <span>Выбрать формат</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a class="btn btn-quiet" href="#about">Почему можно доверять</a>
+          </div>
+          <dl class="hero-facts" aria-label="Ключевые факты">
+            <div>
+              <dt>8+</dt>
+              <dd>лет опыта</dd>
+            </div>
+            <div>
+              <dt>5 дней</dt>
+              <dd>до PDF-плана после консультации</dd>
+            </div>
+            <div>
+              <dt>3</dt>
+              <dd>формата сопровождения</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-media reveal" data-parallax data-scroll-depth="-54">
+          <div class="portrait-frame">
+            <img src="assets/doctor-portrait.jpg" alt="Доктор Анна Гладкая" />
+          </div>
+          <div class="floating-note">
+            <strong>8+ лет</strong>
+            <span>эндокринология, терапия и функциональная медицина</span>
+          </div>
+          <div class="signature-lines" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="approach section-shell" id="approach" aria-labelledby="approach-title">
+        <div class="approach-copy reveal">
+          <span class="section-number">01</span>
+          <h2 id="approach-title">Видео о подходе Анны Владимировны</h2>
+          <p class="approach-lead">
+            В приоритете не набор назначений, а понятная система: найти причину, объяснить связь симптомов
+            и собрать персональный план восстановления.
+          </p>
+        </div>
+
+        <div class="approach-video-shell reveal">
+          <div class="approach-video-frame">
+            <video
+              controls
+              playsinline
+              preload="metadata"
+              poster="assets/anna-video-poster.jpg"
+              aria-label="Видео Анны Владимировны о подходе к консультациям"
+            >
+              <source src="assets/anna-approach-web.mp4" type="video/mp4" />
+              Ваш браузер не поддерживает воспроизведение видео.
+            </video>
+          </div>
+          <p class="approach-video-caption">4:22 · Анна Владимировна рассказывает о принципах работы с пациентом</p>
+        </div>
+
+        <div class="approach-points reveal" aria-label="Ключевые принципы подхода">
+          <div>
+            <span>01</span>
+            <p>Разбор симптомов, анализов и образа жизни как единой картины.</p>
+          </div>
+          <div>
+            <span>02</span>
+            <p>Объяснение причин простым языком без хаоса в рекомендациях.</p>
+          </div>
+          <div>
+            <span>03</span>
+            <p>План действий, который можно выполнять после консультации.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="statement section-shell reveal" aria-labelledby="statement-title">
+        <div>
+          <h2 id="statement-title">Комплексное решение проблем здоровья</h2>
+        </div>
+        <p>
+          Эндокринная система - главный дирижер организма. Когда в ее работе происходит сбой,
+          это отражается на состоянии всех систем, поскольку работа одной зависит от работы другой.
+          На онлайн-консультации мы выявим истинные причины нарушений, разберемся с симптомами,
+          подготовим персональный план восстановления здоровья и ответы на ваши вопросы.
+        </p>
+      </section>
+
+      <section class="audience" aria-labelledby="audience-title">
+        <div class="section-shell audience-inner">
+          <div class="section-heading reveal">
+            <span class="section-number">02</span>
+            <h2 id="audience-title">Для кого подходит формат личной консультации</h2>
+          </div>
+          <ul class="audience-list">
+            <li class="reveal">Для тех, у кого есть симптомы, причину которых пока не удалось выявить.</li>
+            <li class="reveal">Для жителей городов, где сложно попасть к грамотному узкому специалисту.</li>
+            <li class="reveal">Для занятых людей, ценящих свое время и консультацию из любого места.</li>
+            <li class="reveal">Для тех, кто заботится о профилактике и хочет сохранить здоровье на долгие годы.</li>
+            <li class="reveal">Для тех, у кого выявлены заболевания и кто хочет научиться ими управлять.</li>
+            <li class="reveal">Для всей семьи, когда требуется комплексный подход к здоровью нескольких родственников.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="problems section-shell" id="problems" aria-labelledby="problems-title">
+        <div class="problems-intro reveal">
+          <span class="section-number">03</span>
+          <h2 id="problems-title">С какими проблемами можно обратиться</h2>
+          <p>Комплексный подход к симптомам, гормональному фону, дефицитам и качеству жизни.</p>
+        </div>
+        <div class="problem-grid">
+          <article class="problem reveal">
+            <span>01</span>
+            <h3>Хроническая усталость</h3>
+            <p>Апатия, отсутствие сил и энергии, состояние «только встала - уже устала».</p>
+          </article>
+          <article class="problem reveal">
+            <span>02</span>
+            <h3>Щитовидная железа</h3>
+            <p>Гипотиреоз, гипертиреоз, аутоиммунный тиреоидит, узловые образования, подбор терапии.</p>
+          </article>
+          <article class="problem reveal">
+            <span>03</span>
+            <h3>Женское здоровье</h3>
+            <p>Нарушения цикла, СПКЯ, МФЯ, низкое либидо, ПМС, эстроген-доминирующие состояния и ЗГТ.</p>
+          </article>
+          <article class="problem reveal">
+            <span>04</span>
+            <h3>Хронический стресс</h3>
+            <p>Синдром истощения надпочечников, высокий или низкий кортизол.</p>
+          </article>
+          <article class="problem reveal">
+            <span>05</span>
+            <h3>Беременность</h3>
+            <p>Планирование, подготовка, коррекция гормонального фона и дефицитов.</p>
+          </article>
+          <article class="problem reveal">
+            <span>06</span>
+            <h3>Пищеварение</h3>
+            <p>Изжога, отрыжка, тяжесть, вздутие, спазмы, диарея, запоры, горечь во рту.</p>
+          </article>
+          <article class="problem reveal">
+            <span>07</span>
+            <h3>Кожа, волосы, ногти</h3>
+            <p>Выпадение волос, ломкость ногтей, сухая кожа, высыпания, розацеа, экзема, псориаз.</p>
+          </article>
+          <article class="problem reveal">
+            <span>08</span>
+            <h3>Вес и углеводный обмен</h3>
+            <p>Лишний вес, ожирение, инсулинорезистентность, преддиабет, диабет 1 и 2 типа, LADA.</p>
+          </article>
+          <article class="problem reveal">
+            <span>09</span>
+            <h3>Дефициты</h3>
+            <p>Выявление и восполнение дефицитов витаминов, микроэлементов и минералов.</p>
+          </article>
+          <article class="problem reveal">
+            <span>10</span>
+            <h3>Anti-age медицина</h3>
+            <p>Активное долголетие, детоксикация, митохондриальное здоровье, снижение процессов гликации.</p>
+          </article>
+          <article class="problem reveal">
+            <span>11</span>
+            <h3>Рецидивирующие инфекции</h3>
+            <p>Герпес, молочница, грибковые заболевания, частые ОРВИ и простуды.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="results" aria-labelledby="results-title">
+        <div class="section-shell results-inner">
+          <h2 id="results-title" class="reveal">Какой результат вы получите</h2>
+          <div class="result-row">
+            <article class="result-item reveal">
+              <span class="result-icon">01</span>
+              <p>Четкое понимание причин ваших симптомов.</p>
+            </article>
+            <article class="result-item reveal">
+              <span class="result-icon">02</span>
+              <p>Индивидуальный план обследования при необходимости.</p>
+            </article>
+            <article class="result-item reveal">
+              <span class="result-icon">03</span>
+              <p>Готовая схема лечения и рекомендации по питанию, образу жизни и добавкам.</p>
+            </article>
+            <article class="result-item reveal">
+              <span class="result-icon">04</span>
+              <p>Поддержка врача на всех этапах терапии.</p>
+            </article>
+            <article class="result-item reveal">
+              <span class="result-icon">05</span>
+              <p>Улучшение самочувствия, энергии и качества жизни при соблюдении рекомендаций.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="format section-shell" id="format" aria-labelledby="format-title">
+        <div class="format-heading reveal">
+          <span class="section-number">04</span>
+          <h2 id="format-title">Формат онлайн-консультаций</h2>
+        </div>
+        <div class="format-grid">
+          <article class="format-step reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M5 10a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V10Z" />
+              <path d="m21 13 6-4v14l-6-4" />
+            </svg>
+            <h3>Аудио или видеозвонок</h3>
+            <p>Консультация проходит в мессенджерах в удобном онлайн-формате.</p>
+          </article>
+          <article class="format-step reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M9 4h10l5 5v19H9V4Z" />
+              <path d="M19 4v6h5M12 17h8M12 22h8" />
+            </svg>
+            <h3>Персональный PDF-план</h3>
+            <p>В течение 5 дней после консультации вы получаете персонализированный документ.</p>
+          </article>
+          <article class="format-step reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 4a12 12 0 1 1 0 24 12 12 0 0 1 0-24Z" />
+              <path d="M16 9v8l5 3" />
+            </svg>
+            <h3>Обратная связь</h3>
+            <p>Продолжительность консультации и возможность задавать вопросы зависят от тарифа.</p>
+          </article>
+          <article class="format-step reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M9 6h14v22H9V6Z" />
+              <path d="M12 11h8M12 16h8M12 21h5" />
+            </svg>
+            <h3>Подготовка заранее</h3>
+            <p>Перед консультацией вы сдаете базовый чекап и заполняете анкету.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="tariffs section-shell" id="tariffs" aria-labelledby="tariffs-title">
+        <div class="tariffs-heading reveal">
+          <div>
+            <span class="section-number">05</span>
+            <h2 id="tariffs-title">Тарифы консультаций</h2>
+          </div>
+          <p>Выберите формат, который подходит именно вам.</p>
+        </div>
+
+        <div class="tariff-grid">
+          <article class="tariff-card reveal" data-tariff-card>
+            <h3>Стандартный</h3>
+            <ul>
+              <li>Подробная консультация 40-60 минут в формате видеозвонка.</li>
+              <li>Разбор анализов и жалоб, выявление их взаимосвязи.</li>
+              <li>Персонализированный план восстановления здоровья на 2-3 месяца.</li>
+              <li>Обратная связь по назначенной терапии в течение 1 месяца без разбора новых исследований.</li>
+            </ul>
+            <p class="price">25 000 <span>руб.</span></p>
+            <button class="btn btn-card" type="button" data-select-tariff="Стандартный" data-magnetic>Выбрать тариф</button>
+          </article>
+
+          <article class="tariff-card featured reveal" data-tariff-card>
+            <div class="tariff-status">Оптимальный выбор</div>
+            <h3>Оптимальный</h3>
+            <p class="includes">Включает все из тарифа «Стандартный», а также:</p>
+            <ul>
+              <li>Индивидуальный план дообследования и расшифровка результатов.</li>
+              <li>Контрольный разбор анализов и коррекция терапии через 1,5-2 месяца.</li>
+              <li>Дополнительный аудиозвонок 15-30 минут для обсуждения результатов.</li>
+            </ul>
+            <p class="price">40 000 <span>руб.</span></p>
+            <button class="btn btn-card" type="button" data-select-tariff="Оптимальный" data-magnetic>Выбрать тариф</button>
+          </article>
+
+          <article class="tariff-card reveal" data-tariff-card>
+            <h3>Комплексное сопровождение</h3>
+            <ul>
+              <li>Программа на 6 месяцев и первичная консультация 60-90 минут.</li>
+              <li>Расширенный план дообследования при необходимости.</li>
+              <li>Неограниченная обратная связь в течение 6 месяцев.</li>
+              <li>Повторная консультация через 2-3 месяца после начала терапии.</li>
+              <li>Расшифровка промежуточных исследований и 2-3 дополнительных аудиозвонка до 30 минут.</li>
+            </ul>
+            <p class="price">85 000 <span>руб.</span></p>
+            <button class="btn btn-card" type="button" data-select-tariff="Комплексное сопровождение" data-magnetic>Выбрать тариф</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div class="section-shell contact-inner">
+          <div class="contact-copy reveal">
+            <h2 id="contact-title">Готовы восстановить здоровье и качество жизни?</h2>
+            <p>
+              Запишитесь на онлайн-консультацию - сделайте первый шаг к гармонии и энергии уже сегодня.
+            </p>
+          </div>
+          <form class="booking-form reveal" data-booking-form>
+            <label>
+              <span>Ваше имя</span>
+              <input name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" />
+            </label>
+            <label>
+              <span>Телефон или Telegram</span>
+              <input name="contact" type="text" autocomplete="tel" placeholder="+7 ... или @username" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" placeholder="Для ответа и материалов" />
+            </label>
+            <label>
+              <span>Выбранный формат</span>
+              <select name="tariff" data-tariff-select>
+                <option>Стандартный - 25 000 руб.</option>
+                <option selected>Оптимальный - 40 000 руб.</option>
+                <option>Комплексное сопровождение - 85 000 руб.</option>
+              </select>
+            </label>
+            <label>
+              <span>Ваш запрос</span>
+              <textarea name="message" rows="3" placeholder="Кратко опишите симптомы или цель консультации"></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit" data-magnetic>
+              <span>Отправить заявку</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12M13 6l6 6-6 6" />
+              </svg>
+            </button>
+            <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="about section-shell final-about" id="about" aria-labelledby="about-title">
+        <div class="section-heading reveal">
+          <span class="section-number">06</span>
+          <h2 id="about-title">Кто я и почему мне можно доверять</h2>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-image reveal">
+            <img src="assets/botanical-cream.jpg" alt="" aria-hidden="true" />
+          </div>
+          <div class="credential-columns">
+            <article class="credential reveal">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="m4 11 12-6 12 6-12 6L4 11Z" />
+                <path d="M9 15v7c2 3 12 3 14 0v-7" />
+              </svg>
+              <h3>Высшее медицинское образование</h3>
+              <ul>
+                <li>Саратовский государственный медицинский университет им. Разумовского, лечебное дело.</li>
+                <li>Кубанский государственный медицинский университет, углубленная специализация.</li>
+              </ul>
+            </article>
+            <article class="credential reveal">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M8 6h12a4 4 0 0 1 4 4v16H10a4 4 0 0 0-4 0V8a2 2 0 0 1 2-2Z" />
+                <path d="M10 10h10M10 15h10M10 20h7" />
+              </svg>
+              <h3>Узкопрофильное обучение</h3>
+              <ul>
+                <li>PreventAge University, Москва - превентивная и функциональная медицина.</li>
+                <li>IV Medical, Москва - инвазивная терапия и anti-age протоколы.</li>
+                <li>Регулярные курсы повышения квалификации по аккредитованным программам Минздрава.</li>
+              </ul>
+            </article>
+            <article class="credential reveal">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 4 25 8v7c0 6-4 10-9 13-5-3-9-7-9-13V8l9-4Z" />
+                <path d="m11 16 3 3 7-8" />
+              </svg>
+              <h3>Сертификации</h3>
+              <ul>
+                <li>Эндокринология: диагностика и коррекция гормональных нарушений.</li>
+                <li>Терапия: комплексное ведение пациентов.</li>
+                <li>Функциональная медицина: поиск и устранение причин болезней, а не симптомов.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="booking-dialog" data-booking-dialog aria-labelledby="booking-dialog-title">
+      <div class="booking-modal">
+        <button class="modal-close" type="button" data-close-booking aria-label="Закрыть окно">
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="modal-copy">
+          <span class="section-number">Запись</span>
+          <h2 id="booking-dialog-title">Персональная онлайн-консультация</h2>
+          <p>
+            Оставьте контакты и выберите формат. Заявка будет собрана в структурированное письмо
+            для доктора Анны Гладкой.
+          </p>
+          <div class="mail-card" aria-hidden="true">
+            <span>Письмо врачу</span>
+            <strong>Новая заявка на консультацию</strong>
+            <p>Контакты, выбранная услуга, удобное время и запрос пациента.</p>
+          </div>
+        </div>
+
+        <form class="booking-modal-form" data-popup-form>
+          <label>
+            <span>Ваше имя</span>
+            <input name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" />
+          </label>
+          <label>
+            <span>Телефон или Telegram</span>
+            <input name="contact" type="text" autocomplete="tel" placeholder="+7 ... или @username" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" placeholder="Для ответа и материалов" />
+          </label>
+          <label>
+            <span>Услуга</span>
+            <select name="tariff" data-popup-tariff-select>
+              <option>Стандартный - 25 000 руб.</option>
+              <option selected>Оптимальный - 40 000 руб.</option>
+              <option>Комплексное сопровождение - 85 000 руб.</option>
+            </select>
+          </label>
+          <label>
+            <span>Удобное время</span>
+            <input name="time" type="text" placeholder="Например: будни после 18:00" />
+          </label>
+          <label>
+            <span>Запрос</span>
+            <textarea name="message" rows="4" placeholder="Кратко опишите симптомы, цель консультации или вопрос"></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit" data-magnetic>
+            <span>Сформировать письмо</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h12M13 6l6 6-6 6" />
+            </svg>
+          </button>
+          <p class="form-status" data-popup-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </dialog>
+
+    <footer class="site-footer section-shell">
+      <p>© Доктор Гладкая Анна Владимировна</p>
+      <a href="#top">Наверх</a>
+    </footer>
+  </body>
+</html>
