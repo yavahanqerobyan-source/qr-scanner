@@ -1887,19 +1887,23 @@ h1 {
 
   .hero {
     position: relative;
-    min-height: auto;
-    padding: 94px 14px 40px 22px;
+    min-height: 100svh;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding: 104px 20px 34px;
     background:
-      linear-gradient(180deg, rgba(246, 242, 234, 0.99) 0%, rgba(246, 242, 234, 0.96) 58%, rgba(239, 233, 221, 0.96) 100%),
-      url("assets/botanical-white.jpg") right -46px top 88px / 72vw auto no-repeat;
+      linear-gradient(90deg, rgba(246, 242, 234, 0.98) 0%, rgba(246, 242, 234, 0.76) 31%, rgba(246, 242, 234, 0.14) 56%, rgba(246, 242, 234, 0) 100%),
+      linear-gradient(180deg, rgba(246, 242, 234, 0.54) 0%, rgba(246, 242, 234, 0.04) 42%, rgba(246, 242, 234, 0.86) 100%),
+      url("assets/hero-mobile-portrait.jpg") right 0 top 148px / min(86vw, 350px) auto no-repeat;
   }
 
   .hero-copy {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    max-width: 350px;
+    display: block;
+    min-height: calc(100svh - 138px);
+    max-width: none;
   }
 
   .hero::after,
@@ -1925,41 +1929,57 @@ h1 {
   }
 
   h1 {
-    max-width: 330px;
-    font-size: clamp(35px, 9.9vw, 43px);
-    line-height: 1.03;
+    display: none;
   }
 
-  .doctor-name {
-    max-width: 305px;
-    margin-top: 18px;
-    font-size: 21px;
+  .hero .doctor-name {
+    display: block;
+    max-width: 190px;
+    margin-top: 22px;
+    color: var(--sage-900);
+    font-size: 23px;
+    line-height: 1.06;
   }
 
+  .hero .doctor-name span {
+    display: block;
+    margin-top: 8px;
+    color: rgba(39, 40, 34, 0.66);
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 1.28;
+    text-transform: uppercase;
+   }
+
+  .hero-line,
   .hero-lead {
-    max-width: 310px;
-    font-size: 16.5px;
+    display: none;
   }
 
   .doctor-slogan {
     order: 6;
-    max-width: 318px;
-    margin-top: 20px;
-    padding-left: 16px;
+    max-width: 222px;
+    margin-top: clamp(270px, 36svh, 322px);
+    padding-left: 14px;
   }
 
   .doctor-slogan blockquote {
     font-size: 21px;
+    line-height: 1.1;
   }
 
   .doctor-signature {
-    max-width: 292px;
-    font-size: 29px;
+    max-width: 242px;
+    font-size: 30px;
   }
 
   .hero-actions {
     order: 5;
     grid-template-columns: 1fr;
+    margin-top: 18px;
+    width: min(calc(100vw - 40px), 340px);
   }
 
   .hero-actions .btn {
@@ -1994,33 +2014,11 @@ h1 {
   }
 
   .hero .hero-media {
-    position: relative;
-    z-index: 1;
-    order: 4;
-    display: block !important;
-    width: min(58vw, 236px);
-    margin: 18px 4px 0 auto;
-    padding: 7px;
-    overflow: visible;
-    border: 1px solid rgba(184, 146, 102, 0.28);
-    border-radius: 8px;
-    background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(239, 233, 221, 0.52)),
-      rgba(246, 242, 234, 0.5);
-    box-shadow: 0 24px 56px rgba(45, 54, 41, 0.18);
-    opacity: 1;
-    translate: none;
-    transition: none;
+    display: none !important;
   }
 
   .hero .hero-media::before {
-    display: block;
-    inset: 12px -9px -12px 9px;
-    width: auto;
-    height: auto;
-    border-color: rgba(184, 146, 102, 0.26);
-    border-radius: 8px;
-    transform: none;
+    display: none;
   }
 
   .signature-lines {

@@ -13,8 +13,83 @@
     </script>
     <link rel="preload" href="assets/hero-scene.png" as="image" />
     <link rel="preload" href="assets/hero-mobile-portrait.jpg" as="image" media="(max-width: 760px)" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css?v=mobile-cover-20260623" />
+    <style>
+      @media (max-width: 760px) {
+        .hero {
+          min-height: 100svh !important;
+          width: 100% !important;
+          max-width: none !important;
+          margin-inline: 0 !important;
+          padding: 104px 20px 34px !important;
+          background:
+            linear-gradient(90deg, rgba(246, 242, 234, 0.98) 0%, rgba(246, 242, 234, 0.76) 31%, rgba(246, 242, 234, 0.14) 56%, rgba(246, 242, 234, 0) 100%),
+            linear-gradient(180deg, rgba(246, 242, 234, 0.54) 0%, rgba(246, 242, 234, 0.04) 42%, rgba(246, 242, 234, 0.86) 100%),
+            url("assets/hero-mobile-portrait.jpg") right 0 top 148px / min(86vw, 350px) auto no-repeat !important;
+        }
+
+        .hero-copy {
+          display: block !important;
+          min-height: calc(100svh - 138px) !important;
+          max-width: none !important;
+        }
+
+        .hero h1,
+        .hero .hero-line,
+        .hero-lead {
+          display: none !important;
+        }
+
+        .hero .doctor-name {
+          display: block !important;
+          max-width: 190px !important;
+          margin-top: 22px !important;
+          color: #263725 !important;
+          font-family: var(--serif) !important;
+          font-size: 23px !important;
+          line-height: 1.06 !important;
+        }
+
+        .hero .doctor-name span {
+          display: block !important;
+          margin-top: 8px !important;
+          color: rgba(39, 40, 34, 0.66) !important;
+          font-family: var(--sans) !important;
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.18em !important;
+          line-height: 1.28 !important;
+          text-transform: uppercase !important;
+        }
+
+        .hero .hero-media {
+          display: none !important;
+        }
+
+        .hero .hero-actions {
+          order: 5 !important;
+          margin-top: 18px !important;
+          width: min(calc(100vw - 40px), 340px) !important;
+        }
+
+        .hero .doctor-slogan {
+          order: 6 !important;
+          max-width: 222px !important;
+          margin-top: clamp(270px, 36svh, 322px) !important;
+          padding-left: 14px !important;
+        }
+
+        .hero .doctor-slogan blockquote {
+          font-size: 21px !important;
+          line-height: 1.1 !important;
+        }
+
+        .hero .doctor-signature {
+          font-size: 30px !important;
+        }
+      }
+    </style>
+    <script src="script.js?v=mobile-cover-20260623" defer></script>
   </head>
   <body>
     <div class="progress" aria-hidden="true"><span></span></div>
@@ -52,7 +127,7 @@
         <div class="hero-copy reveal" data-scroll-depth="36">
           <h1 id="hero-title">Онлайн-консультации эндокринолога</h1>
           <div class="hero-line" aria-hidden="true"></div>
-          <p class="doctor-name">Доктор: Гладкая Анна Владимировна</p>
+          <p class="doctor-name">Анна Гладкая<br /><span>доктор-эндокринолог</span></p>
           <p class="hero-lead">
             Женское здоровье, гормональный баланс и энергия без хаоса в назначениях.
           </p>
