@@ -12,6 +12,7 @@
       document.documentElement.classList.add("has-js");
     </script>
     <link rel="preload" href="assets/hero-scene.png" as="image" />
+    <link rel="preload" href="assets/hero-mobile-portrait.jpg" as="image" media="(max-width: 760px)" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
@@ -55,6 +56,16 @@
           <p class="hero-lead">
             Женское здоровье, гормональный баланс и энергия без хаоса в назначениях.
           </p>
+          <div class="hero-media reveal" data-parallax data-scroll-depth="-54">
+            <div class="portrait-frame">
+              <img src="assets/hero-mobile-portrait.jpg" alt="Доктор Анна Гладкая" />
+            </div>
+            <div class="floating-note">
+              <strong>8+ лет</strong>
+              <span>эндокринология, терапия и функциональная медицина</span>
+            </div>
+            <div class="signature-lines" aria-hidden="true"></div>
+          </div>
           <figure class="doctor-slogan">
             <blockquote>Сначала найти причину.<br />Затем восстановить систему.</blockquote>
             <figcaption class="doctor-signature">Анна Гладкая</figcaption>
@@ -84,16 +95,6 @@
           </dl>
         </div>
 
-        <div class="hero-media reveal" data-parallax data-scroll-depth="-54">
-          <div class="portrait-frame">
-            <img src="assets/doctor-portrait.jpg" alt="Доктор Анна Гладкая" />
-          </div>
-          <div class="floating-note">
-            <strong>8+ лет</strong>
-            <span>эндокринология, терапия и функциональная медицина</span>
-          </div>
-          <div class="signature-lines" aria-hidden="true"></div>
-        </div>
       </section>
 
       <section class="approach section-shell" id="approach" aria-labelledby="approach-title">

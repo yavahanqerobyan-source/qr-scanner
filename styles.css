@@ -1888,14 +1888,18 @@ h1 {
   .hero {
     position: relative;
     min-height: auto;
-    padding: 96px 14px 42px 23px;
+    padding: 94px 14px 40px 22px;
     background:
-      linear-gradient(90deg, rgba(246, 242, 234, 0.99) 0%, rgba(246, 242, 234, 0.96) 61%, rgba(246, 242, 234, 0.58) 82%, rgba(246, 242, 234, 0.16) 100%),
-      url("assets/hero-scene.png") 42% calc(50% + var(--scroll-y, 0px)) / auto 100% no-repeat;
+      linear-gradient(180deg, rgba(246, 242, 234, 0.99) 0%, rgba(246, 242, 234, 0.96) 58%, rgba(239, 233, 221, 0.96) 100%),
+      url("assets/botanical-white.jpg") right -46px top 88px / 72vw auto no-repeat;
   }
 
   .hero-copy {
-    max-width: 340px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
   }
 
   .hero::after,
@@ -1921,37 +1925,40 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(34px, 9.6vw, 42px);
+    max-width: 330px;
+    font-size: clamp(35px, 9.9vw, 43px);
     line-height: 1.03;
-    max-width: 292px;
   }
 
   .doctor-name {
-    margin-top: 20px;
-    font-size: 24px;
+    max-width: 305px;
+    margin-top: 18px;
+    font-size: 21px;
   }
 
   .hero-lead {
-    font-size: 17px;
-    max-width: 285px;
+    max-width: 310px;
+    font-size: 16.5px;
   }
 
   .doctor-slogan {
-    max-width: 285px;
-    margin-top: 22px;
+    order: 6;
+    max-width: 318px;
+    margin-top: 20px;
     padding-left: 16px;
   }
 
   .doctor-slogan blockquote {
-    font-size: 22px;
+    font-size: 21px;
   }
 
   .doctor-signature {
-    max-width: 270px;
-    font-size: 30px;
+    max-width: 292px;
+    font-size: 29px;
   }
 
   .hero-actions {
+    order: 5;
     grid-template-columns: 1fr;
   }
 
@@ -1986,35 +1993,50 @@ h1 {
     font-size: 11px;
   }
 
-  .hero-media {
-    position: absolute;
-    top: 224px;
-    right: -70px;
-    z-index: -1;
-    display: block;
-    width: 198px;
-    margin: 0;
+  .hero .hero-media {
+    position: relative;
+    z-index: 1;
+    order: 4;
+    display: block !important;
+    width: min(58vw, 236px);
+    margin: 18px 4px 0 auto;
     padding: 7px;
-    border-color: rgba(255, 255, 255, 0.36);
-    background: rgba(246, 242, 234, 0.18);
-    box-shadow: none;
-    opacity: 0.26;
+    overflow: visible;
+    border: 1px solid rgba(184, 146, 102, 0.28);
+    border-radius: 8px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(239, 233, 221, 0.52)),
+      rgba(246, 242, 234, 0.5);
+    box-shadow: 0 24px 56px rgba(45, 54, 41, 0.18);
+    opacity: 1;
+    translate: none;
+    transition: none;
   }
 
-  .hero-media::before,
+  .hero .hero-media::before {
+    display: block;
+    inset: 12px -9px -12px 9px;
+    width: auto;
+    height: auto;
+    border-color: rgba(184, 146, 102, 0.26);
+    border-radius: 8px;
+    transform: none;
+  }
+
   .signature-lines {
     display: none;
   }
 
-  .portrait-frame {
-    border-radius: 999px 0 0 999px;
+  .hero .portrait-frame {
+    border-radius: 6px;
   }
 
-  .portrait-frame img {
-    aspect-ratio: 0.8;
+  .hero .portrait-frame img {
+    aspect-ratio: 4 / 5;
+    object-position: 50% 12%;
   }
 
-  .floating-note {
+  .hero .floating-note {
     display: none;
   }
 
