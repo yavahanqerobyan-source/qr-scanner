@@ -176,47 +176,28 @@ button {
   padding-top: 2px;
 }
 
-.brand strong,
-.brand em {
+.brand em,
+.brand small {
   display: block;
   font-style: normal;
-  line-height: 1.08;
-}
-
-.brand strong {
-  color: var(--sage-700);
-  font-size: 0;
-  letter-spacing: 0;
-}
-
-.brand strong::before {
-  content: "Доктор";
-  color: var(--graphite);
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 500;
-  text-transform: none;
-  letter-spacing: 0;
 }
 
 .brand em {
-  margin-top: 3px;
   color: var(--sage-900);
   font-family: var(--serif);
   font-size: 21px;
+  line-height: 1.08;
+  white-space: nowrap;
 }
 
-.brand strong {
-  color: var(--graphite);
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 500;
+.brand small {
+  margin-top: 5px;
+  color: rgba(39, 53, 43, 0.58);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
   text-transform: none;
-  letter-spacing: 0;
-}
-
-.brand strong::before {
-  content: none;
 }
 
 .main-nav {
@@ -1382,15 +1363,7 @@ h1 {
 }
 
 .analysis::before {
-  position: absolute;
-  inset: -46px 0 0;
-  pointer-events: none;
-  content: "";
-  background:
-    linear-gradient(180deg, rgba(184, 146, 102, 0.12), rgba(246, 242, 234, 0.78) 36px, transparent 132px),
-    linear-gradient(90deg, rgba(184, 146, 102, 0.07), transparent 42%),
-    radial-gradient(circle at 82% 14%, rgba(184, 146, 102, 0.12), transparent 34%);
-  opacity: 0.72;
+  content: none;
 }
 
 .analysis-heading {
@@ -1407,9 +1380,7 @@ h1 {
   padding: clamp(34px, 5vw, 62px) clamp(24px, 4.6vw, 56px);
   overflow: hidden;
   border-radius: 8px;
-  background:
-    linear-gradient(180deg, rgba(184, 146, 102, 0.1), rgba(255, 255, 255, 0.56) 28%, rgba(246, 242, 234, 0.32)),
-    linear-gradient(90deg, rgba(184, 146, 102, 0.08), transparent 46%);
+  background: rgba(246, 242, 234, 0.72);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.72),
     0 26px 72px rgba(45, 54, 41, 0.06);
@@ -2151,6 +2122,7 @@ h1 {
   }
 
   .site-header {
+    grid-template-columns: minmax(0, 1fr) auto;
     top: 10px;
     min-height: 64px;
     gap: 10px;
@@ -2158,7 +2130,10 @@ h1 {
   }
 
   .brand {
+    grid-column: 1;
+    gap: 10px;
     min-width: 0;
+    overflow: hidden;
   }
 
   .brand-mark {
@@ -2167,17 +2142,40 @@ h1 {
     font-size: 22px;
   }
 
-  .brand strong {
-    font-size: 10px;
+  .brand > span:last-child {
+    min-width: 0;
+    padding-top: 0;
   }
 
   .brand em {
-    max-width: 150px;
-    font-size: 15px;
+    max-width: none;
+    overflow: hidden;
+    font-size: clamp(12px, 3.45vw, 14px);
+    line-height: 1.08;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brand small {
+    margin-top: 4px;
+    overflow: hidden;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .header-cta {
     display: none;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+  }
+
+  .menu-toggle {
+    grid-column: 2;
+    justify-self: end;
   }
 
   .hero {
@@ -2188,9 +2186,9 @@ h1 {
     margin-inline: 0;
     padding: 96px 20px 50px;
     background:
-      linear-gradient(90deg, rgba(246, 242, 234, 0.98) 0%, rgba(246, 242, 234, 0.78) 35%, rgba(246, 242, 234, 0.16) 62%, rgba(246, 242, 234, 0) 100%),
-      linear-gradient(180deg, rgba(246, 242, 234, 0.44) 0%, rgba(246, 242, 234, 0.02) 44%, rgba(246, 242, 234, 0.9) 100%),
-      url("assets/hero-mobile-portrait.jpg") right -4px top 218px / min(92vw, 366px) auto no-repeat;
+      linear-gradient(180deg, rgba(246, 242, 234, 0.98) 0%, rgba(246, 242, 234, 0.52) 20%, rgba(246, 242, 234, 0.08) 48%, rgba(246, 242, 234, 0.68) 77%, rgba(246, 242, 234, 0.98) 100%),
+      linear-gradient(90deg, rgba(246, 242, 234, 0.7) 0%, rgba(246, 242, 234, 0.18) 44%, rgba(246, 242, 234, 0) 100%),
+      url("assets/hero-mobile-portrait.jpg") center top 138px / min(108vw, 430px) auto no-repeat;
   }
 
   .hero-copy {
@@ -2226,9 +2224,22 @@ h1 {
 
   .hero h1 {
     display: block;
-    max-width: 350px;
-    font-size: clamp(36px, 9.8vw, 46px);
-    line-height: 1.02;
+    max-width: min(312px, calc(100vw - 40px));
+    margin-top: clamp(418px, 56svh, 510px);
+    padding: 14px 16px 15px;
+    color: rgba(51, 63, 53, 0.72);
+    font-size: clamp(21px, 5.95vw, 27px);
+    line-height: 1.08;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 8px;
+    background:
+      linear-gradient(145deg, rgba(246, 242, 234, 0.7), rgba(246, 242, 234, 0.46)),
+      rgba(246, 242, 234, 0.48);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 18px 48px rgba(45, 54, 41, 0.12);
+    backdrop-filter: blur(9px);
+    text-shadow: 0 1px 12px rgba(246, 242, 234, 0.64);
     transform: none;
   }
 
@@ -2250,7 +2261,7 @@ h1 {
 
   .hero-statement-card {
     max-width: 100%;
-    margin-top: clamp(340px, 47svh, 430px);
+    margin-top: 16px;
     padding: 24px 22px 22px;
     border: 1px solid rgba(184, 146, 102, 0.24);
     border-radius: 8px;
