@@ -129,7 +129,7 @@ button {
   left: 50%;
   z-index: 80;
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto;
   gap: 28px;
   align-items: center;
   width: 100%;
@@ -2325,6 +2325,17 @@ h1 {
 
   .hero .btn-primary {
     min-width: 0;
+    min-height: 64px;
+    gap: clamp(6px, 2vw, 10px);
+    padding-inline: clamp(12px, 4vw, 22px);
+    font-size: clamp(14px, 4.15vw, 16.5px);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero .btn-primary svg {
+    width: clamp(16px, 4.4vw, 20px);
+    height: clamp(16px, 4.4vw, 20px);
   }
 
   .hero-actions {
