@@ -17,6 +17,7 @@ const bookingClose = document.querySelector("[data-close-booking]");
 const popupForm = document.querySelector("[data-popup-form]");
 const popupStatus = document.querySelector("[data-popup-status]");
 const popupTariffSelect = document.querySelector("[data-popup-tariff-select]");
+const fileInputs = document.querySelectorAll("[data-file-input]");
 const magneticTargets = document.querySelectorAll("[data-magnetic], .header-cta");
 const spotlightTargets = document.querySelectorAll(".problem, .tariff-card");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -117,6 +118,45 @@ function getFormValue(data, name, fallback = "Не указано") {
   return value || fallback;
 }
 
+function formatFileSize(bytes) {
+  if (!Number.isFinite(bytes) || bytes <= 0) {
+    return "размер не указан";
+  }
+
+  if (bytes < 1024 * 1024) {
+    return `${Math.ceil(bytes / 1024)} КБ`;
+  }
+
+  return `${(bytes / (1024 * 1024)).toFixed(1)} МБ`;
+}
+
+function getSelectedFiles(data) {
+  return data
+    .getAll("analysisFiles")
+    .filter((file) => file && typeof file === "object" && "name" in file && file.name);
+}
+
+function formatSelectedFiles(files) {
+  if (files.length === 0) {
+    return "Файлы не выбраны";
+  }
+
+  return files.map((file) => `${file.name} (${formatFileSize(file.size)})`).join("; ");
+}
+
+function updateFileSummary(input) {
+  const summary = input.closest(".file-field")?.querySelector("[data-file-summary]");
+
+  if (!summary) {
+    return;
+  }
+
+  const files = Array.from(input.files || []);
+  summary.textContent = files.length > 0
+    ? `Выбрано: ${formatSelectedFiles(files)}`
+    : "Можно выбрать PDF, фото или документы с анализами.";
+}
+
 function buildEmailBody(data) {
   const createdAt = new Date().toLocaleString("ru-RU", {
     day: "2-digit",
@@ -125,11 +165,12 @@ function buildEmailBody(data) {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const selectedFiles = getSelectedFiles(data);
 
   return [
-    "Новая заявка с сайта доктора Анны Гладкой",
+    "Новая заявка с сайта доктора Анны Владимировны Гладкой",
     "",
-    "ДАННЫЕ ПАЦИЕНТА",
+    "ДАННЫЕ КЛИЕНТА",
     `Имя: ${getFormValue(data, "name")}`,
     `Контакт: ${getFormValue(data, "contact")}`,
     `Email: ${getFormValue(data, "email")}`,
@@ -143,6 +184,10 @@ function buildEmailBody(data) {
     "ЗАПРОС",
     getFormValue(data, "message"),
     "",
+    "АНАЛИЗЫ И ДОКУМЕНТЫ",
+    formatSelectedFiles(selectedFiles),
+    selectedFiles.length > 0 ? "Важно: прикрепите выбранные файлы к этому письму перед отправкой." : "",
+    "",
     "СЛУЖЕБНО",
     `Источник: сайт-визитка`,
     `Дата заявки: ${createdAt}`,
@@ -155,9 +200,12 @@ function submitLeadForm(form, statusElement) {
   const subject = `Заявка на консультацию: ${tariff}`;
   const body = buildEmailBody(data);
   const mailtoUrl = `mailto:${leadEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const selectedFiles = getSelectedFiles(data);
 
   if (statusElement) {
-    statusElement.textContent = `Письмо подготовлено для ${leadEmail}. Проверьте почтовое окно и отправьте заявку.`;
+    statusElement.textContent = selectedFiles.length > 0
+      ? `Письмо подготовлено для ${leadEmail}. Прикрепите выбранные файлы в почтовом окне и отправьте заявку.`
+      : `Письмо подготовлено для ${leadEmail}. Проверьте почтовое окно и отправьте заявку.`;
   }
 
   window.location.href = mailtoUrl;
@@ -166,7 +214,7 @@ function submitLeadForm(form, statusElement) {
 function smoothScrollTo(targetY) {
   const startY = window.scrollY;
   const distance = clamp(targetY, 0, getMaxScroll()) - startY;
-  const duration = clamp(Math.abs(distance) * 0.42, 360, 760);
+  const duration = clamp(Math.abs(distance) * 0.34, 380, 980);
   const startedAt = performance.now();
 
   if (reducedMotion.matches || Math.abs(distance) < 2) {
@@ -174,11 +222,11 @@ function smoothScrollTo(targetY) {
     return;
   }
 
-  const easeOutCubic = (t) => 1 - (1 - t) ** 3;
+  const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
 
   function tick(now) {
     const elapsed = clamp((now - startedAt) / duration, 0, 1);
-    window.scrollTo(0, startY + distance * easeOutCubic(elapsed));
+    window.scrollTo(0, startY + distance * easeInOutSine(elapsed));
 
     if (elapsed < 1) {
       window.requestAnimationFrame(tick);
@@ -248,6 +296,11 @@ if ("IntersectionObserver" in window) {
 window.addEventListener("scroll", updateScrollState, { passive: true });
 window.addEventListener("resize", updateScrollState);
 updateScrollState();
+
+fileInputs.forEach((input) => {
+  updateFileSummary(input);
+  input.addEventListener("change", () => updateFileSummary(input));
+});
 
 window.addEventListener(
   "pointermove",
