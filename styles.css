@@ -2179,6 +2179,7 @@ h1 {
   }
 
   .hero {
+    --mobile-portrait-top: clamp(18px, 7.5vw, 30px);
     position: relative;
     min-height: auto;
     width: 100%;
@@ -2186,9 +2187,9 @@ h1 {
     margin-inline: 0;
     padding: 96px 20px 50px;
     background:
-      linear-gradient(180deg, rgba(246, 242, 234, 0.98) 0%, rgba(246, 242, 234, 0.52) 20%, rgba(246, 242, 234, 0.08) 48%, rgba(246, 242, 234, 0.68) 77%, rgba(246, 242, 234, 0.98) 100%),
+      linear-gradient(180deg, rgba(246, 242, 234, 0.9) 0%, rgba(246, 242, 234, 0.24) 18%, rgba(246, 242, 234, 0.04) 46%, rgba(246, 242, 234, 0.68) 77%, rgba(246, 242, 234, 0.98) 100%),
       linear-gradient(90deg, rgba(246, 242, 234, 0.7) 0%, rgba(246, 242, 234, 0.18) 44%, rgba(246, 242, 234, 0) 100%),
-      url("assets/hero-mobile-portrait.jpg") center top 138px / min(108vw, 430px) auto no-repeat;
+      url("assets/hero-mobile-portrait.jpg") center top var(--mobile-portrait-top) / min(108vw, 430px) auto no-repeat;
   }
 
   .hero-copy {
@@ -2225,7 +2226,7 @@ h1 {
   .hero h1 {
     display: block;
     max-width: min(312px, calc(100vw - 40px));
-    margin-top: clamp(418px, 56svh, 510px);
+    margin-top: clamp(338px, 46.5svh, 430px);
     padding: 14px 16px 15px;
     color: rgba(51, 63, 53, 0.72);
     font-size: clamp(21px, 5.95vw, 27px);
