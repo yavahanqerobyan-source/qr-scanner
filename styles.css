@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Onest:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap");
 
 @font-face {
   font-family: "IvyPresto Display";
@@ -6,6 +6,30 @@
     local("IvyPresto Display"),
     local("IvyPrestoDisplay-Regular"),
     local("IvyPresto Display Regular");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Local";
+  src: url("assets/fonts/Nunito-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Local";
+  src: url("assets/fonts/Nunito-Bold.ttf") format("truetype");
+  font-weight: 500 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Local";
+  src: url("assets/fonts/Nunito-ExtraBold.ttf") format("truetype");
+  font-weight: 750 800;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -28,9 +52,10 @@
   --shadow-soft: 0 28px 90px rgba(43, 21, 26, 0.08);
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
   --serif: "Cormorant Garamond", "IvyPresto Display", "IvyPresto Text", Didot, "Bodoni 72", Constantia, Cambria, Georgia, serif;
-  --sans: "Onest", "Manrope", "Segoe UI Variable Text", Aptos, "Segoe UI", Tahoma, sans-serif;
+  --sans: "Nunito Local", "Nunito", "Manrope", "Segoe UI Variable Text", Aptos, "Segoe UI", Tahoma, sans-serif;
   --script: "Segoe Script", "Monotype Corsiva", cursive;
   --max: 1220px;
+  --desktop-header-h: 74px;
 }
 
 * {
@@ -146,8 +171,8 @@ button {
   gap: 30px;
   align-items: center;
   width: 100%;
-  min-height: 92px;
-  padding: 22px 52px 16px;
+  min-height: var(--desktop-header-h);
+  padding: 12px 52px 10px;
   border: 0;
   border-radius: 0;
   background:
@@ -161,9 +186,9 @@ button {
 .site-header::after {
   position: absolute;
   right: 0;
-  bottom: -34px;
+  bottom: -18px;
   left: 0;
-  height: 34px;
+  height: 18px;
   pointer-events: none;
   content: "";
   background: linear-gradient(180deg, rgba(250, 247, 243, 0.62), rgba(250, 247, 243, 0));
@@ -185,13 +210,13 @@ button {
 
 .brand-mark {
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   flex: 0 0 auto;
   place-items: center;
   color: var(--champagne);
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 20px;
   font-style: italic;
   font-weight: 500;
   line-height: 1;
@@ -214,14 +239,14 @@ button {
 .brand em {
   color: var(--sage-900);
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 0.98;
   white-space: nowrap;
 }
 
 .brand small {
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--champagne);
   font-size: 10px;
   font-weight: 700;
@@ -334,7 +359,7 @@ button {
 }
 
 .menu-toggle {
-  display: inline-block;
+  display: none;
   width: 46px;
   height: 46px;
   padding: 0;
@@ -370,9 +395,9 @@ button {
   align-items: start;
   width: 100%;
   max-width: none;
-  min-height: 100svh;
-  margin-inline: 0;
-  padding: clamp(106px, 13.2svh, 132px) 0 clamp(38px, 5.2svh, 56px) 5.9vw;
+  min-height: calc(100svh - var(--desktop-header-h));
+  margin: var(--desktop-header-h) 0 0;
+  padding: clamp(34px, 6.2svh, 54px) 0 clamp(38px, 5.2svh, 56px) 5.9vw;
   background:
     linear-gradient(90deg, rgba(250, 247, 243, 0.96) 0%, rgba(250, 247, 243, 0.84) 32%, rgba(250, 247, 243, 0.05) 58%, rgba(250, 247, 243, 0) 100%),
     url("assets/hero-scene.png") center calc(50% + var(--scroll-y, 0px)) / cover no-repeat;
@@ -2055,6 +2080,8 @@ h1 {
 
   .hero {
     grid-template-columns: 1fr;
+    min-height: 100svh;
+    margin-top: 0;
     padding-top: 120px;
   }
 
@@ -2213,7 +2240,7 @@ h1 {
     min-height: 0;
     width: 100%;
     max-width: none;
-    margin-inline: 0;
+    margin: 0;
     padding: 66px 20px clamp(28px, 8vw, 42px);
     background:
       linear-gradient(180deg, rgba(250, 247, 243, 0.56) 0%, rgba(250, 247, 243, 0.08) 20%, rgba(250, 247, 243, 0.05) 48%, rgba(250, 247, 243, 0.72) 76%, rgba(250, 247, 243, 1) 100%),
