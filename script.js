@@ -18,11 +18,15 @@ const popupForm = document.querySelector("[data-popup-form]");
 const popupStatus = document.querySelector("[data-popup-status]");
 const popupTariffSelect = document.querySelector("[data-popup-tariff-select]");
 const fileInputs = document.querySelectorAll("[data-file-input]");
-const magneticTargets = document.querySelectorAll("[data-magnetic], .header-cta");
+const magneticTargets = document.querySelectorAll(".header-cta");
 const spotlightTargets = document.querySelectorAll(".problem, .tariff-card");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(pointer: fine)");
 const leadEmail = "yarebrov@ya.ru";
+
+revealItems.forEach((item, index) => {
+  item.style.setProperty("--reveal-delay", `${Math.min((index % 5) * 55, 220)}ms`);
+});
 
 const tariffMap = new Map([
   ["Стандартный", "Стандартный - 25 000 руб."],
