@@ -943,7 +943,7 @@ h1 {
 
 .statement-body p {
   position: relative;
-  padding-bottom: 14px;
+  padding-bottom: 0;
   color: var(--sage-900);
   font-family: var(--sans);
   font-size: clamp(17px, 1.35vw, 21px);
@@ -951,22 +951,20 @@ h1 {
 }
 
 .statement-body p:not(:last-child) {
-  border-bottom: 1px solid rgba(73, 87, 69, 0.11);
+  border-bottom: 0;
 }
 
 .statement-body strong {
   color: var(--sage-900);
-  font-family: var(--serif);
-  font-size: 1.13em;
-  font-weight: 600;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 720;
 }
 
 .statement-body p:nth-child(4) {
-  padding: 14px 0;
+  padding: 0;
   color: var(--sage-900);
   border: 0;
-  border-top: 1px solid rgba(184, 146, 102, 0.18);
-  border-bottom: 1px solid rgba(184, 146, 102, 0.18);
   background: transparent;
 }
 
@@ -2212,11 +2210,11 @@ h1 {
   .hero {
     --mobile-portrait-top: 0px;
     position: relative;
-    min-height: 100svh;
+    min-height: 0;
     width: 100%;
     max-width: none;
     margin-inline: 0;
-    padding: 66px 20px 8px;
+    padding: 66px 20px clamp(28px, 8vw, 42px);
     background:
       linear-gradient(180deg, rgba(250, 247, 243, 0.56) 0%, rgba(250, 247, 243, 0.08) 20%, rgba(250, 247, 243, 0.05) 48%, rgba(250, 247, 243, 0.72) 76%, rgba(250, 247, 243, 1) 100%),
       linear-gradient(90deg, rgba(250, 247, 243, 0.58) 0%, rgba(250, 247, 243, 0.14) 46%, rgba(250, 247, 243, 0) 100%),
@@ -2261,18 +2259,24 @@ h1 {
   .hero h1 {
     order: 1;
     display: block;
-    max-width: min(300px, calc(100vw - 40px));
-    margin-top: clamp(314px, 42svh, 382px);
-    padding: 0;
-    color: rgba(43, 21, 26, 0.72);
-    font-size: clamp(18px, 4.9vw, 22px);
-    line-height: 1.1;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    text-shadow: 0 1px 18px rgba(250, 247, 243, 0.92);
+    max-width: min(350px, calc(100vw - 40px));
+    margin: clamp(292px, 39svh, 356px) auto 0;
+    padding: 16px 18px 15px;
+    color: rgba(43, 21, 26, 0.78);
+    font-size: clamp(20px, 5.35vw, 24px);
+    line-height: 1.05;
+    text-align: center;
+    border: 1px solid rgba(250, 247, 243, 0.74);
+    border-radius: 2px;
+    background:
+      linear-gradient(135deg, rgba(250, 247, 243, 0.74), rgba(242, 236, 228, 0.52)),
+      rgba(250, 247, 243, 0.48);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 18px 46px rgba(43, 21, 26, 0.12);
+    backdrop-filter: blur(18px) saturate(1.04);
+    -webkit-backdrop-filter: blur(18px) saturate(1.04);
+    text-shadow: none;
     transform: none;
   }
 
@@ -2347,7 +2351,8 @@ h1 {
   .hero-actions {
     order: 2;
     grid-template-columns: 1fr;
-    margin-top: 18px;
+    justify-self: center;
+    margin: 18px auto 0;
     width: min(calc(100vw - 40px), 340px);
   }
 
@@ -2363,6 +2368,7 @@ h1 {
     min-width: 0;
     min-height: 56px;
     gap: clamp(6px, 2vw, 10px);
+    justify-content: center;
     padding-inline: clamp(12px, 4vw, 22px);
     font-size: clamp(13px, 3.5vw, 15px);
     letter-spacing: 0.03em;
@@ -2383,7 +2389,7 @@ h1 {
   }
 
   .hero-actions {
-    margin-top: 24px;
+    margin-top: 18px;
   }
 
   .hero-facts {
@@ -2431,7 +2437,6 @@ h1 {
   }
 
   .statement,
-  .approach,
   .analysis,
   .about,
   .format,
@@ -2441,24 +2446,40 @@ h1 {
   }
 
   .approach {
-    gap: 34px;
+    gap: 28px;
+    padding-block: 24px 58px;
+    text-align: center;
   }
 
   .approach::before {
-    top: 38px;
+    content: none;
+  }
+
+  .approach-copy {
+    justify-items: center;
+    max-width: 100%;
+    padding-top: 0;
+  }
+
+  .approach-meta {
+    justify-content: center;
+    margin-bottom: 12px;
   }
 
   .approach-copy h2 {
+    max-width: 100%;
     font-size: clamp(34px, 9vw, 46px);
     white-space: normal;
+    text-align: center;
   }
 
   .approach-lead {
     max-width: 34rem;
-    margin-top: 22px;
-    padding-top: 18px;
+    margin: 18px auto 0;
+    padding-top: 16px;
     font-size: 14px;
     line-height: 1.62;
+    text-align: center;
   }
 
   .approach-video-shell {
@@ -2475,7 +2496,9 @@ h1 {
   }
 
   .statement-body {
-    padding: 18px 0 0 20px;
+    gap: 10px;
+    padding: 0;
+    border-left: 0;
   }
 
   .statement-body p {
