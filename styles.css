@@ -269,6 +269,7 @@ button {
 .main-nav a {
   position: relative;
   padding-block: 8px;
+  transition: color 0.32s var(--ease-premium), opacity 0.32s var(--ease-premium);
 }
 
 .main-nav a::after {
@@ -285,9 +286,19 @@ button {
 }
 
 .main-nav a:hover::after,
-.main-nav a:focus-visible::after {
+.main-nav a:focus-visible::after,
+.main-nav a.is-active::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.main-nav a.is-active {
+  color: var(--sage-900);
+}
+
+.main-nav a:focus-visible {
+  outline: 1px solid rgba(199, 154, 122, 0.5);
+  outline-offset: 8px;
 }
 
 .header-cta {
@@ -591,6 +602,7 @@ h1 {
   text-transform: uppercase;
   transform: translate3d(var(--magnet-x), calc(var(--magnet-y) + var(--lift)), 0);
   transition: transform 0.34s var(--ease-premium), border-color 0.34s var(--ease-premium), background 0.34s var(--ease-premium), box-shadow 0.34s var(--ease-premium), color 0.34s var(--ease-premium);
+  will-change: transform;
 }
 
 .btn::before {
@@ -1265,12 +1277,12 @@ h1 {
 }
 
 .problem:hover {
+  --card-y: -4px;
   border-color: rgba(184, 146, 102, 0.3);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.42), rgba(246, 242, 234, 0.16)),
     rgba(246, 242, 234, 0.32);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
-  transform: translate3d(0, -4px, 0);
 }
 
 .problem:hover::before {
@@ -1386,6 +1398,74 @@ h1 {
   min-height: 280px;
   padding: 32px;
   border-right: 1px solid var(--line);
+}
+
+.problem,
+.result-item,
+.format-step,
+.analysis-panel,
+.analysis-flow,
+.tariff-card {
+  --card-y: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translate3d(0, var(--card-y), 0);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.result-item,
+.format-step,
+.analysis-panel,
+.analysis-flow,
+.booking-form,
+.booking-modal-form {
+  position: relative;
+  overflow: hidden;
+}
+
+.result-item::before,
+.format-step::before,
+.analysis-panel::before,
+.analysis-flow::before,
+.booking-form::before,
+.booking-modal-form::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 0%), rgba(199, 154, 122, 0.18), transparent 34%),
+    linear-gradient(135deg, transparent 0 62%, rgba(255, 255, 255, 0.14) 62% 62.35%, transparent 62.35% 100%);
+  opacity: 0;
+  transition: opacity 0.48s var(--ease-premium);
+}
+
+.result-item:hover,
+.format-step:hover,
+.analysis-panel:hover,
+.analysis-flow:hover {
+  --card-y: -4px;
+}
+
+.result-item:hover::before,
+.format-step:hover::before,
+.analysis-panel:hover::before,
+.analysis-flow:hover::before,
+.booking-form:focus-within::before,
+.booking-modal-form:focus-within::before {
+  opacity: 1;
+}
+
+.result-item > *,
+.format-step > *,
+.analysis-panel > *,
+.analysis-flow > *,
+.booking-form > *,
+.booking-modal-form > * {
+  position: relative;
+  z-index: 1;
 }
 
 .format-step:last-child {
@@ -1608,16 +1688,41 @@ h1 {
 .tariff-card::before {
   position: absolute;
   inset: 0 0 auto 0;
+  z-index: 2;
   height: 5px;
+  pointer-events: none;
   content: "";
   background: linear-gradient(90deg, var(--champagne), rgba(184, 146, 102, 0));
 }
 
+.tariff-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 0%), rgba(255, 255, 255, 0.22), transparent 34%),
+    linear-gradient(135deg, transparent 0 62%, rgba(199, 154, 122, 0.12) 62% 62.35%, transparent 62.35% 100%);
+  opacity: 0;
+  transition: opacity 0.48s var(--ease-premium);
+}
+
 .tariff-card:hover,
 .tariff-card.is-selected {
+  --card-y: -6px;
   border-color: rgba(184, 146, 102, 0.55);
   box-shadow: 0 28px 74px rgba(44, 50, 39, 0.14);
-  transform: translateY(-6px);
+}
+
+.tariff-card:hover::after,
+.tariff-card.is-selected::after {
+  opacity: 1;
+}
+
+.tariff-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .tariff-card.featured {
@@ -1743,6 +1848,12 @@ h1 {
 .booking-modal-form label {
   display: grid;
   gap: 8px;
+  transition: transform 0.32s var(--ease-premium), opacity 0.32s var(--ease-premium);
+}
+
+.booking-form label:focus-within,
+.booking-modal-form label:focus-within {
+  transform: translate3d(0, -2px, 0);
 }
 
 .booking-form label span,
@@ -1752,10 +1863,19 @@ h1 {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
+  transition: color 0.28s var(--ease-premium), opacity 0.28s var(--ease-premium);
 }
 
 .booking-modal-form label span {
   color: rgba(39, 53, 43, 0.62);
+}
+
+.booking-form label:focus-within span {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.booking-modal-form label:focus-within span {
+  color: var(--sage-900);
 }
 
 .booking-form input,
@@ -1773,7 +1893,8 @@ h1 {
   outline: none;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
   outline: none;
-  transition: border-color 0.26s var(--ease-premium), box-shadow 0.26s var(--ease-premium), background 0.26s var(--ease-premium);
+  transform: translate3d(0, 0, 0);
+  transition: border-color 0.26s var(--ease-premium), box-shadow 0.26s var(--ease-premium), background 0.26s var(--ease-premium), transform 0.26s var(--ease-premium);
 }
 
 .booking-form input[type="file"],
@@ -1821,7 +1942,9 @@ h1 {
 .booking-modal-form select:focus,
 .booking-modal-form textarea:focus {
   border-color: rgba(239, 222, 195, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 0 0 4px rgba(239, 222, 195, 0.16);
+  transform: translate3d(0, -1px, 0);
 }
 
 .booking-form .btn {
@@ -1843,6 +1966,30 @@ h1 {
   color: var(--graphite);
   border: 0;
   background: transparent;
+}
+
+.booking-dialog[open] {
+  animation: dialogFadeIn 0.32s var(--ease-premium) both;
+}
+
+.booking-dialog[open]::backdrop {
+  animation: backdropFadeIn 0.32s var(--ease-premium) both;
+}
+
+.booking-dialog[open] .booking-modal {
+  animation: modalRiseIn 0.42s var(--ease-premium) both;
+}
+
+.booking-dialog.is-closing {
+  animation: dialogFadeOut 0.22s ease both;
+}
+
+.booking-dialog.is-closing::backdrop {
+  animation: backdropFadeOut 0.22s ease both;
+}
+
+.booking-dialog.is-closing .booking-modal {
+  animation: modalSettleOut 0.22s ease both;
 }
 
 .booking-dialog::backdrop {
@@ -1868,6 +2015,7 @@ h1 {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.82),
     0 38px 110px rgba(16, 22, 16, 0.28);
+  transform-origin: 50% 46%;
 }
 
 .booking-modal::before {
@@ -2015,21 +2163,92 @@ h1 {
 }
 
 .has-js .reveal {
+  --reveal-y: 18px;
   opacity: 0;
   filter: blur(8px);
-  transform: translate3d(0, 18px, 0) scale(0.988);
+  transform: translate3d(0, var(--reveal-y), 0) scale(0.988);
   transition:
-    opacity 0.9s var(--ease-premium),
-    filter 0.9s var(--ease-premium),
-    transform 0.9s var(--ease-premium);
+    opacity 1s var(--ease-premium),
+    filter 1s var(--ease-premium),
+    transform 1s var(--ease-premium);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, filter, transform;
+}
+
+.has-js .reveal[data-motion="card"] {
+  --reveal-y: 26px;
+}
+
+.has-js .reveal[data-motion="copy"] {
+  --reveal-y: 14px;
 }
 
 .has-js .reveal.is-visible {
   opacity: 1;
   filter: blur(0);
   transform: translate3d(0, 0, 0) scale(1);
+}
+
+@keyframes dialogFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialogFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes modalRiseIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes modalSettleOut {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.99);
+  }
 }
 
 @keyframes floatNote {
@@ -2715,6 +2934,20 @@ h1 {
 
   .has-js .reveal {
     opacity: 1;
+    filter: none;
     transform: none;
+  }
+
+  .problem,
+  .result-item,
+  .format-step,
+  .analysis-panel,
+  .analysis-flow,
+  .tariff-card,
+  .booking-dialog,
+  .booking-dialog::backdrop,
+  .booking-dialog .booking-modal {
+    animation: none !important;
+    transform: none !important;
   }
 }

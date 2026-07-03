@@ -3,6 +3,7 @@ const nav = document.querySelector("[data-nav]");
 const menuButton = document.querySelector("[data-menu]");
 const progressBar = document.querySelector(".progress span");
 const revealItems = document.querySelectorAll(".reveal");
+const navLinks = document.querySelectorAll('.main-nav a[href^="#"]');
 const parallaxTarget = document.querySelector("[data-parallax]");
 const hero = document.querySelector(".hero");
 const scrollDepthLayers = document.querySelectorAll("[data-scroll-depth]");
@@ -18,15 +19,34 @@ const popupForm = document.querySelector("[data-popup-form]");
 const popupStatus = document.querySelector("[data-popup-status]");
 const popupTariffSelect = document.querySelector("[data-popup-tariff-select]");
 const fileInputs = document.querySelectorAll("[data-file-input]");
-const magneticTargets = document.querySelectorAll(".header-cta");
-const spotlightTargets = document.querySelectorAll(".problem, .tariff-card");
+const magneticTargets = document.querySelectorAll("[data-magnetic], .header-cta");
+const spotlightTargets = document.querySelectorAll(".problem, .result-item, .format-step, .analysis-panel, .analysis-flow, .tariff-card, .booking-form, .booking-modal-form");
+const motionCards = document.querySelectorAll(".problem, .result-item, .format-step, .analysis-panel, .analysis-flow, .tariff-card");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(pointer: fine)");
 const leadEmail = "yarebrov@ya.ru";
 
 revealItems.forEach((item, index) => {
-  item.style.setProperty("--reveal-delay", `${Math.min((index % 5) * 55, 220)}ms`);
+  const section = item.closest("section, .booking-dialog");
+  const sectionItems = section ? Array.from(section.querySelectorAll(".reveal")) : Array.from(revealItems);
+  const sectionIndex = Math.max(sectionItems.indexOf(item), 0);
+
+  item.style.setProperty("--reveal-delay", `${Math.min((sectionIndex % 6) * 70, 350)}ms`);
+
+  if (item.matches(".problem, .result-item, .format-step, .analysis-panel, .analysis-flow, .tariff-card, .booking-form")) {
+    item.dataset.motion = item.dataset.motion || "card";
+  } else if (item.matches(".hero-copy, .approach-copy, .section-heading, .tariffs-heading, .contact-copy")) {
+    item.dataset.motion = item.dataset.motion || "copy";
+  }
 });
+
+const navSections = Array.from(navLinks)
+  .map((link) => {
+    const target = link.hash ? document.querySelector(link.hash) : null;
+    return target ? { link, target } : null;
+  })
+  .filter(Boolean)
+  .sort((a, b) => a.target.offsetTop - b.target.offsetTop);
 
 const tariffMap = new Map([
   ["Стандартный", "Стандартный - 25 000 руб."],
@@ -59,6 +79,34 @@ function updateScrollState() {
       layer.style.setProperty("--scroll-y", `${heroProgress * depth}px`);
     });
   }
+
+  updateActiveNav(scrollTop);
+}
+
+function updateActiveNav(scrollTop = window.scrollY) {
+  if (navSections.length === 0) {
+    return;
+  }
+
+  const offset = (header?.getBoundingClientRect().height ?? 0) + window.innerHeight * 0.24;
+  let activeLink = null;
+
+  navSections.forEach(({ link, target }) => {
+    if (target.offsetTop - offset <= scrollTop) {
+      activeLink = link;
+    }
+  });
+
+  navLinks.forEach((link) => {
+    const isActive = link === activeLink;
+    link.classList.toggle("is-active", isActive);
+
+    if (isActive) {
+      link.setAttribute("aria-current", "true");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
 }
 
 function closeMenu() {
@@ -96,6 +144,7 @@ function openBookingDialog(selectedTariff) {
   }
 
   document.body.classList.add("modal-open");
+  bookingDialog?.classList.remove("is-closing");
 
   if (typeof bookingDialog?.showModal === "function" && !bookingDialog.open) {
     bookingDialog.showModal();
@@ -105,10 +154,31 @@ function openBookingDialog(selectedTariff) {
 
   window.setTimeout(() => {
     popupForm?.querySelector("input, select, textarea, button")?.focus();
-  }, 80);
+  }, reducedMotion.matches ? 40 : 180);
 }
 
 function closeBookingDialog() {
+  if (!bookingDialog) {
+    return;
+  }
+
+  if (!reducedMotion.matches && bookingDialog.open) {
+    bookingDialog.classList.add("is-closing");
+
+    window.setTimeout(() => {
+      if (bookingDialog.open && typeof bookingDialog.close === "function") {
+        bookingDialog.close();
+      } else {
+        bookingDialog.removeAttribute("open");
+        document.body.classList.remove("modal-open");
+      }
+
+      bookingDialog.classList.remove("is-closing");
+    }, 220);
+
+    return;
+  }
+
   if (bookingDialog?.open && typeof bookingDialog.close === "function") {
     bookingDialog.close();
   } else {
@@ -325,8 +395,8 @@ if (!reducedMotion.matches && finePointer.matches) {
   magneticTargets.forEach((target) => {
     target.addEventListener("pointermove", (event) => {
       const rect = target.getBoundingClientRect();
-      const x = (event.clientX - rect.left - rect.width / 2) * 0.08;
-      const y = (event.clientY - rect.top - rect.height / 2) * 0.12;
+      const x = (event.clientX - rect.left - rect.width / 2) * 0.045;
+      const y = (event.clientY - rect.top - rect.height / 2) * 0.06;
 
       target.style.setProperty("--magnet-x", `${x.toFixed(2)}px`);
       target.style.setProperty("--magnet-y", `${y.toFixed(2)}px`);
@@ -348,6 +418,22 @@ if (!reducedMotion.matches && finePointer.matches) {
       target.style.setProperty("--spot-y", `${y.toFixed(1)}%`);
     });
   });
+
+  motionCards.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      card.style.setProperty("--tilt-x", `${(-y * 1.7).toFixed(2)}deg`);
+      card.style.setProperty("--tilt-y", `${(x * 1.4).toFixed(2)}deg`);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+    });
+  });
 }
 
 bookingOpeners.forEach((button) => {
@@ -362,8 +448,14 @@ bookingDialog?.addEventListener("click", (event) => {
   }
 });
 
+bookingDialog?.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeBookingDialog();
+});
+
 bookingDialog?.addEventListener("close", () => {
   document.body.classList.remove("modal-open");
+  bookingDialog.classList.remove("is-closing");
 });
 
 tariffButtons.forEach((button) => {
