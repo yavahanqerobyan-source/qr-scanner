@@ -20,8 +20,8 @@ const popupStatus = document.querySelector("[data-popup-status]");
 const popupTariffSelect = document.querySelector("[data-popup-tariff-select]");
 const fileInputs = document.querySelectorAll("[data-file-input]");
 const magneticTargets = document.querySelectorAll("[data-magnetic], .header-cta");
-const spotlightTargets = document.querySelectorAll(".problem, .result-item, .format-step, .analysis-panel, .analysis-flow, .tariff-card, .booking-form, .booking-modal-form");
-const motionCards = document.querySelectorAll(".problem, .result-item, .format-step, .analysis-panel, .analysis-flow, .tariff-card");
+const spotlightTargets = document.querySelectorAll(".problem, .format-step, .analysis-panel, .analysis-flow, .tariff-card, .booking-form, .booking-modal-form");
+const motionCards = document.querySelectorAll(".problem, .format-step, .analysis-panel, .analysis-flow, .tariff-card");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(pointer: fine)");
 const leadEmail = "yarebrov@ya.ru";
@@ -33,8 +33,10 @@ revealItems.forEach((item, index) => {
 
   item.style.setProperty("--reveal-delay", `${Math.min((sectionIndex % 6) * 70, 350)}ms`);
 
-  if (item.matches(".problem, .result-item, .format-step, .analysis-panel, .analysis-flow, .tariff-card, .booking-form")) {
+  if (item.matches(".problem, .format-step, .analysis-panel, .analysis-flow, .tariff-card, .booking-form")) {
     item.dataset.motion = item.dataset.motion || "card";
+  } else if (item.matches(".result-item")) {
+    item.dataset.motion = item.dataset.motion || "copy";
   } else if (item.matches(".hero-copy, .approach-copy, .section-heading, .tariffs-heading, .contact-copy")) {
     item.dataset.motion = item.dataset.motion || "copy";
   }
