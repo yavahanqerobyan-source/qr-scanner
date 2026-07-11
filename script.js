@@ -113,7 +113,9 @@ function updateActiveNav(scrollTop = window.scrollY) {
 
 function closeMenu() {
   nav?.classList.remove("is-open");
+  header?.classList.remove("menu-open");
   menuButton?.setAttribute("aria-expanded", "false");
+  menuButton?.setAttribute("aria-label", "Открыть меню");
 }
 
 function syncTariff(selectedTariff) {
@@ -315,6 +317,25 @@ function smoothScrollTo(targetY) {
 menuButton?.addEventListener("click", () => {
   const isOpen = nav?.classList.toggle("is-open");
   menuButton.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  menuButton.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню");
+  header?.classList.toggle("menu-open", Boolean(isOpen));
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && nav?.classList.contains("is-open")) {
+    closeMenu();
+    menuButton?.focus();
+  }
+});
+
+document.addEventListener("pointerdown", (event) => {
+  if (
+    nav?.classList.contains("is-open") &&
+    event.target instanceof Node &&
+    !header?.contains(event.target)
+  ) {
+    closeMenu();
+  }
 });
 
 nav?.addEventListener("click", (event) => {
