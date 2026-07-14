@@ -201,10 +201,12 @@ button {
 .brand-mark {
   position: relative;
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   flex: 0 0 auto;
-  overflow: hidden;
+  box-sizing: border-box;
+  padding: 2px;
+  overflow: visible;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -212,6 +214,7 @@ button {
 }
 
 .brand-mark img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -523,6 +526,14 @@ h1 {
 
 .hero-lead span {
   display: block;
+}
+
+.hero-lead .lead-focus strong {
+  display: block;
+}
+
+.hero-lead .lead-explanation {
+  margin-top: 12px;
 }
 
 .hero-lead .lead-credentials {
@@ -3059,8 +3070,10 @@ h1 {
   }
 
   .brand-mark {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
+    padding: 2px;
+    overflow: visible;
     background: transparent;
     box-shadow: none;
   }
