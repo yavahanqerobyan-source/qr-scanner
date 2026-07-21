@@ -358,6 +358,8 @@ document.querySelectorAll('.reveal').forEach((reveal) => {
 const workFilterButtons = [...document.querySelectorAll('[data-work-filter]')];
 const workCards = [...document.querySelectorAll('[data-work-type]')];
 const worksStatus = document.querySelector('#works-status');
+const workFilters = document.querySelector('.work-filters');
+const mobileWorksQuery = window.matchMedia('(max-width: 680px)');
 
 workFilterButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -370,13 +372,31 @@ workFilterButtons.forEach((button) => {
       filterButton.setAttribute('aria-pressed', String(isActive));
     });
 
+    let firstVisibleCard = null;
+
     workCards.forEach((card) => {
       const isVisible = selectedType === 'all' || card.dataset.workType === selectedType;
       card.hidden = !isVisible;
-      if (isVisible) visibleCount += 1;
+      if (isVisible) {
+        firstVisibleCard ??= card;
+        visibleCount += 1;
+      }
     });
 
     worksStatus.textContent = `Показано: ${visibleCount}`;
+
+    if (mobileWorksQuery.matches && firstVisibleCard && workFilters) {
+      button.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+
+      window.requestAnimationFrame(() => {
+        const stickyOffset = header.offsetHeight + workFilters.offsetHeight + 16;
+        const cardTop = firstVisibleCard.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: Math.max(0, cardTop - stickyOffset),
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+      });
+    }
   });
 });
 
