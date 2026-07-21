@@ -387,12 +387,16 @@ workFilterButtons.forEach((button) => {
     worksStatus.textContent = `Показано: ${visibleCount}`;
 
     if (mobileWorksQuery.matches && firstVisibleCard && workFilters) {
-      button.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+      const centeredFilterLeft = button.offsetLeft - ((workFilters.clientWidth - button.offsetWidth) / 2);
+      workFilters.scrollTo({
+        left: Math.max(0, centeredFilterLeft),
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      });
 
       window.requestAnimationFrame(() => {
         worksGrid?.scrollTo({ left: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         const stickyOffset = header.offsetHeight + workFilters.offsetHeight + 16;
-        const cardTop = firstVisibleCard.getBoundingClientRect().top + window.scrollY;
+        const cardTop = (worksGrid || firstVisibleCard).getBoundingClientRect().top + window.scrollY;
         window.scrollTo({
           top: Math.max(0, cardTop - stickyOffset),
           behavior: reduceMotion ? 'auto' : 'smooth',
