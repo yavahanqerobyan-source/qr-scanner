@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @font-face { font-family: Prata; src: url("assets/fonts/prata-cyrillic.woff2") format("woff2"); }
+      @font-face { font-family: Golos; src: url("assets/fonts/golos-text-cyrillic.woff2") format("woff2"); }
+      @font-face { font-family: Old; font-style: italic; src: url("assets/fonts/old-standard-italic-cyrillic.woff2") format("woff2"); }
+      * { box-sizing: border-box; }
+      html, body { width: 1200px; height: 630px; margin: 0; overflow: hidden; }
+      body { position: relative; display: grid; grid-template-columns: 58% 42%; background: #f4efeb; color: #29252a; }
+      body::after { content: ""; position: absolute; inset: 0; opacity: .055; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
+      .copy { position: relative; z-index: 2; display: flex; flex-direction: column; padding: 46px 42px 45px 66px; }
+      .logo { width: 290px; height: auto; margin-bottom: 64px; }
+      .eyebrow { margin: 0 0 20px; color: #9d7654; font: 600 13px/1 Golos, sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+      h1 { max-width: 640px; margin: 0; font: 400 62px/1.08 Prata, serif; letter-spacing: -.045em; }
+      h1 em { display: block; margin-top: 8px; color: #a85750; font-family: Old, serif; font-weight: 400; }
+      .meta { display: flex; gap: 25px; align-items: center; margin-top: auto; font: 500 13px/1 Golos, sans-serif; letter-spacing: .07em; text-transform: uppercase; }
+      .meta i { width: 56px; height: 1px; background: #b9956f; }
+      .portrait { position: relative; overflow: hidden; }
+      .portrait::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, #f4efeb 0%, rgba(244,239,235,.22) 16%, transparent 38%), linear-gradient(180deg, transparent 62%, rgba(30,25,29,.28)); }
+      .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%; filter: saturate(.88) contrast(1.035) sepia(.025); transform: scale(1.035); }
+      .stamp { position: absolute; right: 34px; bottom: 29px; z-index: 2; padding: 11px 15px; border: 1px solid rgba(255,255,255,.54); color: white; font: 500 10px/1 Golos, sans-serif; letter-spacing: .15em; text-transform: uppercase; }
+    </style>
+  </head>
+  <body>
+    <section class="copy">
+      <img class="logo" src="assets/brand/yulia-rebrova-logo.png" alt="" />
+      <p class="eyebrow">Живопись · портрет · наследие</p>
+      <h1>Портреты маслом <em>по вашим фотографиям</em></h1>
+      <div class="meta"><span>Ростов-на-Дону</span><i></i><span>Доставка по России</span></div>
+    </section>
+    <section class="portrait">
+      <img src="assets/artist/yulia-hero.webp" alt="" />
+      <span class="stamp">Юлия Реброва · художник</span>
+    </section>
+  </body>
+</html>

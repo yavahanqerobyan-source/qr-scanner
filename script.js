@@ -359,6 +359,7 @@ const workFilterButtons = [...document.querySelectorAll('[data-work-filter]')];
 const workCards = [...document.querySelectorAll('[data-work-type]')];
 const worksStatus = document.querySelector('#works-status');
 const workFilters = document.querySelector('.work-filters');
+const worksGrid = document.querySelector('.works-grid');
 const mobileWorksQuery = window.matchMedia('(max-width: 680px)');
 
 workFilterButtons.forEach((button) => {
@@ -389,6 +390,7 @@ workFilterButtons.forEach((button) => {
       button.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
 
       window.requestAnimationFrame(() => {
+        worksGrid?.scrollTo({ left: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         const stickyOffset = header.offsetHeight + workFilters.offsetHeight + 16;
         const cardTop = firstVisibleCard.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({
