@@ -111,6 +111,9 @@ window.addEventListener('scroll', requestProgressUpdate, { passive: true });
 window.addEventListener('resize', requestProgressUpdate);
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('.brand-logo').forEach((logo) => {
+  logo.addEventListener('animationend', () => logo.classList.add('is-settled'), { once: true });
+});
 const revealElements = document.querySelectorAll('[data-reveal]');
 const hero = document.querySelector('.hero');
 const portraitPaths = hero.querySelectorAll('.portrait-line path');
@@ -190,6 +193,136 @@ const updateEstimate = () => {
 
 estimateForm.addEventListener('change', updateEstimate);
 updateEstimate();
+
+const certificateDialog = document.querySelector('#certificate-dialog');
+const certificateOpenButton = document.querySelector('[data-certificate-open]');
+const certificateCloseButton = certificateDialog?.querySelector('[data-certificate-close]');
+const certificateForm = document.querySelector('#certificate-builder');
+const certificatePortraitFields = certificateForm?.querySelector('[data-certificate-portrait]');
+const certificateAmountFields = certificateForm?.querySelector('[data-certificate-custom]');
+const certificateAmountInput = certificateForm?.querySelector('input[name="certificate-amount"]');
+const certificatePresetButtons = [...(certificateForm?.querySelectorAll('[data-certificate-preset]') || [])];
+const certificateTotal = document.querySelector('#certificate-total');
+const certificateSummaryCopy = document.querySelector('#certificate-summary-copy');
+let certificateReturnFocus = null;
+let certificateClosing = false;
+
+const certificatePackageLabels = {
+  canvas: 'Холст',
+  gift: 'Подарок',
+  legacy: 'Наследие',
+};
+const certificateFormatLabels = {
+  '30x40': '30 × 40 см',
+  '40x50': '40 × 50 см',
+  '50x60': '50 × 60 см',
+  '50x70': '50 × 70 см',
+  '60x80': '60 × 80 см',
+  '80x100': '80 × 100 см',
+};
+const certificatePeopleLabels = {
+  1: 'один человек',
+  2: 'два человека',
+  3: 'три человека',
+};
+
+const updateCertificateBuilder = () => {
+  if (!certificateForm) return;
+  const data = new FormData(certificateForm);
+  const mode = String(data.get('certificate-mode'));
+  const isPortrait = mode === 'portrait';
+  certificatePortraitFields.hidden = !isPortrait;
+  certificateAmountFields.hidden = isPortrait;
+
+  let total = 0;
+  let summary = '';
+  if (isPortrait) {
+    const packageName = String(data.get('certificate-package'));
+    const format = String(data.get('certificate-format'));
+    const people = Number(data.get('certificate-people'));
+    const multiplier = 1 + Math.max(0, people - 1) * 0.35;
+    total = Math.round((priceMatrix[format][packageName] * multiplier) / 1000) * 1000;
+    summary = `«${certificatePackageLabels[packageName]}» · ${certificateFormatLabels[format]} · ${certificatePeopleLabels[people]}`;
+  } else {
+    total = Math.max(10000, Number(data.get('certificate-amount')) || 0);
+    summary = 'Свободный номинал · выбор сюжета останется получателю';
+  }
+
+  certificateTotal.textContent = currency.format(total);
+  certificateSummaryCopy.textContent = summary;
+  certificatePresetButtons.forEach((button) => {
+    button.classList.toggle('is-active', Number(button.dataset.certificatePreset) === total);
+  });
+};
+
+const closeCertificateDialog = () => {
+  if (!certificateDialog?.open || certificateClosing) return;
+  certificateClosing = true;
+  certificateDialog.classList.add('is-closing');
+  window.setTimeout(() => {
+    certificateDialog.close();
+    certificateDialog.classList.remove('is-closing');
+    document.body.classList.remove('cert-modal-open');
+    certificateClosing = false;
+    certificateReturnFocus?.focus();
+  }, reduceMotion ? 0 : 220);
+};
+
+certificateOpenButton?.addEventListener('click', () => {
+  certificateReturnFocus = document.activeElement;
+  certificateDialog.classList.remove('is-closing');
+  certificateDialog.showModal();
+  document.body.classList.add('cert-modal-open');
+  updateCertificateBuilder();
+  window.requestAnimationFrame(() => certificateForm.querySelector('input:checked')?.focus());
+});
+
+certificateCloseButton?.addEventListener('click', closeCertificateDialog);
+certificateDialog?.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  closeCertificateDialog();
+});
+certificateDialog?.addEventListener('click', (event) => {
+  if (event.target === certificateDialog) closeCertificateDialog();
+});
+certificateForm?.addEventListener('change', updateCertificateBuilder);
+certificateForm?.addEventListener('input', updateCertificateBuilder);
+certificatePresetButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    certificateAmountInput.value = button.dataset.certificatePreset;
+    updateCertificateBuilder();
+  });
+});
+
+certificateForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(certificateForm);
+  const mode = String(data.get('certificate-mode'));
+  const storyInput = document.querySelector('#brief-story');
+  const formatSelect = document.querySelector('#brief-format');
+  const contactTarget = document.querySelector('#contact');
+  let requestText = '';
+
+  if (mode === 'portrait') {
+    const packageName = String(data.get('certificate-package'));
+    const format = String(data.get('certificate-format'));
+    const people = Number(data.get('certificate-people'));
+    requestText = `Хочу оформить подарочный сертификат: вариант «${certificatePackageLabels[packageName]}», формат ${certificateFormatLabels[format]}, ${certificatePeopleLabels[people]}. Ориентир — ${certificateTotal.textContent}.`;
+    formatSelect.value = certificateFormatLabels[format];
+  } else {
+    requestText = `Хочу оформить подарочный сертификат со свободным номиналом ${certificateTotal.textContent}.`;
+    formatSelect.value = 'Помогите выбрать';
+  }
+
+  storyInput.value = requestText;
+  formStatus.className = 'form-status is-success';
+  formStatus.textContent = 'Выбор сертификата перенесён в заявку. Проверьте детали и выберите мессенджер.';
+  closeCertificateDialog();
+  window.setTimeout(() => {
+    jumpToSection(contactTarget, '#contact', false);
+    storyInput.focus({ preventScroll: true });
+  }, reduceMotion ? 0 : 240);
+});
 
 document.querySelectorAll('.reveal').forEach((reveal) => {
   const range = reveal.querySelector('.reveal-range');
