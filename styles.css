@@ -728,8 +728,9 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
   .atelier-note { grid-template-columns: 1fr; gap: 18px; width: 100%; margin-top: 72px; }
   .atelier-note small { max-width: none; text-align: left; }
   .approach h2, .section-heading h2, .process h2, .photo-copy h2, .faq h2, .contact h2, .reviews h2 { font-size: clamp(42px, 12vw, 60px); }
-  .work-filters { gap: 6px; margin-top: -10px; }
-  .work-filter { min-height: 40px; padding: 0 13px; font-size: 9px; }
+  .work-filters { position: sticky; top: 74px; z-index: calc(var(--z-header) - 1); flex-wrap: nowrap; gap: 6px; width: calc(100% + 32px); margin: -10px 0 26px -16px; padding: 10px 16px 11px; overflow-x: auto; border-bottom-color: rgba(41, 37, 42, 0.1); background: rgba(244, 239, 235, 0.88); box-shadow: 0 12px 24px rgba(41, 37, 42, 0.055); scrollbar-width: none; overscroll-behavior-inline: contain; backdrop-filter: blur(18px) saturate(1.08); -webkit-backdrop-filter: blur(18px) saturate(1.08); }
+  .work-filters::-webkit-scrollbar { display: none; }
+  .work-filter { flex: 0 0 auto; min-height: 40px; padding: 0 13px; font-size: 9px; }
   .works-status { text-align: left; }
   .works-grid { grid-template-columns: 1fr; gap: 48px; }
   .work-card:nth-child(n) { grid-column: 1; }
