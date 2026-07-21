@@ -222,33 +222,41 @@ document.querySelectorAll('.reveal').forEach((reveal) => {
   frame.addEventListener('pointercancel', endDrag);
 });
 
+const workFilterButtons = [...document.querySelectorAll('[data-work-filter]')];
+const workCards = [...document.querySelectorAll('[data-work-type]')];
+const worksStatus = document.querySelector('#works-status');
+
+workFilterButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const selectedType = button.dataset.workFilter;
+    let visibleCount = 0;
+
+    workFilterButtons.forEach((filterButton) => {
+      const isActive = filterButton === button;
+      filterButton.classList.toggle('is-active', isActive);
+      filterButton.setAttribute('aria-pressed', String(isActive));
+    });
+
+    workCards.forEach((card) => {
+      const isVisible = selectedType === 'all' || card.dataset.workType === selectedType;
+      card.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    });
+
+    worksStatus.textContent = `Показано: ${visibleCount}`;
+  });
+});
+
 const briefForm = document.querySelector('#brief-form');
 const formStatus = document.querySelector('#form-status');
 
-const copyText = async (text) => {
-  if (navigator.clipboard) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-
-  const fallback = document.createElement('textarea');
-  fallback.value = text;
-  fallback.setAttribute('readonly', '');
-  fallback.style.position = 'fixed';
-  fallback.style.opacity = '0';
-  document.body.append(fallback);
-  fallback.select();
-  const copied = document.execCommand('copy');
-  fallback.remove();
-  if (!copied) throw new Error('Браузер отклонил копирование');
-};
-
-briefForm.addEventListener('submit', async (event) => {
+briefForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const data = new FormData(briefForm);
   const name = String(data.get('name') || '').trim();
   const story = String(data.get('story') || '').trim();
   const format = String(data.get('format') || 'Помогите выбрать');
+  const messenger = String(data.get('messenger') || 'telegram');
   const message = [
     'Здравствуйте, Юлия! Хочу обсудить портрет.',
     name ? `Меня зовут ${name}.` : '',
@@ -258,25 +266,34 @@ briefForm.addEventListener('submit', async (event) => {
   ].filter(Boolean).join('\n');
 
   const button = briefForm.querySelector('button[type="submit"]');
-  button.disabled = true;
-  button.setAttribute('aria-busy', 'true');
-  formStatus.className = 'form-status';
-  formStatus.textContent = 'Копирую текст заявки…';
+  const pageUrl = `${window.location.origin}${window.location.pathname}`;
+  const messengerUrl = messenger === 'max'
+    ? `https://max.ru/:share?text=${encodeURIComponent(message)}`
+    : `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(message)}`;
 
-  try {
-    await copyText(message);
-    formStatus.textContent = 'Заявка скопирована. Откройте мой контакт и вставьте сообщение.';
-    formStatus.classList.add('is-success');
-  } catch (error) {
-    formStatus.textContent = 'Не удалось скопировать автоматически. Выделите описание и скопируйте его вручную.';
-    formStatus.classList.add('is-error');
-    document.querySelector('#brief-story').focus();
-    console.warn('Copy request failed:', error);
-  } finally {
-    button.disabled = false;
-    button.removeAttribute('aria-busy');
-  }
+  button.setAttribute('aria-busy', 'true');
+  formStatus.className = 'form-status is-success';
+  formStatus.textContent = messenger === 'max'
+    ? 'Открываю MAX с готовым текстом…'
+    : 'Открываю Telegram с готовым текстом…';
+
+  const messengerLink = document.createElement('a');
+  messengerLink.href = messengerUrl;
+  messengerLink.target = '_blank';
+  messengerLink.rel = 'noopener noreferrer';
+  messengerLink.click();
+  button.removeAttribute('aria-busy');
 });
+
+const mobileWriteCta = document.querySelector('.mobile-write-cta');
+const contactSection = document.querySelector('#contact');
+
+if ('IntersectionObserver' in window && mobileWriteCta && contactSection) {
+  const contactObserver = new IntersectionObserver(([entry]) => {
+    mobileWriteCta.classList.toggle('is-hidden', entry.isIntersecting);
+  }, { threshold: 0.08 });
+  contactObserver.observe(contactSection);
+}
 
 const observedSections = document.querySelectorAll('main section[id]');
 const navLinks = [...navigation.querySelectorAll('a[href^="#"]'), ...chapterLinks];

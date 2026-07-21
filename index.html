@@ -34,11 +34,11 @@
       </button>
 
       <nav class="site-nav" id="site-nav" aria-label="Основная навигация">
+        <a href="#works">Работы</a>
         <a href="#approach">Обо мне</a>
         <a href="#process">Процесс</a>
+        <a href="#reviews">Отзывы</a>
         <a href="#prices">Стоимость</a>
-        <a href="#certificate">Сертификат</a>
-        <a href="#questions">Вопросы</a>
         <a class="nav-cta" href="#contact">Обсудить портрет</a>
       </nav>
     </header>
@@ -47,11 +47,12 @@
       <p class="chapter-index-title" aria-hidden="true">Частное собрание · 2026</p>
       <ol>
         <li><a href="#top" data-chapter-link><span>00</span><strong>Образ</strong></a></li>
-        <li><a href="#approach" data-chapter-link><span>01</span><strong>Подход</strong></a></li>
-        <li><a href="#stories" data-chapter-link><span>02</span><strong>Сюжеты</strong></a></li>
+        <li><a href="#works" data-chapter-link><span>01</span><strong>Работы</strong></a></li>
+        <li><a href="#approach" data-chapter-link><span>02</span><strong>Подход</strong></a></li>
         <li><a href="#process" data-chapter-link><span>03</span><strong>Процесс</strong></a></li>
-        <li><a href="#prices" data-chapter-link><span>04</span><strong>Форматы</strong></a></li>
-        <li><a href="#contact" data-chapter-link><span>05</span><strong>Разговор</strong></a></li>
+        <li><a href="#reviews" data-chapter-link><span>04</span><strong>Отзывы</strong></a></li>
+        <li><a href="#prices" data-chapter-link><span>05</span><strong>Форматы</strong></a></li>
+        <li><a href="#contact" data-chapter-link><span>06</span><strong>Разговор</strong></a></li>
       </ol>
       <div class="chapter-progress" aria-hidden="true"><span></span></div>
     </nav>
@@ -64,8 +65,8 @@
           <h1 id="hero-title">Портрет, в котором узнают <em>не только лицо</em></h1>
           <p class="hero-lead">
             Пишу маслом по вашим фотографиям — тех, кого любят, и моменты, которые
-            хочется оставить надолго. Эскиз вы утверждаете до первого мазка и видите
-            каждый этап работы.
+            хочется оставить надолго. Каждый портрет веду лично: от первого разговора
+            и поиска образа до фотоотчётов и бережного вручения.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#contact">
@@ -76,7 +77,7 @@
           </div>
           <dl class="hero-facts" aria-label="Ключевые факты">
             <div><dt>с 2017</dt><dd>пишу портреты на заказ</dd></div>
-            <div><dt>эскиз</dt><dd>утверждаете до холста</dd></div>
+            <div><dt>140+</dt><dd>довольных клиентов</dd></div>
             <div><dt>по России</dt><dd>бережная доставка</dd></div>
           </dl>
         </div>
@@ -136,6 +137,71 @@
         <span aria-hidden="true"></span>
         <p>Художественный институт им. В. И. Сурикова, Москва</p>
       </div>
+
+      <section class="works section" id="works" aria-labelledby="works-title">
+        <div class="section-heading works-heading" data-reveal>
+          <div>
+            <p class="eyebrow">Избранные работы</p>
+            <h2 id="works-title">Портреты,<br /><em>которые остаются</em></h2>
+          </div>
+          <p>Выберите сюжет — я покажу работы, близкие вашей будущей картине по настроению и задаче.</p>
+        </div>
+
+        <div class="work-filters" role="group" aria-label="Фильтр работ" data-reveal data-delay="1">
+          <button type="button" class="work-filter is-active" data-work-filter="all" aria-pressed="true">Все работы</button>
+          <button type="button" class="work-filter" data-work-filter="personal" aria-pressed="false">Личные</button>
+          <button type="button" class="work-filter" data-work-filter="family" aria-pressed="false">Семейные</button>
+          <button type="button" class="work-filter" data-work-filter="archive" aria-pressed="false">По архивным фото</button>
+          <button type="button" class="work-filter" data-work-filter="pets" aria-pressed="false">С питомцами</button>
+        </div>
+
+        <p class="works-status" id="works-status" role="status" aria-live="polite">Показано 10 работ</p>
+        <div class="works-grid">
+          <article class="work-card work-card-featured" data-work-type="personal" data-reveal>
+            <div class="work-media work-tone-rose" role="img" aria-label="Место для фотографии личного портрета"><span class="work-number">01</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Личный портрет</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="family" data-reveal data-delay="1">
+            <div class="work-media work-tone-sage" role="img" aria-label="Место для фотографии семейного портрета"><span class="work-number">02</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Семейный портрет</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="archive" data-reveal>
+            <div class="work-media work-media-real">
+              <img src="assets/works/archive-portrait.png" alt="Портрет маслом, восстановленный Юлией Ребровой по архивной чёрно-белой фотографии" width="720" height="960" loading="lazy" />
+              <span class="work-number">03</span><span class="work-original-mark">Оригинальная работа</span>
+            </div>
+            <div class="work-caption"><h3>По архивному снимку</h3><dl><div><dt>Формат</dt><dd>Уточняется</dd></div><div><dt>Срок</dt><dd>Уточняется</dd></div><div><dt>Повод</dt><dd>Память семьи</dd></div></dl></div>
+          </article>
+          <article class="work-card work-card-wide" data-work-type="family" data-reveal data-delay="1">
+            <div class="work-media work-tone-lilac" role="img" aria-label="Место для фотографии парного портрета"><span class="work-number">04</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Портрет двоих</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="pets" data-reveal>
+            <div class="work-media work-tone-blue" role="img" aria-label="Место для портрета с питомцем"><span class="work-number">05</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>С любимым питомцем</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="personal" data-reveal data-delay="1">
+            <div class="work-media work-tone-ochre" role="img" aria-label="Место для фотографии камерного портрета"><span class="work-number">06</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Камерный портрет</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card work-card-wide" data-work-type="archive" data-reveal>
+            <div class="work-media work-tone-smoke" role="img" aria-label="Место для реконструированного портрета"><span class="work-number">07</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Восстановленный образ</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="personal" data-reveal data-delay="1">
+            <div class="work-media work-tone-rose-deep" role="img" aria-label="Место для парадного портрета"><span class="work-number">08</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Парадный портрет</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="pets" data-reveal>
+            <div class="work-media work-tone-sage-deep" role="img" aria-label="Место для портрета питомца"><span class="work-number">09</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Портрет питомца</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card" data-work-type="family" data-reveal data-delay="1">
+            <div class="work-media work-tone-sand" role="img" aria-label="Место для портрета поколений"><span class="work-number">10</span><span class="work-pending">Добавить реальную работу</span></div>
+            <div class="work-caption"><h3>Портрет поколений</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+        </div>
+      </section>
 
       <section class="approach section" id="approach" aria-labelledby="approach-title">
         <div class="section-label" data-reveal>
@@ -206,22 +272,23 @@
         </div>
       </section>
 
-      <section class="reveal-showcase section" aria-labelledby="reveal-title">
+      <section class="reveal-showcase section" id="archive-case" aria-labelledby="reveal-title">
         <div class="section-heading" data-reveal>
           <div>
-            <p class="eyebrow">Фотография → масло</p>
-            <h2 id="reveal-title">Потяните — и увидите, как рождается сходство</h2>
+            <p class="eyebrow">Из семейного архива → в живопись</p>
+            <h2 id="reveal-title">Возвращаю цвет.<br /><em>Сохраняю характер.</em></h2>
           </div>
-          <p>Слева — снимок, который вы присылаете. Справа — то, чем он становится на холсте. Это иллюстрация процесса, а не готовая работа.</p>
+          <p>Даже по старому чёрно-белому снимку я могу восстановить образ, собрать цвет и написать живой портрет маслом.</p>
         </div>
         <figure class="reveal" data-reveal data-delay="1">
           <div class="reveal-frame">
-            <div class="reveal-after" aria-hidden="true">
-              <span class="reveal-spark"></span>
-              <span class="reveal-tag reveal-tag-after">Масло</span>
+            <div class="reveal-after">
+              <img src="assets/works/archive-portrait.png" alt="Готовый портрет маслом по архивной фотографии" width="720" height="960" loading="lazy" />
+              <span class="reveal-tag reveal-tag-after">Портрет маслом</span>
             </div>
-            <div class="reveal-before" aria-hidden="true">
-              <span class="reveal-tag reveal-tag-before">Фотография</span>
+            <div class="reveal-before">
+              <img src="assets/works/archive-source.png" alt="Архивная чёрно-белая фотография, ставшая основой портрета" width="640" height="960" loading="lazy" />
+              <span class="reveal-tag reveal-tag-before">Архивный снимок</span>
             </div>
             <div class="reveal-divider" aria-hidden="true">
               <span class="reveal-handle">
@@ -231,7 +298,7 @@
             <input class="reveal-range" type="range" min="0" max="100" value="52"
                    aria-label="Сравнить фотографию и живопись: стрелками влево и вправо" />
           </div>
-          <figcaption class="reveal-caption">Наведите и потяните разделитель. Из фотографии рождается портрет маслом.</figcaption>
+          <figcaption class="reveal-caption"><strong>Реальная работа Юлии.</strong> Потяните разделитель: слева — исходный снимок, справа — портрет маслом.</figcaption>
         </figure>
       </section>
 
@@ -275,6 +342,53 @@
             <p>Эскиз меняю столько раз, сколько нужно, — пока вы не скажете: да, это он.</p>
           </li>
         </ul>
+      </section>
+
+      <section class="reviews section section-tinted" id="reviews" aria-labelledby="reviews-title">
+        <div class="reviews-intro" data-reveal>
+          <p class="eyebrow">Отзывы</p>
+          <h2 id="reviews-title">Слова, которые<br /><em>остаются со мной</em></h2>
+          <p>Я публикую отзывы только с согласия клиентов — так же бережно, как фотографии готовых портретов.</p>
+        </div>
+        <div class="review-count" data-reveal data-delay="1" aria-label="Более 140 довольных клиентов, рейтинг 5 из 5 на основе 81 отзыва Avito">
+          <strong>140<sup>+</sup></strong>
+          <span>довольных<br />клиентов</span>
+          <a class="avito-proof" href="https://www.avito.ru/brands/240f1ecc4146da9acd398a4aadc005de/all/tovary_dlya_detey_i_igrushki?gdlkerfdnwq=101&amp;page_from=from_item_card_button&amp;sellerId=a1ad3f4377fa25cd63d56b62ed7e9625" target="_blank" rel="noopener noreferrer">
+            <b>5,0</b><small>81 отзыв на Avito</small><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="review-grid">
+          <article class="review-card review-card-main" data-reveal>
+            <span class="review-quote" aria-hidden="true">“</span>
+            <blockquote>Юля, очень благодарна за картину. Она изумительная — красивая, воздушная и с душой. На фотографии, напечатанной на холсте, души нет, а написанная красками картина её имеет. Это небо и земля! Благодарю за такой необыкновенный подарок.</blockquote>
+            <p>Анастасия · портрет по фотографии · Avito</p>
+          </article>
+          <article class="review-card" data-reveal data-delay="1">
+            <span class="review-quote" aria-hidden="true">“</span>
+            <blockquote>Моя сестра заказала картину у Юлии, и это был отличный выбор. Юлия постоянно держала нас в курсе процесса, аккуратно собирала детали по крупицам с разных фотографий, чтобы передать всё важное. Только она смогла реализовать идею именно так, как хотелось. Очень довольны результатом и благодарны за профессионализм и внимательность!</blockquote>
+            <p>Клиентка · композиция из разных фотографий · Avito</p>
+          </article>
+          <article class="review-card" data-reveal data-delay="2">
+            <span class="review-quote" aria-hidden="true">“</span>
+            <blockquote>Безмерно благодарна Юлии за праздник души. Обратилась за портретом маме на 75 лет — маслом на холсте. Даже представить не могла, что так можно передать взгляд, черты и цвета по чёрно-белой фотографии. Мама даже всплакнула от восторга. Работа выполнена в срок. Однозначно рекомендую художника!</blockquote>
+            <p>Татьяна · портрет мамы к 75-летию · Avito</p>
+          </article>
+          <article class="review-card review-card-compact" data-reveal>
+            <span class="review-quote" aria-hidden="true">“</span>
+            <blockquote>Всё учтено, что просили, и сходство! Именинник был растроган.</blockquote>
+            <p>Олеся · портрет в подарок · Avito</p>
+          </article>
+          <article class="review-card review-card-compact" data-reveal data-delay="1">
+            <span class="review-quote" aria-hidden="true">“</span>
+            <blockquote>Юлия прекрасно умеет работать с цветами и композицией. Эта работа особенно зацепила.</blockquote>
+            <p>Тарас · коллекционер живописи · Avito</p>
+          </article>
+          <article class="review-card review-card-compact" data-reveal data-delay="2">
+            <span class="review-quote" aria-hidden="true">“</span>
+            <blockquote>Муж был в восторге!</blockquote>
+            <p>Елена · портрет мужа с сыном · Avito</p>
+          </article>
+        </div>
       </section>
 
       <section class="prices section section-dark" id="prices" aria-labelledby="prices-title">
@@ -456,7 +570,7 @@
         <div class="contact-copy" data-reveal>
           <p class="eyebrow">Начать разговор</p>
           <h2 id="contact-title">Пришлите фотографии.<br /><em>Я отвечу лично.</em></h2>
-          <p>Соберите короткую заявку — сайт скопирует текст, который останется отправить мне в удобный мессенджер.</p>
+          <p>Соберите короткую заявку и выберите мессенджер. Я подготовлю текст — вам останется выбрать наш диалог и отправить сообщение.</p>
           <p>Пишу по одному портрету за раз, поэтому к праздникам место лучше занимать заранее.</p>
           <div class="privacy-note">
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v10H5z" /></svg>
@@ -473,14 +587,30 @@
           <select id="brief-format" name="format">
             <option>Помогите выбрать</option><option>30 × 40 см</option><option>40 × 50 см</option><option>50 × 60 см</option><option>50 × 70 см</option><option>60 × 80 см</option><option>80 × 100 см</option>
           </select>
+          <fieldset class="messenger-choice">
+            <legend>Куда перейти после заявки</legend>
+            <label>
+              <input type="radio" name="messenger" value="telegram" checked />
+              <span><strong>Telegram</strong><small>готовый текст</small></span>
+            </label>
+            <label>
+              <input type="radio" name="messenger" value="max" />
+              <span><strong>MAX</strong><small>готовый текст</small></span>
+            </label>
+          </fieldset>
           <button class="button button-primary button-wide" type="submit">
-            Скопировать заявку
-            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 8h11v11H8zM5 15H3V3h12v2" /></svg>
+            Перейти в мессенджер
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </button>
-          <p class="form-status" id="form-status" role="status" aria-live="polite">Мой контакт в мессенджере будет подключён перед публикацией сайта.</p>
+          <p class="form-status" id="form-status" role="status" aria-live="polite">Мессенджер откроется с готовым текстом. Останется выбрать диалог со мной.</p>
         </form>
       </section>
     </main>
+
+    <a class="mobile-write-cta" href="#contact" aria-label="Написать Юлии">
+      <span>Написать</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
 
     <footer class="site-footer">
       <a class="brand brand-footer" href="#top"><span class="brand-mark" aria-hidden="true">ЮР</span><span class="brand-name">Юлия Реброва</span></a>
