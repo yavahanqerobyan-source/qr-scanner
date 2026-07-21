@@ -420,10 +420,9 @@ briefForm.addEventListener('submit', (event) => {
   ].filter(Boolean).join('\n');
 
   const button = briefForm.querySelector('button[type="submit"]');
-  const pageUrl = `${window.location.origin}${window.location.pathname}`;
   const messengerUrl = messenger === 'max'
     ? `https://max.ru/:share?text=${encodeURIComponent(message)}`
-    : `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(message)}`;
+    : `https://t.me/artist_julia?text=${encodeURIComponent(message)}`;
 
   button.setAttribute('aria-busy', 'true');
   formStatus.className = 'form-status is-success';
