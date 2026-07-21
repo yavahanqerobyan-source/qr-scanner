@@ -345,6 +345,21 @@ body.is-dark-chapter .chapter-progress span { background: var(--color-rose); }
 
 .process-intro { display: flex; align-items: end; justify-content: space-between; gap: 56px; padding: 68px 0 76px; }
 .process-intro p { max-width: 340px; margin-bottom: 6px; color: var(--color-muted); }
+.process-gallery { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 30px); margin: -14px 0 96px; }
+.process-gallery figure { grid-column: span 4; min-width: 0; margin: 0; }
+.process-gallery figure:nth-child(1) { padding-top: 72px; }
+.process-gallery figure:nth-child(3) { align-self: end; padding-bottom: 58px; }
+.process-photo { position: relative; overflow: hidden; aspect-ratio: 3 / 4; background: #c8b9aa; box-shadow: 0 22px 50px rgba(57, 44, 51, 0.16); }
+.process-gallery figure:nth-child(2) .process-photo { aspect-ratio: 3 / 4; }
+.process-gallery figure:nth-child(3) .process-photo { aspect-ratio: 4 / 3; }
+.process-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 800ms var(--ease), filter 500ms ease; }
+.process-gallery figure:nth-child(1) img { object-position: 50% 48%; }
+.process-gallery figure:nth-child(2) img { object-position: 50% 34%; }
+.process-gallery figure:hover img { transform: scale(1.025); filter: saturate(1.04); }
+.process-photo > span { position: absolute; top: 16px; left: 18px; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid rgba(251, 248, 244, 0.55); border-radius: 50%; background: rgba(41, 37, 42, 0.34); color: var(--color-on-primary); font-family: var(--font-editorial); font-size: 13px; font-style: italic; backdrop-filter: blur(8px); }
+.process-gallery figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-top: 14px; }
+.process-gallery figcaption strong { font-family: var(--font-display); font-size: 20px; font-weight: 400; }
+.process-gallery figcaption small { max-width: 170px; color: var(--color-muted); font-size: 11px; line-height: 1.45; text-align: right; }
 .process-list { margin: 0; padding: 0; list-style: none; }
 .process-list li { display: grid; grid-template-columns: 90px 1fr; padding: 26px 0; border-top: 1px solid var(--color-border); }
 .process-list li:last-child { border-bottom: 1px solid var(--color-border); }
@@ -721,6 +736,12 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
   .story-meta { align-items: start; flex-direction: column; gap: 2px; }
   .story-meta p { text-align: left; }
   .process-intro { padding: 48px 0 54px; }
+  .process-gallery { grid-template-columns: 1fr; gap: 38px; margin: -8px 0 72px; }
+  .process-gallery figure:nth-child(n) { grid-column: 1; width: min(100%, 430px); padding: 0; }
+  .process-gallery figure:nth-child(2) { margin-left: auto; }
+  .process-gallery figure:nth-child(3) { width: 100%; }
+  .process-gallery figcaption { align-items: start; flex-direction: column; gap: 2px; }
+  .process-gallery figcaption small { max-width: none; text-align: left; }
   .process-list li { grid-template-columns: 42px 1fr; }
   .process-list li > div { grid-template-columns: 1fr; gap: 8px; }
   .process-list h3 { font-size: 25px; }
@@ -749,7 +770,7 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
   .timing-weeks { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
   .timing-weeks span { margin-top: 0; }
   .cert-steps li { grid-template-columns: 44px 1fr; }
-  .certificate-dialog { padding: 52px 0 0; place-items: end stretch; }
+  .certificate-dialog[open] { padding: 52px 0 0; place-items: end stretch; }
   .certificate-dialog-shell { grid-template-columns: 1fr; width: 100%; max-height: calc(100svh - 24px); overflow-y: auto; border-right: 0; border-bottom: 0; border-left: 0; border-radius: 24px 24px 0 0; animation-name: certificateSheetIn; }
   .certificate-dialog.is-closing .certificate-dialog-shell { animation-name: certificateSheetOut; }
   .certificate-dialog-close { position: fixed; top: 12px; right: 14px; width: 42px; height: 42px; border-color: rgba(255, 255, 255, 0.28); background: rgba(41, 37, 42, 0.44); color: var(--color-on-primary); }

@@ -244,7 +244,7 @@ const updateCertificateBuilder = () => {
     total = Math.round((priceMatrix[format][packageName] * multiplier) / 1000) * 1000;
     summary = `«${certificatePackageLabels[packageName]}» · ${certificateFormatLabels[format]} · ${certificatePeopleLabels[people]}`;
   } else {
-    total = Math.max(10000, Number(data.get('certificate-amount')) || 0);
+    total = Math.max(1000, Number(data.get('certificate-amount')) || 0);
     summary = 'Свободный номинал · выбор сюжета останется получателю';
   }
 
@@ -379,6 +379,27 @@ workFilterButtons.forEach((button) => {
     worksStatus.textContent = `Показано: ${visibleCount}`;
   });
 });
+
+const mobileContactBar = document.querySelector('.mobile-contact-bar');
+const worksSection = document.querySelector('#works');
+let mobileContactTicking = false;
+
+const updateMobileContactBar = () => {
+  if (!mobileContactBar || !worksSection) return;
+  const shouldShow = window.scrollY + header.offsetHeight >= worksSection.offsetTop;
+  mobileContactBar.classList.toggle('is-visible', shouldShow);
+  mobileContactTicking = false;
+};
+
+const requestMobileContactUpdate = () => {
+  if (mobileContactTicking) return;
+  mobileContactTicking = true;
+  window.requestAnimationFrame(updateMobileContactBar);
+};
+
+updateMobileContactBar();
+window.addEventListener('scroll', requestMobileContactUpdate, { passive: true });
+window.addEventListener('resize', requestMobileContactUpdate);
 
 const briefForm = document.querySelector('#brief-form');
 const formStatus = document.querySelector('#form-status');
