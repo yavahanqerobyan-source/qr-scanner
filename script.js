@@ -285,16 +285,6 @@ briefForm.addEventListener('submit', (event) => {
   button.removeAttribute('aria-busy');
 });
 
-const mobileWriteCta = document.querySelector('.mobile-write-cta');
-const contactSection = document.querySelector('#contact');
-
-if ('IntersectionObserver' in window && mobileWriteCta && contactSection) {
-  const contactObserver = new IntersectionObserver(([entry]) => {
-    mobileWriteCta.classList.toggle('is-hidden', entry.isIntersecting);
-  }, { threshold: 0.08 });
-  contactObserver.observe(contactSection);
-}
-
 const observedSections = document.querySelectorAll('main section[id]');
 const navLinks = [...navigation.querySelectorAll('a[href^="#"]'), ...chapterLinks];
 let sectionTicking = false;
