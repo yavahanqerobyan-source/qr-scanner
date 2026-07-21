@@ -133,9 +133,8 @@ p { text-wrap: pretty; }
 /* When the mobile menu is open the header must NOT create a containing block for the
    fixed full-screen nav — backdrop-filter would clip the overlay to the header box. */
 body.menu-open .site-header { background: var(--color-background); border-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
-.brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; }
-.brand-mark { display: grid; place-items: center; width: 42px; aspect-ratio: 1; border: 1px solid currentColor; border-radius: 50%; font-family: var(--font-display); font-size: 14px; letter-spacing: -0.04em; }
-.brand-name { font-family: var(--font-editorial); font-size: 19px; font-style: italic; letter-spacing: -0.025em; }
+.brand { display: inline-flex; align-items: center; min-height: 44px; }
+.brand-logo { display: block; width: clamp(164px, 14.5vw, 198px); height: auto; }
 .site-nav { display: flex; align-items: center; gap: 28px; font-family: var(--font-label); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
 .site-nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; }
 .site-nav > a:not(.nav-cta)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 7px; height: 1px; background: currentColor; transition: right 220ms var(--ease); }
@@ -194,6 +193,11 @@ body.is-dark-chapter .chapter-progress span { background: var(--color-rose); }
 .hero-art { position: relative; z-index: 3; justify-self: end; width: min(100%, 500px); transform: translate3d(calc(var(--hero-progress) * -16vw), calc(var(--hero-progress) * 3vh), 0) scale(calc(1 + var(--hero-progress) * 0.26)); transform-origin: center; will-change: transform; }
 .canvas { position: relative; aspect-ratio: 4 / 5.1; overflow: hidden; background: linear-gradient(148deg, #e9ddcc 0%, #e3d4c0 52%, #d8c4ab 100%); border: 12px solid var(--color-surface); box-shadow: 0 28px 70px rgba(57, 44, 51, 0.22); isolation: isolate; }
 .canvas::after { content: ""; position: absolute; inset: 18px; z-index: 9; border: 1px solid rgba(41, 37, 42, 0.16); pointer-events: none; }
+.canvas-photo { aspect-ratio: 3 / 4; background: #a59a8d; }
+.hero-portrait { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 43%; filter: saturate(0.9) contrast(1.035) sepia(0.035); transform: scale(calc(1.025 + var(--hero-progress) * 0.045)) translate3d(0, calc(var(--hero-progress) * -1.6%), 0); transform-origin: 52% 38%; will-change: transform; }
+.canvas-photo .oil, .canvas-photo .portrait-line, .canvas-photo .oil-strokes { display: none; }
+.canvas-photo .oil-weave { z-index: 7; opacity: 0.2; mix-blend-mode: soft-light; }
+.canvas-photo::before { content: ""; position: absolute; inset: 0; z-index: 8; pointer-events: none; background: radial-gradient(75% 55% at 8% 8%, rgba(222, 184, 140, 0.16), transparent 68%), linear-gradient(to top, rgba(24, 19, 17, 0.62), transparent 38%); }
 
 /* Oil study — layered pigment masses, light from the upper left.
    Softness comes from the gradient stops themselves, so no per-layer blur
@@ -212,7 +216,7 @@ body.is-dark-chapter .chapter-progress span { background: var(--color-rose); }
 .oil-strokes { position: absolute; inset: 4% 2% 0 4%; width: 94%; height: 92%; z-index: 6; opacity: calc(0.62 + var(--hero-progress) * 0.34); mix-blend-mode: soft-light; }
 .oil-strokes path { fill: none; stroke-linecap: round; }
 .oil-weave { position: absolute; inset: 0; z-index: 7; opacity: 0.38; mix-blend-mode: multiply; background-image: repeating-linear-gradient(0deg, rgba(74, 54, 38, 0.05) 0 1px, transparent 1px 4px), repeating-linear-gradient(90deg, rgba(74, 54, 38, 0.045) 0 1px, transparent 1px 4px); }
-.canvas::before { content: ""; position: absolute; inset: 0; z-index: 8; pointer-events: none; background: linear-gradient(to top, rgba(38, 26, 16, 0.4), transparent 26%); }
+.canvas:not(.canvas-photo)::before { content: ""; position: absolute; inset: 0; z-index: 8; pointer-events: none; background: linear-gradient(to top, rgba(38, 26, 16, 0.4), transparent 26%); }
 .portrait-line { position: absolute; inset: 3% 0 0 4%; z-index: 5; width: 92%; height: 92%; fill: none; stroke: rgba(74, 54, 38, 0.5); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: calc(0.6 - var(--hero-progress) * 0.4); }
 .portrait-line .line-soft { stroke-width: 1.2; opacity: 0.7; }
 .portrait-line .line-faint { stroke-width: 0.9; opacity: 0.28; stroke-dasharray: 7 8; }
@@ -269,6 +273,7 @@ body.is-dark-chapter .chapter-progress span { background: var(--color-rose); }
 .work-card:nth-child(8) { grid-column: span 4; padding-top: 8vw; }
 .work-card:nth-child(9) { grid-column: span 5; }
 .work-card:nth-child(10) { grid-column: span 7; padding-top: 5vw; }
+.work-card:nth-child(11) { grid-column: span 12; }
 .work-card[hidden] { display: none; }
 .work-media { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 5; overflow: hidden; isolation: isolate; border: 1px solid rgba(74, 54, 38, 0.12); background: var(--work-tone, var(--color-rose)); box-shadow: inset 0 0 70px rgba(74, 54, 38, 0.11); }
 .work-card:nth-child(2) .work-media, .work-card:nth-child(4) .work-media, .work-card:nth-child(7) .work-media { aspect-ratio: 4 / 3; }
@@ -276,6 +281,10 @@ body.is-dark-chapter .chapter-progress span { background: var(--color-rose); }
 .work-media::after { content: ""; position: absolute; z-index: -2; width: 76%; height: 28%; border-radius: 50%; background: rgba(251, 248, 244, 0.2); filter: blur(28px); transform: translate(12%, 62%) rotate(-12deg); }
 .work-media-real::before, .work-media-real::after { display: none; }
 .work-media-real img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%; transition: transform 700ms var(--ease), filter 500ms ease; }
+.work-media-don { aspect-ratio: 4 / 5 !important; background: #b9ad9c; }
+.work-media-don img { object-position: 50% 50%; }
+.work-media-interior { aspect-ratio: 16 / 9 !important; background: #d9cbbb; }
+.work-media-interior img { object-position: 50% 55%; }
 .work-card:hover .work-media-real img { transform: scale(1.025); filter: saturate(1.04); }
 .work-number { position: absolute; top: 20px; left: 22px; font-family: var(--font-editorial); font-size: 18px; font-style: italic; color: rgba(41, 37, 42, 0.5); }
 .work-pending { max-width: 180px; padding: 9px 13px; border: 1px solid rgba(41, 37, 42, 0.24); background: rgba(251, 248, 244, 0.36); color: rgba(41, 37, 42, 0.72); font-family: var(--font-label); font-size: 9px; letter-spacing: 0.13em; text-align: center; text-transform: uppercase; backdrop-filter: blur(8px); }
@@ -528,6 +537,7 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
 .site-footer { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 32px; padding: 42px max(24px, calc((100vw - 1180px) / 2)); background: var(--color-primary); color: var(--color-on-primary); }
 .site-footer p { margin: 0; color: rgba(251, 248, 244, 0.65); font-size: 12px; text-align: center; }
 .brand-footer { justify-self: start; }
+.brand-footer .brand-logo { width: clamp(184px, 17vw, 222px); }
 .footer-note { justify-self: end; }
 .mobile-write-cta { display: none; }
 
@@ -587,7 +597,7 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
 @media (max-width: 680px) {
   :root { --container: calc(100% - 32px); --section-space: 88px; }
   body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
-  .brand-name { font-size: 16px; }
+  .brand-logo { width: 154px; }
   .hero { height: 180svh; }
   .hero-stage { min-height: 100svh; padding: 120px 16px 32px; }
   .hero h1 { font-size: clamp(48px, 14.2vw, 68px); }
@@ -619,7 +629,7 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
   .works-grid { grid-template-columns: 1fr; gap: 48px; }
   .work-card:nth-child(n) { grid-column: 1; }
   .work-card:nth-child(n) .work-media { aspect-ratio: 4 / 5; }
-  .work-card:nth-child(4) .work-media, .work-card:nth-child(7) .work-media { aspect-ratio: 4 / 3; }
+  .work-card:nth-child(4) .work-media, .work-card:nth-child(7) .work-media, .work-card:nth-child(11) .work-media { aspect-ratio: 4 / 3; }
   .content-source-note { margin-top: 42px; padding-left: 0; }
   .story-grid { grid-template-columns: 1fr; }
   .story-card-tall { grid-row: auto; }
@@ -680,6 +690,7 @@ tbody td { color: rgba(251, 248, 244, 0.78); font-size: 14px; }
   .oil-naples { opacity: 0.66; }
   .oil-strokes { opacity: 0.82; }
   .portrait-line { opacity: 0.32; }
+  .hero-portrait { transform: none !important; }
   .section-curtain { transition: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.01ms; }
 }

@@ -18,9 +18,8 @@
     <div class="section-curtain" aria-hidden="true"></div>
 
     <header class="site-header" data-header>
-      <a class="brand" href="#top">
-        <span class="brand-mark" aria-hidden="true">ЮР</span>
-        <span class="brand-name">Юлия Реброва</span>
+      <a class="brand" href="#top" aria-label="Юлия Реброва — в начало">
+        <img class="brand-logo" src="assets/brand/yulia-rebrova-logo.png" alt="" width="480" height="153" />
       </a>
 
       <button
@@ -83,7 +82,8 @@
         </div>
 
         <div class="hero-art">
-          <div class="canvas" role="img" aria-label="Незавершённый портрет маслом: подмалёвок под прозрачными слоями краски. Авторская иллюстрация, не готовая работа Юлии.">
+          <div class="canvas canvas-photo">
+            <img class="hero-portrait" src="assets/artist/yulia-hero.webp" alt="Художница Юлия Реброва с кистью в мастерской" width="1067" height="1600" fetchpriority="high" decoding="async" />
             <div class="oil oil-ground"></div>
             <div class="oil oil-bg-rose"></div>
             <div class="oil oil-bg-sage"></div>
@@ -121,10 +121,10 @@
               </g>
             </svg>
             <div class="oil-weave"></div>
-            <p class="canvas-note">Сходство рождается<br />на эскизе. Характер — в живописи.</p>
+            <p class="canvas-note">Каждый портрет<br />я пишу лично.</p>
             <span class="canvas-signature">Ю. Реброва</span>
           </div>
-          <p class="art-caption"><span>Академическая школа</span><span>Ростов-на-Дону</span></p>
+          <p class="art-caption"><span>Юлия Реброва · художник</span><span>Ростов-на-Дону</span></p>
         </div>
         <p class="hero-ghost" aria-hidden="true">слой<br />за слоем</p>
         <div class="hero-film-mark" aria-hidden="true"><span>Кадр 01</span><span>Портрет · масло</span></div>
@@ -153,17 +153,21 @@
           <button type="button" class="work-filter" data-work-filter="family" aria-pressed="false">Семейные</button>
           <button type="button" class="work-filter" data-work-filter="archive" aria-pressed="false">По архивным фото</button>
           <button type="button" class="work-filter" data-work-filter="pets" aria-pressed="false">С питомцами</button>
+          <button type="button" class="work-filter" data-work-filter="interior" aria-pressed="false">Для интерьера</button>
         </div>
 
-        <p class="works-status" id="works-status" role="status" aria-live="polite">Показано 10 работ</p>
+        <p class="works-status" id="works-status" role="status" aria-live="polite">Показано 11 работ</p>
         <div class="works-grid">
           <article class="work-card work-card-featured" data-work-type="personal" data-reveal>
             <div class="work-media work-tone-rose" role="img" aria-label="Место для фотографии личного портрета"><span class="work-number">01</span><span class="work-pending">Добавить реальную работу</span></div>
             <div class="work-caption"><h3>Личный портрет</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
           </article>
           <article class="work-card" data-work-type="family" data-reveal data-delay="1">
-            <div class="work-media work-tone-sage" role="img" aria-label="Место для фотографии семейного портрета"><span class="work-number">02</span><span class="work-pending">Добавить реальную работу</span></div>
-            <div class="work-caption"><h3>Семейный портрет</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+            <div class="work-media work-media-real work-media-don">
+              <img src="assets/works/parents-don-style.png" alt="Портрет родителей в донском стиле: семейная пара в традиционных костюмах на фоне донского пейзажа" width="663" height="939" loading="lazy" />
+              <span class="work-number">02</span><span class="work-original-mark">Оригинальная работа</span>
+            </div>
+            <div class="work-caption"><h3>Родители в донском стиле</h3><dl><div><dt>Формат</dt><dd>Уточняется</dd></div><div><dt>Срок</dt><dd>Уточняется</dd></div><div><dt>Повод</dt><dd>Семейная история</dd></div></dl></div>
           </article>
           <article class="work-card" data-work-type="archive" data-reveal>
             <div class="work-media work-media-real">
@@ -199,6 +203,13 @@
           <article class="work-card" data-work-type="family" data-reveal data-delay="1">
             <div class="work-media work-tone-sand" role="img" aria-label="Место для портрета поколений"><span class="work-number">10</span><span class="work-pending">Добавить реальную работу</span></div>
             <div class="work-caption"><h3>Портрет поколений</h3><dl><div><dt>Формат</dt><dd>—</dd></div><div><dt>Срок</dt><dd>—</dd></div><div><dt>Повод</dt><dd>—</dd></div></dl></div>
+          </article>
+          <article class="work-card work-card-interior" data-work-type="interior" data-reveal>
+            <div class="work-media work-media-real work-media-interior">
+              <img src="assets/works/ginkgo-biloba.webp" alt="Интерьерная картина Юлии Ребровой с листьями гинкго билоба в бирюзовых и зелёных оттенках" width="900" height="1200" loading="lazy" />
+              <span class="work-number">11</span><span class="work-original-mark">Интерьерная работа</span>
+            </div>
+            <div class="work-caption"><h3>Листья гинкго билоба</h3><dl><div><dt>Формат</dt><dd>Уточняется</dd></div><div><dt>Срок</dt><dd>Уточняется</dd></div><div><dt>Повод</dt><dd>Для интерьера</dd></div></dl></div>
           </article>
         </div>
       </section>
@@ -613,7 +624,9 @@
     </a>
 
     <footer class="site-footer">
-      <a class="brand brand-footer" href="#top"><span class="brand-mark" aria-hidden="true">ЮР</span><span class="brand-name">Юлия Реброва</span></a>
+      <a class="brand brand-footer" href="#top" aria-label="Юлия Реброва — в начало">
+        <img class="brand-logo" src="assets/brand/yulia-rebrova-logo-light.png" alt="" width="480" height="153" loading="lazy" />
+      </a>
       <p>Портреты маслом на заказ · Ростов-на-Дону · Доставка по России</p>
       <p class="footer-note">© 2026 Юлия Реброва</p>
     </footer>
