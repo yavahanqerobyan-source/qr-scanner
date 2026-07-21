@@ -406,6 +406,35 @@ workFilterButtons.forEach((button) => {
   });
 });
 
+document.querySelectorAll('[data-swipe-hint-for]').forEach((hint) => {
+  const carousel = document.getElementById(hint.dataset.swipeHintFor);
+  const label = hint.querySelector('span');
+  if (!carousel || !label) return;
+
+  let swipeHintTicking = false;
+  const updateSwipeHint = () => {
+    const canScroll = carousel.scrollWidth > carousel.clientWidth + 8;
+    const reachedEnd = canScroll
+      && carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 12;
+
+    hint.classList.toggle('is-backward', reachedEnd);
+    label.textContent = reachedEnd
+      ? hint.dataset.backText
+      : hint.dataset.forwardText;
+    swipeHintTicking = false;
+  };
+
+  const requestSwipeHintUpdate = () => {
+    if (swipeHintTicking) return;
+    swipeHintTicking = true;
+    window.requestAnimationFrame(updateSwipeHint);
+  };
+
+  updateSwipeHint();
+  carousel.addEventListener('scroll', requestSwipeHintUpdate, { passive: true });
+  window.addEventListener('resize', requestSwipeHintUpdate, { passive: true });
+});
+
 const mobileContactBar = document.querySelector('.mobile-contact-bar');
 const worksSection = document.querySelector('#works');
 let mobileContactTicking = false;

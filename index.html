@@ -138,7 +138,7 @@
         ]
       }
     </script>
-    <script src="analytics.js" defer></script>
+    <script src="site-insights.js?v=20260721" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -285,8 +285,8 @@
         </div>
 
         <p class="works-status" id="works-status" role="status" aria-live="polite">Показано 11 работ</p>
-        <p class="mobile-swipe-hint" aria-hidden="true"><span>Листайте работы</span><i></i></p>
-        <div class="works-grid mobile-carousel" tabindex="0" aria-label="Галерея работ Юлии Ребровой — листайте горизонтально">
+        <p class="mobile-swipe-hint" data-swipe-hint-for="works-carousel" data-forward-text="Листайте работы" data-back-text="Листайте обратно" aria-hidden="true"><span>Листайте работы</span><i></i></p>
+        <div class="works-grid mobile-carousel" id="works-carousel" tabindex="0" aria-label="Галерея работ Юлии Ребровой — листайте горизонтально">
           <article class="work-card work-card-featured" data-work-type="personal" data-reveal>
             <div class="work-media work-media-real work-media-personal">
               <img src="assets/works/personal-portrait-man.webp" alt="Личный мужской портрет маслом в багетной раме, работа Юлии Ребровой" width="900" height="1200" loading="lazy" />
@@ -389,7 +389,8 @@
           <p>Три сюжета, с которых обычно начинается разговор о будущем портрете.</p>
         </div>
 
-        <div class="story-grid">
+        <p class="mobile-swipe-hint" data-swipe-hint-for="story-carousel" data-forward-text="Листайте сюжеты" data-back-text="Листайте обратно" aria-hidden="true"><span>Листайте сюжеты</span><i></i></p>
+        <div class="story-grid mobile-carousel" id="story-carousel" tabindex="0" aria-label="Популярные сюжеты портретов — листайте горизонтально">
           <article class="story-card story-card-tall" data-reveal>
             <div class="story-art art-rose" role="img" aria-label="Графическая иллюстрация личного портрета">
               <span class="paint-orbit"></span>
@@ -463,7 +464,8 @@
           <h2 id="process-title">Понятный путь —<br />от фотографии до вручения</h2>
           <p>Портрет пишется неделями и живёт поколениями. Поэтому каждый этап прозрачен.</p>
         </div>
-        <div class="process-gallery" aria-label="Этапы создания семейного портрета">
+        <p class="mobile-swipe-hint" data-swipe-hint-for="process-gallery-carousel" data-forward-text="Листайте этапы" data-back-text="Листайте обратно" aria-hidden="true"><span>Листайте этапы</span><i></i></p>
+        <div class="process-gallery mobile-carousel" id="process-gallery-carousel" tabindex="0" aria-label="Этапы создания семейного портрета — листайте горизонтально">
           <figure data-reveal>
             <div class="process-photo"><img src="assets/process/01-underpainting.webp" alt="Первый живописный слой семейного портрета на холсте" width="720" height="960" loading="lazy" /><span>01</span></div>
             <figcaption><strong>Подмалёвок</strong><small>Сначала выстраиваю тон и характер</small></figcaption>
@@ -477,7 +479,8 @@
             <figcaption><strong>Завершение</strong><small>Собираю фон, цвет и последние акценты</small></figcaption>
           </figure>
         </div>
-        <ol class="process-list">
+        <p class="mobile-swipe-hint" data-swipe-hint-for="process-list-carousel" data-forward-text="Листайте путь" data-back-text="Листайте обратно" aria-hidden="true"><span>Листайте путь</span><i></i></p>
+        <ol class="process-list mobile-carousel" id="process-list-carousel" tabindex="0" aria-label="Пять шагов заказа портрета — листайте горизонтально">
           <li data-reveal><span class="step-number">01</span><div><h3>Знакомство</h3><p>Обсуждаем человека, повод, интерьер и вместе выбираем сильные фотографии.</p></div></li>
           <li data-reveal><span class="step-number">02</span><div><h3>Бронирование</h3><p>Предоплата 50% закрепляет место в графике и фиксирует срок сдачи.</p></div></li>
           <li data-reveal><span class="step-number">03</span><div><h3>Эскиз</h3><p>Композицию меняем без ограничений, пока вы не скажете: «Да, это оно».</p></div></li>
@@ -523,8 +526,8 @@
             <b>5,0</b><small>81 отзыв на Avito</small><span aria-hidden="true">↗</span>
           </a>
         </div>
-        <p class="mobile-swipe-hint" aria-hidden="true"><span>Листайте отзывы</span><i></i></p>
-        <div class="review-grid mobile-carousel" tabindex="0" aria-label="Отзывы клиентов — листайте горизонтально">
+        <p class="mobile-swipe-hint" data-swipe-hint-for="reviews-carousel" data-forward-text="Листайте отзывы" data-back-text="Листайте обратно" aria-hidden="true"><span>Листайте отзывы</span><i></i></p>
+        <div class="review-grid mobile-carousel" id="reviews-carousel" tabindex="0" aria-label="Отзывы клиентов — листайте горизонтально">
           <article class="review-card review-card-main" data-reveal>
             <span class="review-quote" aria-hidden="true">“</span>
             <blockquote>Юля, очень благодарна за картину. Она изумительная — красивая, воздушная и с душой. На фотографии, напечатанной на холсте, души нет, а написанная красками картина её имеет. Это небо и земля! Благодарю за такой необыкновенный подарок.</blockquote>
@@ -567,8 +570,8 @@
           <p>Все цены — за погрудный портрет одного человека на нейтральном фоне.</p>
         </div>
 
-        <p class="mobile-swipe-hint" aria-hidden="true"><span>Листайте варианты</span><i></i></p>
-        <div class="package-grid mobile-carousel" tabindex="0" aria-label="Варианты оформления портрета — листайте горизонтально">
+        <p class="mobile-swipe-hint" data-swipe-hint-for="packages-carousel" data-forward-text="Листайте варианты" data-back-text="Листайте обратно" aria-hidden="true"><span>Листайте варианты</span><i></i></p>
+        <div class="package-grid mobile-carousel" id="packages-carousel" tabindex="0" aria-label="Варианты оформления портрета — листайте горизонтально">
           <article class="package" data-reveal>
             <p class="package-kicker">Само произведение</p>
             <h3>Холст</h3>

@@ -16,7 +16,7 @@ python -m http.server 4173
 
 - OG-превью: `assets/og/yulia-rebrova-og.png` (1200×630).
 - JSON-LD в `index.html`: `WebSite`, `ProfilePage`, `Person`, `ProfessionalService`, `Service` и каталог предложений.
-- Событийная модель в `analytics.js`: CTA, заявка, сертификат, фильтры, карусели и глубина просмотра. Имена и текст заявки в аналитику не передаются.
+- Событийная модель в `site-insights.js`: CTA, заявка, сертификат, фильтры, мобильные карусели и глубина просмотра. Имена и текст заявки в аналитику не передаются.
 - Чтобы включить внешние счётчики, укажите реальные значения в мета-тегах `ga4-measurement-id` и `yandex-metrika-id`. Провайдеры загружаются только после вызова `siteAnalytics.grantConsent()`.
 - После выбора рабочего домена замените корневые значения `/` у `canonical`, `og:url` и URL в JSON-LD на абсолютный HTTPS-адрес. Тогда же добавьте абсолютный `sitemap.xml` в `robots.txt` и панели Google Search Console / Яндекс Вебмастер.
 
