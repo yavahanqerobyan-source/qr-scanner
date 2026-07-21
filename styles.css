@@ -130,6 +130,9 @@ p { text-wrap: pretty; }
 
 .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 20px max(24px, calc((100vw - 1180px) / 2)); border-bottom: 1px solid transparent; transition: padding 240ms var(--ease), background-color 240ms ease, border-color 240ms ease; }
 .site-header.is-scrolled { padding-top: 12px; padding-bottom: 12px; background: rgba(244, 239, 235, 0.92); border-color: var(--color-border); backdrop-filter: blur(14px); }
+/* When the mobile menu is open the header must NOT create a containing block for the
+   fixed full-screen nav — backdrop-filter would clip the overlay to the header box. */
+body.menu-open .site-header { background: var(--color-background); border-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 .brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; }
 .brand-mark { display: grid; place-items: center; width: 42px; aspect-ratio: 1; border: 1px solid currentColor; border-radius: 50%; font-family: var(--font-display); font-size: 14px; letter-spacing: -0.04em; }
 .brand-name { font-family: var(--font-editorial); font-size: 19px; font-style: italic; letter-spacing: -0.025em; }
