@@ -19,6 +19,7 @@
   const track = (eventName, properties = {}) => {
     const safeProperties = sanitizeProperties(properties);
     window.dataLayer.push({ event: eventName, ...safeProperties });
+    window.JuliaCMS?.recordEvent(eventName, safeProperties);
 
     if (typeof window.gtag === 'function') {
       window.gtag('event', eventName, safeProperties);
@@ -145,6 +146,7 @@
 
   const carouselNames = new Map([
     [document.querySelector('.works-grid'), 'works'],
+    [document.querySelector('.shop-grid'), 'shop'],
     [document.querySelector('.story-grid'), 'subjects'],
     [document.querySelector('.process-gallery'), 'process_gallery'],
     [document.querySelector('.process-list'), 'process_steps'],

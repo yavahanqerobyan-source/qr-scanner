@@ -417,6 +417,7 @@ document.querySelectorAll('[data-swipe-hint-for]').forEach((hint) => {
     const reachedEnd = canScroll
       && carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 12;
 
+    hint.hidden = !canScroll;
     hint.classList.toggle('is-backward', reachedEnd);
     label.textContent = reachedEnd
       ? hint.dataset.backText
