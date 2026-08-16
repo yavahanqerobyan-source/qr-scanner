@@ -51,6 +51,59 @@
     return Number.isFinite(price) && price > 0 ? price.toLocaleString('ru-RU') + ' ₽' : 'Цена по запросу';
   };
 
+  const workCountLabel = (count) => {
+    const lastTwo = count % 100;
+    const last = count % 10;
+    const word = lastTwo >= 11 && lastTwo <= 14 ? 'работ'
+      : last === 1 ? 'работа'
+        : last >= 2 && last <= 4 ? 'работы' : 'работ';
+    return count + ' ' + word;
+  };
+
+  const injectProductSchema = (products) => {
+    if (document.body.dataset.page !== 'shop') return;
+    document.querySelector('#shop-products-schema')?.remove();
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Готовые картины Юлии Ребровой',
+      itemListElement: products.map((product, index) => {
+        const price = Number(product.price);
+        const item = {
+          '@type': 'Product',
+          name: product.title,
+          image: product.image,
+          description: product.description || product.medium || 'Авторская живопись Юлии Ребровой',
+          category: productCategoriesForSchema[product.category] || 'Авторская живопись',
+          brand: { '@type': 'Brand', name: 'Юлия Реброва' },
+        };
+        if (Number.isFinite(price) && price > 0) {
+          item.offers = {
+            '@type': 'Offer',
+            price,
+            priceCurrency: 'RUB',
+            availability: product.status === 'sold' ? 'https://schema.org/OutOfStock'
+              : product.status === 'reserved' ? 'https://schema.org/LimitedAvailability'
+                : 'https://schema.org/InStock',
+            url: '/shop.html',
+          };
+        }
+        return { '@type': 'ListItem', position: index + 1, item };
+      }),
+    };
+    const script = document.createElement('script');
+    script.id = 'shop-products-schema';
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema);
+    document.head.append(script);
+  };
+
+  const productCategoriesForSchema = {
+    interior: 'Интерьерная живопись',
+    portrait: 'Портрет',
+    other: 'Авторская работа',
+  };
+
   const renderProducts = () => {
     if (!shopGrid) return;
     const products = cms.getProducts().filter((product) => product.published);
@@ -72,6 +125,11 @@
     }).join('');
     if (shopEmpty) shopEmpty.hidden = products.length > 0;
     shopGrid.hidden = products.length === 0;
+    const total = document.querySelector('#shop-product-count');
+    const results = document.querySelector('#shop-results-count');
+    if (total) total.textContent = String(products.length);
+    if (results) results.textContent = workCountLabel(products.length);
+    injectProductSchema(products);
   };
 
   const initShopFilters = () => {
@@ -87,6 +145,11 @@
         [...document.querySelectorAll('[data-product-category]')].forEach((card) => {
           card.hidden = category !== 'all' && card.dataset.productCategory !== category;
         });
+        const visibleCount = [...document.querySelectorAll('[data-product-category]')].filter((card) => !card.hidden).length;
+        const results = document.querySelector('#shop-results-count');
+        if (results) results.textContent = workCountLabel(visibleCount);
+        if (shopEmpty) shopEmpty.hidden = visibleCount > 0;
+        if (shopGrid) shopGrid.hidden = visibleCount === 0;
         cms.recordEvent('shop_filter_selected', { category });
       });
     });
@@ -134,5 +197,5 @@
   renderProducts();
   initShopFilters();
   captureLeads();
-  cms.recordEvent('page_view', { page: 'home' });
+  cms.recordEvent('page_view', { page: document.body.dataset.page || 'home' });
 })();

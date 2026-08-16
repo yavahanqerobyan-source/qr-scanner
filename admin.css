@@ -78,6 +78,7 @@ a { color: inherit; text-decoration: none; }
 .admin-intro h2 em { color: var(--admin-rose); font-family: var(--admin-editorial); font-weight: 400; }
 .admin-intro > p:last-child, .admin-view-head > div > p:last-child { margin: 0; color: var(--admin-muted); }
 .admin-view-head { display: flex; align-items: end; justify-content: space-between; gap: 42px; margin-bottom: 40px; padding-bottom: 34px; border-bottom: 1px solid var(--admin-border); }
+.admin-view-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
 .admin-view-head h2 { margin: 6px 0 14px; }
 
 .admin-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--admin-border); border-bottom: 1px solid var(--admin-border); }
@@ -202,7 +203,8 @@ a { color: inherit; text-decoration: none; }
   .admin-intro { margin-bottom: 34px; }
   .admin-intro h2, .admin-view-head h2 { font-size: clamp(38px, 12vw, 54px); }
   .admin-view-head { align-items: start; flex-direction: column; gap: 22px; margin-bottom: 28px; padding-bottom: 26px; }
-  .admin-view-head .admin-button { width: 100%; }
+  .admin-view-actions { width: 100%; }
+  .admin-view-head .admin-button { flex: 1; min-width: 145px; }
   .admin-metrics { grid-template-columns: 1fr 1fr; }
   .admin-metric { padding: 20px 14px; border-bottom: 1px solid var(--admin-border); }
   .admin-metric:nth-child(2) { border-right: 0; }
