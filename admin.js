@@ -14,6 +14,7 @@
     contact_clicked: 'Переходы к связи',
     lead_form_submitted: 'Заявки на портрет',
     product_inquiry_started: 'Интерес к товарам',
+    product_detail_opened: 'Открыли карточку товара',
     certificate_configuration_submitted: 'Заявки на сертификат',
     portfolio_filter_selected: 'Фильтры портфолио',
     carousel_engaged: 'Просмотры подборок',

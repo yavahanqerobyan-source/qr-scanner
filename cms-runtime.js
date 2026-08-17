@@ -107,21 +107,16 @@
   const renderProducts = () => {
     if (!shopGrid) return;
     const products = cms.getProducts().filter((product) => product.published);
-    shopGrid.innerHTML = products.map((product, index) => {
-      const message = 'Здравствуйте, Юлия! Хочу уточнить наличие работы «' + product.title + '».';
-      const link = 'https://t.me/artist_julia?text=' + encodeURIComponent(message);
-      const isSold = product.status === 'sold';
-      const action = isSold
-        ? '<span class="shop-card-action is-disabled">Работа продана</span>'
-        : '<a class="shop-card-action" href="' + link + '" target="_blank" rel="noopener noreferrer" data-product-inquiry data-product-id="' + escapeHTML(product.id) + '" data-product-title="' + escapeHTML(product.title) + '">Уточнить и купить <span aria-hidden="true">↗</span></a>';
+    shopGrid.innerHTML = products.map((product) => {
+      const action = '<span class="shop-card-action">Смотреть работу <span aria-hidden="true">↗</span></span>';
 
-      return '<article class="shop-card' + (index === 0 ? ' shop-card-featured' : '') + '" data-product-category="' + escapeHTML(product.category) + '" data-reveal>'
+      return '<article class="shop-card" data-product-category="' + escapeHTML(product.category) + '" data-product-id="' + escapeHTML(product.id) + '" data-reveal>'
         + '<div class="shop-card-media"><img src="' + escapeHTML(product.image) + '" alt="' + escapeHTML(product.alt || product.title) + '" loading="lazy" decoding="async" />'
         + '<span class="shop-card-status is-' + escapeHTML(product.status) + '">' + escapeHTML(productStatus[product.status] || productStatus.ask) + '</span></div>'
         + '<div class="shop-card-body"><p class="shop-card-kicker">' + escapeHTML(product.medium || 'Авторская работа') + '</p>'
-        + '<h3>' + escapeHTML(product.title) + '</h3><p class="shop-card-description">' + escapeHTML(product.description || '') + '</p>'
+        + '<h3>' + escapeHTML(product.title) + '</h3>'
         + '<div class="shop-card-meta"><span>' + escapeHTML(product.dimensions || 'Размер уточняется') + '</span><strong>' + escapeHTML(formatPrice(product.price)) + '</strong></div>'
-        + action + '</div></article>';
+        + action + '</div><button class="shop-card-hit" type="button" data-product-open="' + escapeHTML(product.id) + '" aria-label="Открыть работу «' + escapeHTML(product.title) + '»"></button></article>';
     }).join('');
     if (shopEmpty) shopEmpty.hidden = products.length > 0;
     shopGrid.hidden = products.length === 0;

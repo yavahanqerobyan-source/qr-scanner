@@ -112,7 +112,7 @@
         </div>
 
         <div class="shop-grid" id="shop-grid" aria-label="Готовые работы Юлии Ребровой">
-          <article class="shop-card shop-card-featured" data-product-category="interior" data-reveal>
+          <article class="shop-card" data-product-category="interior" data-product-id="product-ginkgo" data-reveal>
             <div class="shop-card-media">
               <img src="assets/works/ginkgo-biloba.webp" alt="Интерьерная картина с листьями гинкго билоба" loading="lazy" decoding="async" />
               <span class="shop-card-status is-ask">Наличие уточняется</span>
@@ -120,10 +120,10 @@
             <div class="shop-card-body">
               <p class="shop-card-kicker">Масло, холст</p>
               <h3>Листья гинкго билоба</h3>
-              <p class="shop-card-description">Интерьерная живопись в спокойной бирюзово-зелёной гамме.</p>
               <div class="shop-card-meta"><span>Размер уточняется</span><strong>Цена по запросу</strong></div>
-              <a class="shop-card-action" href="https://t.me/artist_julia" target="_blank" rel="noopener noreferrer">Уточнить и купить <span aria-hidden="true">↗</span></a>
+              <span class="shop-card-action">Смотреть работу <span aria-hidden="true">↗</span></span>
             </div>
+            <button class="shop-card-hit" type="button" data-product-open="product-ginkgo" aria-label="Открыть работу «Листья гинкго билоба»"></button>
           </article>
         </div>
         <div class="shop-empty" id="shop-empty" hidden>
@@ -158,6 +158,35 @@
         </div>
       </section>
     </main>
+
+    <dialog class="product-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
+      <div class="product-dialog-layout">
+        <button class="product-dialog-close" type="button" data-product-close aria-label="Закрыть окно">
+          <span></span><span></span>
+        </button>
+        <div class="product-dialog-media">
+          <img id="product-dialog-image" src="assets/works/ginkgo-biloba.webp" alt="" />
+        </div>
+        <div class="product-dialog-copy">
+          <div class="product-dialog-topline">
+            <span class="shop-card-status is-ask" id="product-dialog-status">Наличие уточняется</span>
+            <span id="product-dialog-category">Интерьерная работа</span>
+          </div>
+          <p class="shop-eyebrow" id="product-dialog-medium">Масло, холст</p>
+          <h2 id="product-dialog-title">Листья гинкго билоба</h2>
+          <p class="product-dialog-description" id="product-dialog-description">Интерьерная живопись в спокойной бирюзово-зелёной гамме.</p>
+          <dl class="product-dialog-facts">
+            <div><dt>Размер</dt><dd id="product-dialog-dimensions">Уточняется</dd></div>
+            <div><dt>Автор</dt><dd>Юлия Реброва</dd></div>
+          </dl>
+          <div class="product-dialog-purchase">
+            <strong id="product-dialog-price">Цена по запросу</strong>
+            <a class="shop-button shop-button-primary" id="product-dialog-buy" href="https://t.me/artist_julia" target="_blank" rel="noopener noreferrer" data-product-inquiry>Купить работу</a>
+          </div>
+          <p class="product-dialog-note">Я лично подтвержу наличие, пришлю дополнительные фото и отвечу на вопросы об оформлении и доставке.</p>
+        </div>
+      </div>
+    </dialog>
 
     <footer class="shop-footer">
       <a class="shop-footer-brand" href="index.html"><img src="assets/brand/yulia-rebrova-logo-light.png" alt="Юлия Реброва" width="480" height="153" /></a>
