@@ -7,6 +7,9 @@
   const validGa4Id = /^G-[A-Z0-9]+$/i.test(ga4Id) ? ga4Id : '';
   const validMetrikaId = /^\d+$/.test(metrikaId) ? Number(metrikaId) : 0;
   const consentKey = 'julia_rebrova_analytics_consent';
+  const visitorKey = 'julia_rebrova_visitor_id';
+  const sessionKey = 'julia_rebrova_session_id';
+  const analyticsConsentVersion = 'analytics-2026-08-17';
 
   window.dataLayer = window.dataLayer || [];
 
@@ -16,10 +19,48 @@
       .map(([key, value]) => [key, typeof value === 'string' ? value.slice(0, 120) : value]),
   );
 
+  const uuid = () => typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (character) => (character ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> character / 4).toString(16));
+
+  const analyticsIdentity = () => {
+    let visitorId = window.localStorage.getItem(visitorKey);
+    let sessionId = window.sessionStorage.getItem(sessionKey);
+    if (!visitorId) {
+      visitorId = uuid();
+      window.localStorage.setItem(visitorKey, visitorId);
+    }
+    if (!sessionId) {
+      sessionId = uuid();
+      window.sessionStorage.setItem(sessionKey, sessionId);
+    }
+    return { visitorId, sessionId };
+  };
+
+  const sendServerEvent = (eventName, properties) => {
+    try {
+      if (window.localStorage.getItem(consentKey) !== 'granted') return;
+      const identity = analyticsIdentity();
+      fetch('/api/events', {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          consent: true,
+          consentVersion: analyticsConsentVersion,
+          events: [{ ...identity, name: eventName, page: window.location.pathname, properties, occurredAt: new Date().toISOString() }],
+        }),
+      }).catch(() => {});
+    } catch {
+      // Аналитика не должна мешать основной работе сайта.
+    }
+  };
+
   const track = (eventName, properties = {}) => {
     const safeProperties = sanitizeProperties(properties);
     window.dataLayer.push({ event: eventName, ...safeProperties });
     window.JuliaCMS?.recordEvent(eventName, safeProperties);
+    sendServerEvent(eventName, safeProperties);
 
     if (typeof window.gtag === 'function') {
       window.gtag('event', eventName, safeProperties);
@@ -78,11 +119,33 @@
   const setConsent = (granted) => {
     try {
       window.localStorage.setItem(consentKey, granted ? 'granted' : 'denied');
+      if (!granted) {
+        window.localStorage.removeItem(visitorKey);
+        window.sessionStorage.removeItem(sessionKey);
+      }
     } catch {
       // Tracking remains available in-memory when storage is unavailable.
     }
 
-    if (granted) enableProviders();
+    document.querySelector('[data-consent-banner]')?.remove();
+    if (granted) {
+      enableProviders();
+      sendServerEvent('analytics_consent_granted', { page: window.location.pathname });
+      sendServerEvent('page_view', { page: document.body.dataset.page || 'home', consent_activation: true });
+    } else if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', { analytics_storage: 'denied' });
+    }
+  };
+
+  const showConsentBanner = () => {
+    const banner = document.createElement('aside');
+    banner.className = 'consent-banner';
+    banner.dataset.consentBanner = '';
+    banner.setAttribute('aria-label', 'Настройки аналитики');
+    banner.innerHTML = '<div><p class="consent-banner-kicker">Приватность</p><p>Я использую необязательную аналитику, чтобы понимать, какие работы интересны посетителям. Она включится только с вашего согласия. <a href="privacy.html#analytics">Подробнее</a></p></div><div class="consent-banner-actions"><button type="button" data-consent-deny>Только необходимые</button><button type="button" data-consent-accept>Разрешить аналитику</button></div>';
+    document.body.append(banner);
+    banner.querySelector('[data-consent-accept]').addEventListener('click', () => setConsent(true));
+    banner.querySelector('[data-consent-deny]').addEventListener('click', () => setConsent(false));
   };
 
   window.siteAnalytics = Object.freeze({
@@ -93,7 +156,9 @@
   });
 
   try {
-    if (window.localStorage.getItem(consentKey) === 'granted') enableProviders();
+    const storedConsent = window.localStorage.getItem(consentKey);
+    if (storedConsent === 'granted') enableProviders();
+    else if (!storedConsent) showConsentBanner();
   } catch {
     // No external provider is loaded without an explicit stored consent signal.
   }
@@ -102,6 +167,13 @@
     if (!(event.target instanceof Element)) return;
     const target = event.target.closest('a, button');
     if (!target) return;
+
+    if (target.matches('[data-revoke-analytics]')) {
+      setConsent(false);
+      target.textContent = 'Аналитика отключена';
+      target.disabled = true;
+      return;
+    }
 
     const text = target.textContent.trim().replace(/\s+/g, ' ').slice(0, 80);
     const href = target.getAttribute('href') || '';

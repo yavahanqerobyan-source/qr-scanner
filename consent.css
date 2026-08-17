@@ -1,0 +1,11 @@
+.consent-banner { position: fixed; right: clamp(14px, 3vw, 42px); bottom: clamp(14px, 3vw, 34px); z-index: 120; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; width: min(720px, calc(100% - 28px)); padding: 20px 22px; border: 1px solid rgba(255,255,255,.42); border-radius: 18px; background: rgba(247,242,237,.94); color: #332d33; box-shadow: 0 24px 70px rgba(44,35,41,.22); backdrop-filter: blur(20px) saturate(1.08); animation: consentIn 480ms cubic-bezier(.22,1,.36,1) both; }
+.consent-banner p { margin: 0; color: #6d6469; font: 12px/1.55 "Golos Atelier", "Golos Local", sans-serif; }
+.consent-banner .consent-banner-kicker { margin-bottom: 5px; color: #866647; font-size: 8px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.consent-banner a { color: #574952; text-decoration: underline; text-underline-offset: 3px; }
+.consent-banner-actions { display: flex; gap: 8px; }
+.consent-banner button { min-height: 42px; padding: 0 16px; border: 1px solid rgba(83,69,77,.2); border-radius: 999px; background: rgba(255,253,249,.7); color: #574952; cursor: pointer; font: 600 9px/1 "Golos Atelier", "Golos Local", sans-serif; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.consent-banner button:last-child { border-color: transparent; background: linear-gradient(135deg,#7c6673,#5d4c56); color: #fff; }
+.consent-banner button:focus-visible { outline: 3px solid rgba(134,102,71,.3); outline-offset: 3px; }
+@keyframes consentIn { from { opacity: 0; transform: translateY(18px) scale(.985); } }
+@media (max-width: 680px) { .consent-banner { right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); left: 8px; grid-template-columns: 1fr; width: auto; gap: 14px; padding: 17px; border-radius: 15px; } .consent-banner-actions { display: grid; grid-template-columns: 1fr 1fr; } .consent-banner button { min-height: 46px; padding: 0 10px; font-size: 8px; white-space: normal; } }
+@media (prefers-reduced-motion: reduce) { .consent-banner { animation: none; } }

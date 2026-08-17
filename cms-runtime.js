@@ -159,8 +159,11 @@
         type: 'portrait',
         name,
         channel: String(data.get('messenger') || 'telegram'),
-        title: name ? 'Заявка от ' + name : 'Заявка на портрет',
+        title: 'Заявка на портрет',
         detail: story || 'Клиент перешёл в мессенджер без описания.',
+        consent: data.get('personal-data-consent') === 'yes',
+        consentVersion: 'pd-2026-08-17',
+        formId: 'portrait-brief',
       });
     });
 
@@ -171,26 +174,24 @@
         channel: 'telegram',
         title: 'Интерес к сертификату',
         detail: 'Вариант: ' + String(data.get('certificate-package') || 'подарок') + ', формат: ' + String(data.get('certificate-format') || 'не выбран'),
+        consent: data.get('personal-data-consent') === 'yes',
+        consentVersion: 'pd-2026-08-17',
+        formId: 'certificate-builder',
       });
     });
 
     document.addEventListener('click', (event) => {
       const link = event.target.closest('[data-product-inquiry]');
       if (!link) return;
-      cms.addLead({
-        type: 'product',
-        channel: 'telegram',
-        title: 'Интерес к готовой работе',
-        detail: link.dataset.productTitle || 'Товар из магазина',
-        productId: link.dataset.productId || '',
-      });
       cms.recordEvent('product_inquiry_started', { product_id: link.dataset.productId || '' });
     });
   };
 
-  renderPortfolio();
-  renderProducts();
-  initShopFilters();
-  captureLeads();
-  cms.recordEvent('page_view', { page: document.body.dataset.page || 'home' });
+  Promise.resolve(cms.ready).finally(() => {
+    renderPortfolio();
+    renderProducts();
+    initShopFilters();
+    captureLeads();
+    cms.recordEvent('page_view', { page: document.body.dataset.page || 'home' });
+  });
 })();

@@ -34,6 +34,7 @@
     <title>Портреты маслом на заказ — Юлия Реброва, Ростов-на-Дону</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="consent.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -777,6 +778,10 @@
               <span><strong>MAX</strong><small>по номеру +7 900 133-53-05</small></span>
             </label>
           </fieldset>
+          <label class="legal-consent">
+            <input type="checkbox" name="personal-data-consent" value="yes" required />
+            <span>Я даю отдельное <a href="consent.html" target="_blank">согласие на обработку персональных данных</a> и ознакомлен(а) с <a href="privacy.html" target="_blank">Политикой конфиденциальности</a>.</span>
+          </label>
           <button class="button button-primary button-wide" type="submit">
             Перейти в мессенджер
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -864,6 +869,11 @@
             <p><strong>Цена выбранного формата фиксируется на 6 месяцев</strong> с даты покупки. После этого сертификат не сгорает: его номинал полностью засчитывается по актуальному прайсу, а возможная разница согласуется перед заказом. Сертификат можно передать другому человеку; неиспользованный номинал возвращается по заявлению.</p>
           </aside>
 
+          <label class="legal-consent legal-consent-certificate">
+            <input type="checkbox" name="personal-data-consent" value="yes" required />
+            <span>Я даю отдельное <a href="consent.html" target="_blank">согласие на обработку данных</a> и принимаю <a href="terms.html#certificates" target="_blank">условия сертификата</a>.</span>
+          </label>
+
           <button class="button button-primary certificate-submit" type="submit">
             Сохранить выбор и написать Юлии
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -888,7 +898,7 @@
         <img class="brand-logo" src="assets/brand/yulia-rebrova-logo-light.png" alt="" width="480" height="153" loading="lazy" />
       </a>
       <p>Портреты маслом на заказ · Ростов-на-Дону · Доставка по России</p>
-      <p class="footer-note">© 2026 Юлия Реброва</p>
+      <div class="footer-legal"><a href="privacy.html">Конфиденциальность</a><a href="consent.html">Согласие</a><a href="terms.html">Условия заказа</a><span>© 2026 Юлия Реброва</span></div>
     </footer>
   </body>
 </html>

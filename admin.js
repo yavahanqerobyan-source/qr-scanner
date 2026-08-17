@@ -65,12 +65,13 @@
     const publishedProducts = products.filter((item) => item.published).length;
     const newLeads = leads.filter((lead) => lead.status === 'new').length;
     const pageViews = events.filter((event) => event.name === 'page_view').length;
+    const uniqueVisitors = new Set(events.filter((event) => event.visitorId).map((event) => event.visitorId)).size;
 
     document.querySelector('#dashboard-metrics').innerHTML = [
       metric('Работы на сайте', publishedWorks, 'из ' + works.length + ' в панели'),
       metric('Товары в витрине', publishedProducts, products.filter((item) => item.status === 'available').length + ' в наличии'),
       metric('Новые обращения', newLeads, leads.length ? 'всего ' + leads.length : 'пока нет'),
-      metric('Просмотры · 30 дней', pageViews, 'в этом браузере'),
+      metric('Посетители · 30 дней', uniqueVisitors || '—', pageViews + ' просмотров'),
     ].join('');
 
     const recent = leads.slice(0, 5);
@@ -128,7 +129,7 @@
     const contacts = events.filter((event) => ['contact_clicked', 'lead_form_submitted', 'product_inquiry_started', 'certificate_configuration_submitted'].includes(event.name)).length;
     const conversion = pageViews ? ((leads.length / pageViews) * 100).toFixed(1).replace('.', ',') + '%' : '—';
     const shopInterest = events.filter((event) => event.name === 'product_inquiry_started').length;
-    document.querySelector('#analytics-metrics').innerHTML = [metric('Просмотры', pageViews, 'за 30 дней'), metric('Целевые действия', contacts, 'переходы и заявки'), metric('Конверсия в обращение', conversion, 'обращения / просмотры'), metric('Интерес к магазину', shopInterest, 'начали диалог о товаре')].join('');
+    document.querySelector('#analytics-metrics').innerHTML = [metric('Уникальные посетители', uniqueVisitors || '—', pageViews + ' просмотров за 30 дней'), metric('Целевые действия', contacts, 'переходы и заявки'), metric('Конверсия в обращение', conversion, 'обращения / просмотры'), metric('Интерес к магазину', shopInterest, 'начали диалог о товаре')].join('');
 
     const days = Array.from({ length: 7 }, (_, index) => {
       const date = new Date();
@@ -256,12 +257,12 @@
         published: form.elements.published.checked,
       };
       const next = current ? existing.map((item) => item.id === current.id ? record : item) : [record, ...existing];
-      cms.savePortfolio(next);
+      await cms.savePortfolio(next);
       workDialog.close();
       renderAll();
       showToast('Работа сохранена и готова к публикации.');
     } catch (error) {
-      showToast(error.name === 'QuotaExceededError' ? 'Не хватает места в браузере. Скачайте резервную копию и уменьшите изображение.' : error.message);
+      showToast(error.message || 'Не удалось сохранить работу.');
     }
   };
 
@@ -288,12 +289,12 @@
         published: form.elements.published.checked,
       };
       const next = current ? existing.map((item) => item.id === current.id ? record : item) : [record, ...existing];
-      cms.saveProducts(next);
+      await cms.saveProducts(next);
       productDialog.close();
       renderAll();
       showToast('Товар сохранён. Витрина обновлена.');
     } catch (error) {
-      showToast(error.name === 'QuotaExceededError' ? 'Не хватает места в браузере. Уменьшите изображение.' : error.message);
+      showToast(error.message || 'Не удалось сохранить товар.');
     }
   };
 
@@ -313,10 +314,10 @@
     link.download = 'julia-rebrova-site-backup-' + new Date().toISOString().slice(0, 10) + '.json';
     link.click();
     URL.revokeObjectURL(url);
-    showToast('Резервная копия сохранена.');
+    showToast('Копия портфолио и магазина сохранена.');
   };
 
-  document.addEventListener('click', (event) => {
+  document.addEventListener('click', async (event) => {
     const nav = event.target.closest('[data-admin-nav]');
     if (nav) switchView(nav.dataset.adminNav);
     const go = event.target.closest('[data-go-view]');
@@ -331,26 +332,38 @@
 
     const deleteWork = event.target.closest('[data-delete-work]');
     if (deleteWork && window.confirm('Удалить эту работу из панели и с сайта?')) {
-      cms.savePortfolio(cms.getPortfolio().filter((item) => item.id !== deleteWork.dataset.deleteWork));
-      renderAll();
-      showToast('Работа удалена.');
+      try {
+        await cms.savePortfolio(cms.getPortfolio().filter((item) => item.id !== deleteWork.dataset.deleteWork));
+        renderAll();
+        showToast('Работа удалена.');
+      } catch (error) {
+        showToast(error.message || 'Не удалось удалить работу.');
+      }
     }
     const deleteProduct = event.target.closest('[data-delete-product]');
     if (deleteProduct && window.confirm('Удалить этот товар из магазина?')) {
-      cms.saveProducts(cms.getProducts().filter((item) => item.id !== deleteProduct.dataset.deleteProduct));
-      renderAll();
-      showToast('Товар удалён.');
+      try {
+        await cms.saveProducts(cms.getProducts().filter((item) => item.id !== deleteProduct.dataset.deleteProduct));
+        renderAll();
+        showToast('Товар удалён.');
+      } catch (error) {
+        showToast(error.message || 'Не удалось удалить товар.');
+      }
     }
 
     if (event.target.closest('[data-close-dialog]')) event.target.closest('dialog')?.close();
   });
 
-  document.addEventListener('change', (event) => {
+  document.addEventListener('change', async (event) => {
     const status = event.target.closest('[data-lead-status]');
     if (status) {
-      cms.saveLeads(cms.getLeads().map((lead) => lead.id === status.dataset.leadStatus ? { ...lead, status: status.value } : lead));
-      renderAll();
-      showToast('Статус обращения обновлён.');
+      try {
+        await cms.updateLeadStatus(status.dataset.leadStatus, status.value);
+        renderAll();
+        showToast('Статус обращения обновлён.');
+      } catch (error) {
+        showToast(error.message || 'Не удалось обновить статус.');
+      }
     }
   });
 
@@ -373,7 +386,7 @@
     const file = event.target.files[0];
     if (!file) return;
     try {
-      cms.importData(JSON.parse(await file.text()));
+      await cms.importData(JSON.parse(await file.text()));
       renderAll();
       showToast('Резервная копия восстановлена.');
     } catch (error) {
@@ -388,7 +401,10 @@
     switchView(location.hash.slice(1) || 'dashboard', false);
   });
   window.addEventListener('storage', renderAll);
+  window.addEventListener('julia-cms-sync-error', (event) => showToast(event.detail?.message || 'Не удалось синхронизировать данные.'));
 
-  renderAll();
-  switchView(location.hash.slice(1) || 'dashboard', false);
+  Promise.resolve(cms.ready).finally(() => {
+    renderAll();
+    switchView(location.hash.slice(1) || 'dashboard', false);
+  });
 })();

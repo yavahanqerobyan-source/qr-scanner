@@ -13,6 +13,8 @@ const OTP_TTL_MS = 10 * 60 * 1000;
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 const SESSION_COOKIE = 'julia_admin_session';
 const MAX_BODY_BYTES = 8 * 1024;
+const MAX_CONTENT_BODY_BYTES = 32 * 1024 * 1024;
+const CONSENT_VERSION = 'pd-2026-08-17';
 
 function loadDotEnv(source) {
   for (const rawLine of source.split(/\r?\n/)) {
@@ -34,6 +36,8 @@ if (existsSync(ENV_PATH)) loadDotEnv(await readFile(ENV_PATH, 'utf8'));
 const PORT = Number(process.env.PORT || 4173);
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const HOST = String(process.env.HOST || (IS_PRODUCTION ? '0.0.0.0' : '127.0.0.1'));
+const TRUST_PROXY = String(process.env.TRUST_PROXY || 'false').toLowerCase() === 'true';
+const database = await import('./database.mjs');
 
 const config = {
   adminEmail: String(process.env.ADMIN_EMAIL || '').trim().toLowerCase(),
@@ -55,6 +59,7 @@ const loginLimiter = new SlidingWindowLimiter({ limit: 5, windowMs: 15 * 60 * 10
 const loginIpLimiter = new SlidingWindowLimiter({ limit: 20, windowMs: 15 * 60 * 1000 });
 const otpLimiter = new SlidingWindowLimiter({ limit: 8, windowMs: 15 * 60 * 1000 });
 const otpIpLimiter = new SlidingWindowLimiter({ limit: 24, windowMs: 15 * 60 * 1000 });
+const publicWriteLimiter = new SlidingWindowLimiter({ limit: 60, windowMs: 15 * 60 * 1000 });
 
 const MIME_TYPES = new Map([
   ['.html', 'text/html; charset=utf-8'],
@@ -72,8 +77,10 @@ const MIME_TYPES = new Map([
 ]);
 
 const DENIED_FILES = new Set([
-  '.env', '.env.example', '.gitignore', 'package.json', 'server.mjs', 'auth-core.mjs', 'smtp-client.mjs', 'README.md',
+  '.env', '.env.example', '.gitignore', 'package.json', 'package-lock.json', 'server.mjs', 'auth-core.mjs', 'smtp-client.mjs', 'database.mjs', 'README.md',
 ]);
+
+const DENIED_DIRECTORIES = new Set(['migrations', 'node_modules', 'scripts', 'test', 'legal']);
 
 function securityHeaders(pathname) {
   const headers = {
@@ -100,6 +107,10 @@ function redirect(response, location) {
 }
 
 function getClientIp(request) {
+  if (TRUST_PROXY) {
+    const forwarded = String(request.headers['x-forwarded-for'] || '').split(',')[0].trim();
+    if (forwarded) return forwarded;
+  }
   return request.socket.remoteAddress || 'unknown';
 }
 
@@ -142,12 +153,12 @@ function verifySameOrigin(request) {
   }
 }
 
-async function readJsonBody(request) {
+async function readJsonBody(request, maxBytes = MAX_BODY_BYTES) {
   let size = 0;
   const chunks = [];
   for await (const chunk of request) {
     size += chunk.length;
-    if (size > MAX_BODY_BYTES) throw Object.assign(new Error('Слишком большой запрос.'), { status: 413 });
+    if (size > maxBytes) throw Object.assign(new Error('Слишком большой запрос.'), { status: 413 });
     chunks.push(chunk);
   }
   try {
@@ -155,6 +166,129 @@ async function readJsonBody(request) {
   } catch {
     throw Object.assign(new Error('Некорректный запрос.'), { status: 400 });
   }
+}
+
+function requireAdmin(request, response) {
+  const session = getSession(request);
+  if (!session) {
+    json(response, 401, { error: 'Требуется вход в панель.' });
+    return null;
+  }
+  return session;
+}
+
+function cleanText(value, maxLength, fallback = '') {
+  const text = String(value ?? fallback).trim().replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+  return text.slice(0, maxLength);
+}
+
+function validateContentItems(value, kind) {
+  if (!Array.isArray(value) || value.length > 200) throw Object.assign(new Error('Некорректный список контента.'), { status: 400 });
+  const ids = new Set();
+  return value.map((raw) => {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw Object.assign(new Error('Некорректная запись контента.'), { status: 400 });
+    const id = cleanText(raw.id, 100);
+    if (!/^[a-zA-Z0-9_-]+$/.test(id) || ids.has(id)) throw Object.assign(new Error('Некорректный или повторяющийся идентификатор.'), { status: 400 });
+    ids.add(id);
+    const title = cleanText(raw.title, 180);
+    if (!title) throw Object.assign(new Error('У каждой записи должно быть название.'), { status: 400 });
+    const item = { ...raw, id, title, published: Boolean(raw.published) };
+    const image = cleanText(raw.image, 4 * 1024 * 1024);
+    if (image && !image.startsWith('data:image/webp;base64,') && !/^(?:https:\/\/|assets\/)[^\s]+$/i.test(image)) {
+      throw Object.assign(new Error('Недопустимый адрес изображения.'), { status: 400 });
+    }
+    item.image = image;
+    if (kind === 'product') {
+      item.status = ['available', 'reserved', 'sold', 'ask'].includes(raw.status) ? raw.status : 'ask';
+      item.price = cleanText(raw.price, 20);
+    }
+    return item;
+  });
+}
+
+async function publicContent(response) {
+  const content = await database.getPublicContent();
+  return json(response, 200, content, { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' });
+}
+
+async function createLead(request, response) {
+  const limit = publicWriteLimiter.consume(getClientIp(request));
+  if (!limit.allowed) return json(response, 429, { error: 'Слишком много запросов. Попробуйте позже.' }, { 'Retry-After': String(Math.ceil(limit.retryAfterMs / 1000)) });
+  const body = await readJsonBody(request);
+  if (body.consent !== true || body.consentVersion !== CONSENT_VERSION) {
+    return json(response, 400, { error: 'Нужно подтвердить согласие на обработку персональных данных.' });
+  }
+  const type = ['portrait', 'certificate', 'product'].includes(body.type) ? body.type : 'portrait';
+  const channel = ['telegram', 'max', 'phone', 'site'].includes(body.channel) ? body.channel : 'site';
+  const name = cleanText(body.name, 120);
+  const detail = cleanText(body.detail, 2000);
+  const title = {
+    portrait: 'Заявка на портрет',
+    certificate: 'Интерес к подарочному сертификату',
+    product: 'Интерес к готовой работе',
+  }[type];
+  const productId = cleanText(body.productId, 100);
+  if (!detail && type === 'portrait') return json(response, 400, { error: 'Добавьте краткое описание заказа.' });
+  const now = new Date();
+  const evidenceBase = `${getClientIp(request)}|${request.headers['user-agent'] || ''}|${body.formId || ''}`;
+  const result = await database.insertLead({
+    type,
+    channel,
+    title,
+    productId,
+    name,
+    detail,
+    consentVersion: CONSENT_VERSION,
+    consentAt: now,
+    source: cleanText(body.source, 60, 'website'),
+    evidence: { requestHash: database.hashEvidence(evidenceBase), formId: cleanText(body.formId, 80) },
+  });
+  return json(response, 201, { ok: true, id: result.id });
+}
+
+async function recordEvents(request, response) {
+  const limit = publicWriteLimiter.consume(getClientIp(request));
+  if (!limit.allowed) return json(response, 429, { error: 'Слишком много запросов.' });
+  const body = await readJsonBody(request, 32 * 1024);
+  if (body.consent !== true || body.consentVersion !== 'analytics-2026-08-17') return json(response, 400, { error: 'Нет согласия на аналитику.' });
+  const values = Array.isArray(body.events) ? body.events.slice(0, 20) : [];
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  const events = values.map((raw) => {
+    const visitorId = cleanText(raw.visitorId, 36);
+    const sessionId = cleanText(raw.sessionId, 36);
+    if (!uuidPattern.test(visitorId) || !uuidPattern.test(sessionId)) throw Object.assign(new Error('Некорректный идентификатор аналитики.'), { status: 400 });
+    const occurredAt = new Date(raw.occurredAt);
+    if (Number.isNaN(occurredAt.getTime()) || Math.abs(Date.now() - occurredAt.getTime()) > 24 * 60 * 60 * 1000) throw Object.assign(new Error('Некорректное время события.'), { status: 400 });
+    const properties = Object.fromEntries(Object.entries(raw.properties || {}).filter(([, entry]) => ['string', 'number', 'boolean'].includes(typeof entry)).slice(0, 20).map(([key, entry]) => [cleanText(key, 50), typeof entry === 'string' ? cleanText(entry, 120) : entry]));
+    return { visitorId, sessionId, name: cleanText(raw.name, 80), page: cleanText(raw.page, 120, '/'), properties, occurredAt };
+  }).filter((event) => event.name);
+  if (events.length) await database.insertAnalyticsEvents(events, 'analytics-2026-08-17');
+  return json(response, 202, { ok: true, accepted: events.length });
+}
+
+async function adminSnapshot(request, response) {
+  const session = requireAdmin(request, response);
+  if (!session) return;
+  return json(response, 200, await database.getAdminSnapshot());
+}
+
+async function replaceAdminContent(request, response, kind) {
+  const session = requireAdmin(request, response);
+  if (!session) return;
+  const body = await readJsonBody(request, MAX_CONTENT_BODY_BYTES);
+  const items = validateContentItems(body.items, kind);
+  await database.replaceContent(kind, items, session.email);
+  return json(response, 200, { ok: true, count: items.length });
+}
+
+async function changeLeadStatus(request, response, id) {
+  const session = requireAdmin(request, response);
+  if (!session) return;
+  const body = await readJsonBody(request);
+  const status = cleanText(body.status, 30);
+  if (!['new', 'contacted', 'in_progress', 'completed', 'archived'].includes(status)) return json(response, 400, { error: 'Некорректный статус.' });
+  await database.updateLeadStatus(id, status, session.email);
+  return json(response, 200, { ok: true });
 }
 
 function isConfigured() {
@@ -253,7 +387,13 @@ async function serveStatic(request, response, pathname) {
   const decoded = decodeURIComponent(route);
   const relative = decoded.replace(/^[/\\]+/, '');
   const target = path.resolve(ROOT, relative);
-  if (!target.startsWith(`${ROOT}${path.sep}`) || relative.split(/[\\/]/).some((part) => part.startsWith('.')) || DENIED_FILES.has(relative)) {
+  const relativeParts = relative.split(/[\\/]/);
+  const extension = path.extname(relative).toLowerCase();
+  if (!target.startsWith(`${ROOT}${path.sep}`)
+      || relativeParts.some((part) => part.startsWith('.'))
+      || DENIED_DIRECTORIES.has(relativeParts[0])
+      || DENIED_FILES.has(relative)
+      || ['.mjs', '.sql', '.md', '.lock'].includes(extension)) {
     response.writeHead(404, securityHeaders(pathname));
     return response.end('Not found');
   }
@@ -284,7 +424,7 @@ const server = http.createServer(async (request, response) => {
     const url = new URL(request.url, `http://${request.headers.host || 'localhost'}`);
     const pathname = url.pathname;
 
-    if (request.method === 'POST' && pathname.startsWith('/api/auth/') && !verifySameOrigin(request)) {
+    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method) && pathname.startsWith('/api/') && !verifySameOrigin(request)) {
       return json(response, 403, { error: 'Запрос отклонён.' });
     }
     if (request.method === 'POST' && pathname === '/api/auth/request-code') return await requestLoginCode(request, response);
@@ -293,6 +433,18 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'GET' && pathname === '/api/auth/session') {
       return json(response, getSession(request) ? 200 : 401, { authenticated: Boolean(getSession(request)) });
     }
+    if (request.method === 'GET' && pathname === '/api/health') {
+      const databaseStatus = database.databaseEnabled ? await database.checkDatabase().then(() => 'ok').catch(() => 'error') : 'not_configured';
+      return json(response, databaseStatus === 'error' ? 503 : 200, { status: 'ok', database: databaseStatus });
+    }
+    if (request.method === 'GET' && pathname === '/api/content') return await publicContent(response);
+    if (request.method === 'POST' && pathname === '/api/leads') return await createLead(request, response);
+    if (request.method === 'POST' && pathname === '/api/events') return await recordEvents(request, response);
+    if (request.method === 'GET' && pathname === '/api/admin/snapshot') return await adminSnapshot(request, response);
+    if (request.method === 'PUT' && pathname === '/api/admin/portfolio') return await replaceAdminContent(request, response, 'portfolio');
+    if (request.method === 'PUT' && pathname === '/api/admin/products') return await replaceAdminContent(request, response, 'product');
+    const leadStatusMatch = pathname.match(/^\/api\/admin\/leads\/([0-9a-f-]{36})$/i);
+    if (request.method === 'PATCH' && leadStatusMatch) return await changeLeadStatus(request, response, leadStatusMatch[1]);
     if (!['GET', 'HEAD'].includes(request.method)) {
       return json(response, 405, { error: 'Метод не поддерживается.' }, { Allow: 'GET, HEAD, POST' });
     }
@@ -312,6 +464,7 @@ const cleanupTimer = setInterval(() => {
   loginIpLimiter.prune(now);
   otpLimiter.prune(now);
   otpIpLimiter.prune(now);
+  publicWriteLimiter.prune(now);
 }, 5 * 60 * 1000);
 cleanupTimer.unref();
 
