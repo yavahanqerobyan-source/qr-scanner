@@ -355,56 +355,63 @@ document.querySelectorAll('.reveal').forEach((reveal) => {
   frame.addEventListener('pointercancel', endDrag);
 });
 
-const workFilterButtons = [...document.querySelectorAll('[data-work-filter]')];
-const workCards = [...document.querySelectorAll('[data-work-type]')];
 const worksStatus = document.querySelector('#works-status');
 const workFilters = document.querySelector('.work-filters');
 const worksGrid = document.querySelector('.works-grid');
 const mobileWorksQuery = window.matchMedia('(max-width: 680px)');
 
-workFilterButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const selectedType = button.dataset.workFilter;
-    let visibleCount = 0;
+const initializeWorkFilters = () => {
+  const workFilterButtons = [...document.querySelectorAll('[data-work-filter]')];
+  workFilterButtons.forEach((button) => {
+    if (button.dataset.workFilterBound) return;
+    button.dataset.workFilterBound = 'true';
+    button.addEventListener('click', () => {
+      const workCards = [...document.querySelectorAll('[data-work-type]')];
+      const selectedType = button.dataset.workFilter;
+      let visibleCount = 0;
 
-    workFilterButtons.forEach((filterButton) => {
-      const isActive = filterButton === button;
-      filterButton.classList.toggle('is-active', isActive);
-      filterButton.setAttribute('aria-pressed', String(isActive));
-    });
-
-    let firstVisibleCard = null;
-
-    workCards.forEach((card) => {
-      const isVisible = selectedType === 'all' || card.dataset.workType === selectedType;
-      card.hidden = !isVisible;
-      if (isVisible) {
-        firstVisibleCard ??= card;
-        visibleCount += 1;
-      }
-    });
-
-    worksStatus.textContent = `Показано: ${visibleCount}`;
-
-    if (mobileWorksQuery.matches && firstVisibleCard && workFilters) {
-      const centeredFilterLeft = button.offsetLeft - ((workFilters.clientWidth - button.offsetWidth) / 2);
-      workFilters.scrollTo({
-        left: Math.max(0, centeredFilterLeft),
-        behavior: reduceMotion ? 'auto' : 'smooth',
+      workFilterButtons.forEach((filterButton) => {
+        const isActive = filterButton === button;
+        filterButton.classList.toggle('is-active', isActive);
+        filterButton.setAttribute('aria-pressed', String(isActive));
       });
 
-      window.requestAnimationFrame(() => {
-        worksGrid?.scrollTo({ left: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-        const stickyOffset = header.offsetHeight + workFilters.offsetHeight + 16;
-        const cardTop = (worksGrid || firstVisibleCard).getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({
-          top: Math.max(0, cardTop - stickyOffset),
+      let firstVisibleCard = null;
+
+      workCards.forEach((card) => {
+        const isVisible = selectedType === 'all' || card.dataset.workType === selectedType;
+        card.hidden = !isVisible;
+        if (isVisible) {
+          firstVisibleCard ??= card;
+          visibleCount += 1;
+        }
+      });
+
+      if (worksStatus) worksStatus.textContent = `Показано: ${visibleCount}`;
+
+      if (mobileWorksQuery.matches && firstVisibleCard && workFilters) {
+        const centeredFilterLeft = button.offsetLeft - ((workFilters.clientWidth - button.offsetWidth) / 2);
+        workFilters.scrollTo({
+          left: Math.max(0, centeredFilterLeft),
           behavior: reduceMotion ? 'auto' : 'smooth',
         });
-      });
-    }
+
+        window.requestAnimationFrame(() => {
+          worksGrid?.scrollTo({ left: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+          const stickyOffset = header.offsetHeight + workFilters.offsetHeight + 16;
+          const cardTop = (worksGrid || firstVisibleCard).getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: Math.max(0, cardTop - stickyOffset),
+            behavior: reduceMotion ? 'auto' : 'smooth',
+          });
+        });
+      }
+    });
   });
-});
+};
+
+initializeWorkFilters();
+document.addEventListener('julia-portfolio-rendered', initializeWorkFilters);
 
 document.querySelectorAll('[data-swipe-hint-for]').forEach((hint) => {
   const carousel = document.getElementById(hint.dataset.swipeHintFor);

@@ -141,16 +141,22 @@
       <form class="admin-editor" id="work-form" method="dialog">
         <div class="admin-editor-head"><div><p class="admin-eyebrow">Портфолио</p><h2 id="work-dialog-title">Новая работа</h2></div><button class="admin-dialog-close" type="button" data-close-dialog aria-label="Закрыть">×</button></div>
         <input type="hidden" name="id" />
-        <input type="hidden" name="image" />
         <div class="admin-editor-grid">
-          <label class="admin-image-field">
-            <span>Изображение</span>
-            <span class="admin-image-preview"><img alt="Предпросмотр работы" /><b>Выбрать фотографию</b><small>JPG, PNG или WebP · до 15 МБ</small></span>
-            <input type="file" name="imageFile" accept="image/jpeg,image/png,image/webp" />
-          </label>
+          <div class="admin-image-field admin-gallery-field">
+            <span class="admin-field-label">Фотографии работы</span>
+            <label class="admin-gallery-upload">
+              <span class="admin-gallery-upload-mark" aria-hidden="true">＋</span>
+              <b>Добавить фотографии</b>
+              <small>До 8 изображений · JPG, PNG или WebP · до 15 МБ каждое</small>
+              <input type="file" name="imageFiles" accept="image/jpeg,image/png,image/webp" multiple />
+            </label>
+            <div class="admin-gallery-list" id="work-images-list" aria-live="polite"></div>
+            <p class="admin-gallery-note">Первая фотография показывается как обложка. Остальные клиент сможет листать в карточке работы.</p>
+          </div>
           <div class="admin-fields">
             <label>Название<input name="title" required maxlength="80" /></label>
-            <label>Категория<select name="type" required><option value="personal">Личные</option><option value="family">Семейные</option><option value="archive">По архивным фото</option><option value="pets">С питомцами</option><option value="interior">Для интерьера</option></select></label>
+            <div class="admin-field-group"><span>Категория</span><div class="admin-category-row"><select name="type" required aria-label="Категория работы"></select><button class="admin-inline-action" type="button" data-new-work-category>＋ Новая</button></div></div>
+            <div class="admin-new-category" data-new-category-panel hidden><label>Название новой категории<input name="typeLabelCustom" maxlength="50" placeholder="Например, Пейзажи" /></label><button type="button" data-cancel-work-category>Отмена</button></div>
             <div class="admin-fields-row"><label>Формат<input name="format" maxlength="40" placeholder="Например, 50 × 70 см" /></label><label>Срок<input name="timeline" maxlength="40" placeholder="Например, 4 недели" /></label></div>
             <label>Повод / подпись<input name="occasion" maxlength="80" placeholder="Семейная история" /></label>
             <label>Описание изображения для поиска<input name="alt" maxlength="160" placeholder="Что изображено на картине" /></label>

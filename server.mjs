@@ -193,11 +193,26 @@ function validateContentItems(value, kind) {
     const title = cleanText(raw.title, 180);
     if (!title) throw Object.assign(new Error('У каждой записи должно быть название.'), { status: 400 });
     const item = { ...raw, id, title, published: Boolean(raw.published) };
-    const image = cleanText(raw.image, 4 * 1024 * 1024);
-    if (image && !image.startsWith('data:image/webp;base64,') && !/^(?:https:\/\/|assets\/)[^\s]+$/i.test(image)) {
+    const validateImage = (value) => {
+      const image = cleanText(value, 4 * 1024 * 1024);
+      if (image && !image.startsWith('data:image/webp;base64,') && !/^(?:https:\/\/|assets\/)[^\s]+$/i.test(image)) {
+        throw Object.assign(new Error('Недопустимый адрес изображения.'), { status: 400 });
+      }
+      return image;
+    };
+    const image = validateImage(raw.image);
+    if (Array.isArray(raw.images) && raw.images.length > 7) {
+      throw Object.assign(new Error('Для одной работы можно добавить до 8 фотографий.'), { status: 400 });
+    }
+    if (raw.images !== undefined && !Array.isArray(raw.images)) {
       throw Object.assign(new Error('Недопустимый адрес изображения.'), { status: 400 });
     }
     item.image = image;
+    item.images = Array.isArray(raw.images) ? [...new Set(raw.images.map(validateImage).filter(Boolean))].filter((entry) => entry !== image) : [];
+    if (kind === 'portfolio') {
+      item.type = cleanText(raw.type, 100, 'personal');
+      item.typeLabel = cleanText(raw.typeLabel, 50);
+    }
     if (kind === 'product') {
       item.status = ['available', 'reserved', 'sold', 'ask'].includes(raw.status) ? raw.status : 'ask';
       item.price = cleanText(raw.price, 20);

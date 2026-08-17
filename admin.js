@@ -5,7 +5,7 @@
   if (!cms) return;
 
   const viewTitles = { dashboard: 'Обзор', portfolio: 'Портфолио', shop: 'Магазин', clients: 'Обращения', analytics: 'Аналитика' };
-  const workTypes = { personal: 'Личные', family: 'Семейные', archive: 'Архивные', pets: 'С питомцами', interior: 'Для интерьера' };
+  const workTypes = { personal: 'Личные', family: 'Семейные', archive: 'По архивным фото', pets: 'С питомцами', interior: 'Для интерьера' };
   const productCategories = { interior: 'Интерьерная работа', portrait: 'Портрет', other: 'Другое' };
   const productStatuses = { available: 'В наличии', reserved: 'Зарезервировано', sold: 'Продано', ask: 'Уточняется' };
   const leadTypes = { portrait: 'Портрет', certificate: 'Сертификат', product: 'Готовая работа' };
@@ -96,8 +96,9 @@
     const items = cms.getPortfolio();
     document.querySelector('#portfolio-list').innerHTML = items.length ? items.map((work) => {
       const thumbnail = work.image ? '<img src="' + escapeHTML(work.image) + '" alt="" />' : '';
+      const imageCount = normalizedWorkImages(work).length;
       return '<article class="admin-content-item"><div class="admin-content-thumb">' + thumbnail + '</div>'
-        + '<div class="admin-content-copy"><h3>' + escapeHTML(work.title) + '</h3><p>' + escapeHTML(workTypes[work.type] || work.type) + ' · ' + escapeHTML(work.format || 'Формат не указан') + '</p><span class="admin-status ' + (work.published ? 'is-published' : 'is-draft') + '">' + (work.published ? 'Опубликовано' : 'Черновик') + '</span></div>'
+        + '<div class="admin-content-copy"><h3>' + escapeHTML(work.title) + '</h3><p>' + escapeHTML(work.typeLabel || workTypes[work.type] || work.type) + ' · ' + escapeHTML(work.format || 'Формат не указан') + (imageCount ? ' · ' + imageCount + ' фото' : '') + '</p><span class="admin-status ' + (work.published ? 'is-published' : 'is-draft') + '">' + (work.published ? 'Опубликовано' : 'Черновик') + '</span></div>'
         + '<div class="admin-content-meta"><strong>' + escapeHTML(work.occasion || 'Без подписи') + '</strong><span>' + escapeHTML(work.timeline || 'Срок не указан') + '</span></div>'
         + '<div class="admin-item-actions"><button type="button" data-edit-work="' + escapeHTML(work.id) + '" aria-label="Редактировать ' + escapeHTML(work.title) + '">' + iconEdit + '</button><button type="button" data-delete-work="' + escapeHTML(work.id) + '" aria-label="Удалить ' + escapeHTML(work.title) + '">' + iconDelete + '</button></div></article>';
     }).join('') : emptyState('Нет работ', 'Добавьте первую работу в портфолио.');
@@ -162,6 +163,51 @@
   const workForm = document.querySelector('#work-form');
   const productDialog = document.querySelector('#product-dialog');
   const productForm = document.querySelector('#product-form');
+  const workImagesList = document.querySelector('#work-images-list');
+  const newCategoryPanel = workForm.querySelector('[data-new-category-panel]');
+  let workImages = [];
+  let pendingCategoryId = '';
+  let workImagesProcessing = false;
+
+  const normalizedWorkImages = (work) => [...new Set([work?.image, ...(Array.isArray(work?.images) ? work.images : [])].filter(Boolean))];
+
+  const getWorkCategories = (currentWork) => {
+    const categories = new Map(Object.entries(workTypes));
+    cms.getPortfolio().forEach((work) => {
+      if (work.type) categories.set(work.type, work.typeLabel || categories.get(work.type) || work.type);
+    });
+    if (currentWork?.type) categories.set(currentWork.type, currentWork.typeLabel || categories.get(currentWork.type) || currentWork.type);
+    return categories;
+  };
+
+  const populateWorkCategories = (currentWork) => {
+    const categories = getWorkCategories(currentWork);
+    workForm.elements.type.innerHTML = [...categories].map(([value, label]) => '<option value="' + escapeHTML(value) + '">' + escapeHTML(label) + '</option>').join('');
+    workForm.elements.type.value = currentWork?.type || 'personal';
+  };
+
+  const renderWorkImages = () => {
+    workImagesList.innerHTML = workImages.length ? workImages.map((source, index) => '<article class="admin-gallery-item' + (index === 0 ? ' is-cover' : '') + '">'
+      + '<img src="' + escapeHTML(source) + '" alt="Фотография ' + (index + 1) + '" />'
+      + '<span>' + (index === 0 ? 'Обложка' : String(index + 1).padStart(2, '0')) + '</span>'
+      + '<div class="admin-gallery-item-actions">'
+      + (index > 0 ? '<button type="button" data-work-image-cover="' + index + '">На обложку</button>' : '')
+      + '<button type="button" data-work-image-remove="' + index + '" aria-label="Удалить фотографию ' + (index + 1) + '">Удалить</button>'
+      + '</div></article>').join('') : '<div class="admin-gallery-empty"><strong>Фотографий пока нет</strong><span>Добавьте общий вид и, при желании, детали картины.</span></div>';
+  };
+
+  const toggleNewCategory = (visible) => {
+    newCategoryPanel.hidden = !visible;
+    if (visible) {
+      pendingCategoryId = cms.uid('category');
+      workForm.elements.typeLabelCustom.required = true;
+      window.setTimeout(() => workForm.elements.typeLabelCustom.focus(), 0);
+    } else {
+      pendingCategoryId = '';
+      workForm.elements.typeLabelCustom.required = false;
+      workForm.elements.typeLabelCustom.value = '';
+    }
+  };
 
   const setImagePreview = (form, source) => {
     const preview = form.querySelector('.admin-image-preview');
@@ -174,16 +220,17 @@
     workForm.reset();
     const work = cms.getPortfolio().find((item) => item.id === id);
     workForm.elements.id.value = work?.id || '';
-    workForm.elements.image.value = work?.image || '';
+    workImages = normalizedWorkImages(work);
+    renderWorkImages();
+    populateWorkCategories(work);
+    toggleNewCategory(false);
     workForm.elements.title.value = work?.title || '';
-    workForm.elements.type.value = work?.type || 'personal';
     workForm.elements.format.value = work?.format || '';
     workForm.elements.timeline.value = work?.timeline || '';
     workForm.elements.occasion.value = work?.occasion || '';
     workForm.elements.alt.value = work?.alt || '';
     workForm.elements.published.checked = work ? Boolean(work.published) : true;
     document.querySelector('#work-dialog-title').textContent = work ? 'Редактировать работу' : 'Новая работа';
-    setImagePreview(workForm, work?.image || '');
     workDialog.showModal();
   };
 
@@ -239,20 +286,25 @@
     event.preventDefault();
     const form = event.currentTarget;
     try {
+      if (workImagesProcessing) throw new Error('Подождите, фотографии ещё обрабатываются.');
       const existing = cms.getPortfolio();
       const current = existing.find((item) => item.id === form.elements.id.value);
-      const uploaded = await fileToWebp(form.elements.imageFile.files[0]);
+      const customCategoryLabel = form.elements.typeLabelCustom.value.trim();
+      const type = customCategoryLabel ? pendingCategoryId : form.elements.type.value;
+      const typeLabel = customCategoryLabel || getWorkCategories(current).get(type) || type;
       const record = {
         id: current?.id || cms.uid('work'),
         title: form.elements.title.value.trim(),
-        type: form.elements.type.value,
+        type,
+        typeLabel,
         format: form.elements.format.value.trim() || '—',
         timeline: form.elements.timeline.value.trim() || '—',
         occasion: form.elements.occasion.value.trim() || '—',
-        image: uploaded || form.elements.image.value,
+        image: workImages[0] || '',
+        images: workImages.slice(1),
         alt: form.elements.alt.value.trim() || form.elements.title.value.trim(),
         badge: current?.badge || 'Оригинальная работа',
-        mediaClass: uploaded ? '' : (current?.mediaClass || ''),
+        mediaClass: workImages.some((source) => source.startsWith('data:')) ? '' : (current?.mediaClass || ''),
         layout: current?.layout || 'standard',
         published: form.elements.published.checked,
       };
@@ -306,6 +358,28 @@
     window.setTimeout(() => URL.revokeObjectURL(url), 30000);
   };
 
+  const addWorkImages = async () => {
+    const files = [...workForm.elements.imageFiles.files];
+    workForm.elements.imageFiles.value = '';
+    if (!files.length) return;
+    if (workImages.length + files.length > 8) {
+      showToast('Для одной работы можно добавить до 8 фотографий.');
+      return;
+    }
+    try {
+      workImagesProcessing = true;
+      const converted = [];
+      for (const file of files) converted.push(await fileToWebp(file));
+      workImages = [...workImages, ...converted];
+      renderWorkImages();
+      showToast(converted.length === 1 ? 'Фотография добавлена.' : 'Добавлено фотографий: ' + converted.length + '.');
+    } catch (error) {
+      showToast(error.message || 'Не удалось обработать фотографии.');
+    } finally {
+      workImagesProcessing = false;
+    }
+  };
+
   const downloadBackup = () => {
     const blob = new Blob([JSON.stringify(cms.exportData(), null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -329,6 +403,25 @@
     if (editWork) openWorkEditor(editWork.dataset.editWork);
     const editProduct = event.target.closest('[data-edit-product]');
     if (editProduct) openProductEditor(editProduct.dataset.editProduct);
+
+    if (event.target.closest('[data-new-work-category]')) toggleNewCategory(true);
+    if (event.target.closest('[data-cancel-work-category]')) toggleNewCategory(false);
+    const makeCover = event.target.closest('[data-work-image-cover]');
+    if (makeCover) {
+      const index = Number(makeCover.dataset.workImageCover);
+      if (Number.isInteger(index) && workImages[index]) {
+        workImages = [workImages[index], ...workImages.filter((_, imageIndex) => imageIndex !== index)];
+        renderWorkImages();
+      }
+    }
+    const removeImage = event.target.closest('[data-work-image-remove]');
+    if (removeImage) {
+      const index = Number(removeImage.dataset.workImageRemove);
+      if (Number.isInteger(index)) {
+        workImages = workImages.filter((_, imageIndex) => imageIndex !== index);
+        renderWorkImages();
+      }
+    }
 
     const deleteWork = event.target.closest('[data-delete-work]');
     if (deleteWork && window.confirm('Удалить эту работу из панели и с сайта?')) {
@@ -369,7 +462,7 @@
 
   workForm.addEventListener('submit', saveWork);
   productForm.addEventListener('submit', saveProduct);
-  workForm.elements.imageFile.addEventListener('change', () => previewFile(workForm));
+  workForm.elements.imageFiles.addEventListener('change', addWorkImages);
   productForm.elements.imageFile.addEventListener('change', () => previewFile(productForm));
   document.querySelector('#backup-button').addEventListener('click', downloadBackup);
   document.querySelector('#import-button').addEventListener('click', () => document.querySelector('#import-input').click());

@@ -10,23 +10,35 @@
 
   const portfolioGrid = document.querySelector('#works-carousel');
   const worksStatus = document.querySelector('#works-status');
+  const workFilters = document.querySelector('.work-filters');
+  const defaultWorkCategories = { personal: 'Личные', family: 'Семейные', archive: 'По архивным фото', pets: 'С питомцами', interior: 'Для интерьера' };
 
   const renderPortfolio = () => {
     if (!portfolioGrid) return;
     const works = cms.getPortfolio().filter((work) => work.published);
+    const categories = new Map();
+    works.forEach((work) => {
+      if (work.type) categories.set(work.type, work.typeLabel || defaultWorkCategories[work.type] || work.type);
+    });
+    if (workFilters) {
+      workFilters.innerHTML = '<button type="button" class="work-filter is-active" data-work-filter="all" aria-pressed="true">Все работы</button>'
+        + [...categories].map(([type, label]) => '<button type="button" class="work-filter" data-work-filter="' + escapeHTML(type) + '" aria-pressed="false">' + escapeHTML(label) + '</button>').join('');
+    }
     portfolioGrid.innerHTML = works.map((work, index) => {
       const layoutClass = work.layout === 'featured' ? ' work-card-featured'
         : work.layout === 'wide' ? ' work-card-wide'
           : work.layout === 'interior' ? ' work-card-interior'
             : '';
-      const mediaClass = work.image ? 'work-media-real ' + (work.mediaClass || '') : (work.mediaClass || 'work-tone-sand');
-      const media = work.image
-        ? '<img src="' + escapeHTML(work.image) + '" alt="' + escapeHTML(work.alt || work.title) + '" loading="lazy" decoding="async" />'
+      const images = [...new Set([work.image, ...(Array.isArray(work.images) ? work.images : [])].filter(Boolean))];
+      const mediaClass = images.length ? 'work-media-real ' + (work.mediaClass || '') : (work.mediaClass || 'work-tone-sand');
+      const media = images.length
+        ? '<div class="work-gallery" data-work-gallery>' + images.map((source, imageIndex) => '<img class="work-gallery-image' + (imageIndex === 0 ? ' is-active' : '') + '" src="' + escapeHTML(source) + '" alt="' + escapeHTML((work.alt || work.title) + (imageIndex ? ' — фотография ' + (imageIndex + 1) : '')) + '" loading="lazy" decoding="async" data-work-gallery-image />').join('')
+          + (images.length > 1 ? '<div class="work-gallery-controls"><button type="button" data-work-gallery-prev aria-label="Предыдущая фотография">←</button><span><b data-work-gallery-current>1</b> / ' + images.length + '</span><button type="button" data-work-gallery-next aria-label="Следующая фотография">→</button></div>' : '') + '</div>'
         : '<span class="work-pending">Добавить реальную работу</span>';
       const badge = work.badge ? '<span class="work-original-mark">' + escapeHTML(work.badge) + '</span>' : '';
 
       return '<article class="work-card' + layoutClass + '" data-work-type="' + escapeHTML(work.type) + '" data-reveal>'
-        + '<div class="work-media ' + escapeHTML(mediaClass.trim()) + '"' + (!work.image ? ' role="img" aria-label="' + escapeHTML(work.alt || work.title) + '"' : '') + '>'
+        + '<div class="work-media ' + escapeHTML(mediaClass.trim()) + '"' + (!images.length ? ' role="img" aria-label="' + escapeHTML(work.alt || work.title) + '"' : '') + '>'
         + media + '<span class="work-number">' + String(index + 1).padStart(2, '0') + '</span>' + badge + '</div>'
         + '<div class="work-caption"><h3>' + escapeHTML(work.title) + '</h3><dl>'
         + '<div><dt>Формат</dt><dd>' + escapeHTML(work.format || '—') + '</dd></div>'
@@ -35,7 +47,25 @@
         + '</dl></div></article>';
     }).join('');
     if (worksStatus) worksStatus.textContent = 'Показано ' + works.length + ' работ';
+    document.dispatchEvent(new CustomEvent('julia-portfolio-rendered'));
   };
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-work-gallery-prev], [data-work-gallery-next]');
+    if (!button) return;
+    const gallery = button.closest('[data-work-gallery]');
+    const images = [...gallery.querySelectorAll('[data-work-gallery-image]')];
+    if (images.length < 2) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const current = Math.max(0, images.findIndex((image) => image.classList.contains('is-active')));
+    const direction = button.matches('[data-work-gallery-next]') ? 1 : -1;
+    const next = (current + direction + images.length) % images.length;
+    images[current].classList.remove('is-active');
+    images[next].classList.add('is-active');
+    const counter = gallery.querySelector('[data-work-gallery-current]');
+    if (counter) counter.textContent = String(next + 1);
+  });
 
   const shopGrid = document.querySelector('#shop-grid');
   const shopEmpty = document.querySelector('#shop-empty');
