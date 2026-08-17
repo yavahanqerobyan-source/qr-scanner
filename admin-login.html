@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="theme-color" content="#373139" />
+    <title>Вход в мастерскую — Юлия Реброва</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="admin-login.css" />
+    <script src="admin-login.js" defer></script>
+  </head>
+  <body>
+    <main class="login-shell">
+      <section class="login-portrait" aria-label="Мастерская Юлии Ребровой">
+        <img src="assets/artist/yulia-hero.webp" alt="Юлия Реброва в мастерской" width="1440" height="1800" />
+        <div class="login-portrait-shade" aria-hidden="true"></div>
+        <a class="login-brand" href="index.html" aria-label="На главную страницу Юлии Ребровой">
+          <img src="assets/brand/yulia-rebrova-logo-light.png" alt="Юлия Реброва — художник" width="480" height="153" />
+        </a>
+        <p class="login-portrait-note"><span>Закрытое пространство</span> для работ, заказов и истории мастерской</p>
+      </section>
+
+      <section class="login-panel" aria-labelledby="login-title">
+        <a class="login-back" href="index.html">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6" /></svg>
+          Вернуться на сайт
+        </a>
+
+        <div class="login-form-wrap">
+          <p class="login-kicker">Панель мастерской</p>
+          <h1 id="login-title">Добро пожаловать<br /><em>в личный кабинет</em></h1>
+          <p class="login-lead" id="login-lead">Сначала подтвердите пароль. Затем я отправлю одноразовый код на разрешённую почту.</p>
+
+          <form class="login-form" id="credentials-form" novalidate>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" inputmode="email" autocomplete="username" required maxlength="254" placeholder="Ваш рабочий email" />
+            </label>
+            <label>
+              <span>Пароль</span>
+              <span class="login-password-field">
+                <input name="password" type="password" autocomplete="current-password" required minlength="6" maxlength="128" placeholder="Введите пароль" />
+                <button type="button" data-toggle-password aria-label="Показать пароль">
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2.5 12s3.4-5 9.5-5 9.5 5 9.5 5-3.4 5-9.5 5-9.5-5-9.5-5Z" /><circle cx="12" cy="12" r="2.5" /></svg>
+                </button>
+              </span>
+            </label>
+            <button class="login-submit" type="submit"><span>Получить код</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5" /></svg></button>
+          </form>
+
+          <form class="login-form login-code-form" id="code-form" hidden novalidate>
+            <fieldset>
+              <legend>Код из письма</legend>
+              <div class="login-code-inputs" data-code-inputs>
+                <input aria-label="Первая цифра" inputmode="numeric" autocomplete="one-time-code" maxlength="1" />
+                <input aria-label="Вторая цифра" inputmode="numeric" maxlength="1" />
+                <input aria-label="Третья цифра" inputmode="numeric" maxlength="1" />
+                <input aria-label="Четвёртая цифра" inputmode="numeric" maxlength="1" />
+                <input aria-label="Пятая цифра" inputmode="numeric" maxlength="1" />
+                <input aria-label="Шестая цифра" inputmode="numeric" maxlength="1" />
+              </div>
+            </fieldset>
+            <p class="login-code-note">Письмо отправлено. Код действует <strong id="code-timer">10:00</strong>.</p>
+            <button class="login-submit" type="submit"><span>Войти в панель</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5" /></svg></button>
+            <button class="login-change" type="button" data-change-account>Ввести данные заново</button>
+          </form>
+
+          <p class="login-message" id="login-message" role="status" aria-live="polite"></p>
+          <p class="login-security"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg> Вход защищён паролем и одноразовым кодом. Сессия закрывается через 8 часов.</p>
+        </div>
+
+        <p class="login-foot">© 2026 Yulia Rebrova Atelier</p>
+      </section>
+    </main>
+  </body>
+</html>

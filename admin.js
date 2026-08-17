@@ -360,6 +360,15 @@
   productForm.elements.imageFile.addEventListener('change', () => previewFile(productForm));
   document.querySelector('#backup-button').addEventListener('click', downloadBackup);
   document.querySelector('#import-button').addEventListener('click', () => document.querySelector('#import-input').click());
+  document.querySelector('#logout-button').addEventListener('click', async () => {
+    const button = document.querySelector('#logout-button');
+    button.disabled = true;
+    try {
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
+    } finally {
+      window.location.replace('/admin-login.html');
+    }
+  });
   document.querySelector('#import-input').addEventListener('change', async (event) => {
     const file = event.target.files[0];
     if (!file) return;

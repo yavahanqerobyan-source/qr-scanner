@@ -1,0 +1,14 @@
+{
+  "name": "yulia-rebrova-atelier",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "setup-auth": "node scripts/setup-auth.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

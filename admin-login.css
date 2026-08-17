@@ -1,0 +1,98 @@
+@font-face { font-family: "Prata Login"; src: url("assets/fonts/prata-cyrillic.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Golos Login"; src: url("assets/fonts/golos-text-cyrillic.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Old Standard Login"; src: url("assets/fonts/old-standard-italic-cyrillic.woff2") format("woff2"); font-style: italic; font-display: swap; }
+
+:root {
+  --ink: #332d33;
+  --plum: #443a43;
+  --paper: #f5efe9;
+  --surface: #fffaf6;
+  --muted: #766d72;
+  --gold: #92704e;
+  --rose: #b97870;
+  --border: rgba(73, 59, 68, 0.18);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--plum); }
+body { min-width: 320px; min-height: 100vh; margin: 0; color: var(--ink); font-family: "Golos Login", sans-serif; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+[hidden] { display: none !important; }
+
+.login-shell { display: grid; grid-template-columns: minmax(360px, 0.88fr) minmax(520px, 1.12fr); min-height: 100svh; background: var(--paper); }
+.login-portrait { position: relative; min-height: 100svh; overflow: hidden; background: #4a4147; isolation: isolate; }
+.login-portrait > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 51% center; filter: saturate(0.72) sepia(0.08); transform: scale(1.035); animation: portraitSettle 1.8s var(--ease) both; }
+.login-portrait-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(35,29,34,0.18), transparent 38%, rgba(31,25,30,0.74)), radial-gradient(80% 60% at 12% 5%, rgba(225,178,116,0.27), transparent 64%); }
+.login-portrait::after { content: ""; position: absolute; inset: 0; z-index: 2; opacity: 0.2; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.11'/%3E%3C/svg%3E"); mix-blend-mode: soft-light; }
+.login-brand { position: absolute; top: clamp(28px, 5vw, 58px); left: clamp(26px, 4vw, 58px); z-index: 3; display: block; width: min(240px, 52%); opacity: 0; animation: reveal 850ms 260ms var(--ease) forwards; }
+.login-brand img { display: block; width: 100%; height: auto; }
+.login-portrait-note { position: absolute; right: clamp(28px, 4vw, 60px); bottom: clamp(36px, 6vw, 72px); left: clamp(28px, 4vw, 60px); z-index: 3; max-width: 430px; margin: 0; color: rgba(255,255,255,0.7); font-family: "Old Standard Login", Georgia, serif; font-size: clamp(18px, 2.1vw, 27px); font-style: italic; line-height: 1.28; opacity: 0; animation: reveal 900ms 520ms var(--ease) forwards; }
+.login-portrait-note span { color: #fff; }
+
+.login-panel { position: relative; display: grid; grid-template-rows: auto 1fr auto; min-height: 100svh; padding: clamp(28px, 4vw, 58px) clamp(30px, 7vw, 112px) 30px; overflow: hidden; background: radial-gradient(70% 55% at 100% 0%, rgba(196,132,112,0.14), transparent 70%), radial-gradient(60% 50% at 0% 100%, rgba(176,143,98,0.1), transparent 72%), var(--paper); }
+.login-panel::before { content: "JR"; position: absolute; right: -0.08em; bottom: -0.24em; color: rgba(108,84,72,0.038); font-family: "Prata Login", Georgia, serif; font-size: min(39vw, 520px); line-height: 1; pointer-events: none; }
+.login-back { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; width: max-content; color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; }
+.login-back svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.4; transition: transform 180ms ease; }
+.login-back:hover svg { transform: translateX(-3px); }
+.login-form-wrap { position: relative; z-index: 1; align-self: center; width: min(100%, 560px); padding: 64px 0 44px; opacity: 0; animation: reveal 900ms 160ms var(--ease) forwards; }
+.login-kicker { margin: 0 0 22px; color: var(--gold); font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.login-form-wrap h1 { margin: 0; font-family: "Prata Login", Georgia, serif; font-size: clamp(38px, 4.4vw, 67px); font-weight: 400; line-height: 1.08; letter-spacing: -0.035em; }
+.login-form-wrap h1 em { color: var(--rose); font-family: "Old Standard Login", Georgia, serif; font-weight: 400; }
+.login-lead { max-width: 490px; margin: 24px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.login-form { display: grid; gap: 19px; margin-top: 38px; }
+.login-form label { display: grid; gap: 8px; color: var(--gold); font-size: 9px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; }
+.login-form input { width: 100%; min-height: 54px; padding: 0 2px; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; outline: 0; background: transparent; color: var(--ink); font-size: 16px; letter-spacing: 0; text-transform: none; transition: border-color 180ms ease, box-shadow 180ms ease; }
+.login-form input::placeholder { color: rgba(74,62,70,0.38); }
+.login-form input:focus { border-color: var(--gold); box-shadow: 0 1px 0 var(--gold); }
+.login-password-field { position: relative; display: block; }
+.login-password-field input { padding-right: 52px; }
+.login-password-field button { position: absolute; top: 4px; right: 0; display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.login-password-field svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.35; }
+.login-submit { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 58px; margin-top: 10px; padding: 0 22px 0 25px; border: 1px solid rgba(96,74,85,0.24); border-radius: 999px; background: linear-gradient(135deg, #7c6673, #5d4c56); color: #fff; box-shadow: 0 16px 34px rgba(70,55,65,0.16); cursor: pointer; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: transform 200ms var(--ease), box-shadow 200ms ease, opacity 180ms ease; }
+.login-submit:hover { transform: translateY(-2px); box-shadow: 0 20px 42px rgba(70,55,65,0.22); }
+.login-submit:disabled { cursor: wait; opacity: 0.62; transform: none; }
+.login-submit svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.login-message { min-height: 21px; margin: 17px 0 0; color: var(--rose); font-size: 12px; }
+.login-message.is-success { color: #6f826a; }
+.login-security { display: flex; align-items: center; gap: 10px; max-width: 480px; margin: 24px 0 0; padding-top: 20px; border-top: 1px solid var(--border); color: rgba(81,70,77,0.58); font-size: 10px; line-height: 1.55; }
+.login-security svg { flex: 0 0 18px; width: 18px; height: 18px; fill: none; stroke: var(--gold); stroke-width: 1.25; }
+.login-foot { position: relative; z-index: 1; margin: 0; color: rgba(77,65,72,0.42); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+.login-code-form fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.login-code-form legend { margin-bottom: 12px; color: var(--gold); font-size: 9px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; }
+.login-code-inputs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px; }
+.login-code-inputs input { min-width: 0; height: 58px; padding: 0; border: 1px solid var(--border); background: rgba(255,250,246,0.55); font-family: "Prata Login", Georgia, serif; font-size: 24px; text-align: center; }
+.login-code-inputs input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(146,112,78,0.12); }
+.login-code-note { margin: -2px 0 0; color: var(--muted); font-size: 11px; }
+.login-code-note strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+.login-change { justify-self: center; padding: 4px; border: 0; background: transparent; color: var(--gold); cursor: pointer; font-size: 10px; letter-spacing: 0.08em; text-decoration: underline; text-underline-offset: 4px; }
+
+@keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes portraitSettle { from { opacity: 0; transform: scale(1.085); } to { opacity: 1; transform: scale(1.035); } }
+
+@media (max-width: 880px) {
+  .login-shell { grid-template-columns: 1fr; }
+  .login-portrait { min-height: 31svh; }
+  .login-portrait > img { object-position: 50% 36%; }
+  .login-brand { top: 24px; left: 22px; width: 190px; }
+  .login-portrait-note { display: none; }
+  .login-panel { min-height: 69svh; padding: 24px clamp(20px, 7vw, 54px) calc(24px + env(safe-area-inset-bottom)); }
+  .login-form-wrap { align-self: start; width: 100%; padding: 52px 0 42px; }
+  .login-form-wrap h1 { font-size: clamp(36px, 10.8vw, 54px); }
+}
+
+@media (max-width: 460px) {
+  .login-portrait { min-height: 25svh; }
+  .login-panel { min-height: 75svh; }
+  .login-form-wrap { padding-top: 42px; }
+  .login-lead { font-size: 13px; }
+  .login-code-inputs { gap: 6px; }
+  .login-code-inputs input { height: 52px; font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
+}

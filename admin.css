@@ -66,6 +66,7 @@ a { color: inherit; text-decoration: none; }
 .admin-button-ghost:hover { border-color: rgba(83,69,77,0.3); background: var(--admin-surface); }
 .admin-icon-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--admin-border); border-radius: 50%; background: rgba(255,253,249,0.55); color: var(--admin-plum-soft); }
 .admin-icon-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
+.admin-logout-button:hover { border-color: rgba(157,81,74,0.34); color: var(--admin-danger); }
 .admin-text-button { min-height: 38px; padding: 0; border: 0; background: transparent; color: var(--admin-gold); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
 .admin-text-button:hover { color: var(--admin-plum); }
 .admin-button:focus-visible, .admin-icon-button:focus-visible, .admin-nav button:focus-visible, .admin-text-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(134,102,71,0.32); outline-offset: 3px; }
